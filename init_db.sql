@@ -35,7 +35,7 @@ CREATE TABLE `ct_hoadon` (
   `price` float DEFAULT NULL,
   `promotion_price` float DEFAULT NULL,
   `total_money` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -48,7 +48,7 @@ CREATE TABLE `ct_khuyenmai` (
   `id_KM` int(10) UNSIGNED DEFAULT NULL,
   `id_SP` int(10) UNSIGNED DEFAULT NULL,
   `discount` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -62,7 +62,7 @@ CREATE TABLE `ct_phieunhaphang` (
   `amount` int(10) UNSIGNED DEFAULT NULL,
   `price` float DEFAULT NULL,
   `total_money` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -79,7 +79,7 @@ CREATE TABLE `hoadon` (
   `total_promo` float DEFAULT NULL,
   `total_remaining_money` float DEFAULT NULL,
   `create_day` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -93,7 +93,7 @@ CREATE TABLE `khachhang` (
   `first_name` varchar(20) DEFAULT NULL,
   `last_name` varchar(20) DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -107,7 +107,7 @@ CREATE TABLE `khuyenmai` (
   `type` varchar(50) DEFAULT NULL,
   `start_time` date DEFAULT NULL,
   `end_time` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -118,7 +118,7 @@ CREATE TABLE `khuyenmai` (
 CREATE TABLE `loai` (
   `id_Loai` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -131,7 +131,7 @@ CREATE TABLE `nguyenlieu` (
   `name` varchar(50) DEFAULT NULL,
   `amount` int(10) UNSIGNED DEFAULT NULL,
   `price` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -145,7 +145,7 @@ CREATE TABLE `nguyenlieudadung` (
   `id_SP` int(10) UNSIGNED NOT NULL,
   `amount_material` int(10) UNSIGNED DEFAULT NULL,
   `amount_product` int(10) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -158,7 +158,7 @@ CREATE TABLE `nhacungcap` (
   `name_NCC` varchar(50) NOT NULL,
   `address` text DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -174,7 +174,7 @@ CREATE TABLE `nhanvien` (
   `address` text DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
   `start_day` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -188,7 +188,7 @@ CREATE TABLE `phieunhaphang` (
   `id_NV` int(11) UNSIGNED NOT NULL,
   `date_add` date NOT NULL,
   `total_money` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -203,7 +203,7 @@ CREATE TABLE `sanpham` (
   `descrption` text DEFAULT NULL,
   `amount` int(10) UNSIGNED DEFAULT NULL,
   `price` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -216,7 +216,7 @@ CREATE TABLE `taikhoan` (
   `id_NV` int(10) UNSIGNED NOT NULL,
   `user_name` varchar(50) DEFAULT NULL,
   `pass` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
