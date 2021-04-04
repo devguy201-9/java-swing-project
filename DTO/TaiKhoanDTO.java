@@ -10,52 +10,53 @@ package doanqlsieuthi.DTO;
  * @author ACER
  */
 public class TaiKhoanDTO {
-    private int id_TK,id_NV;
-    private String user_name,pass;
+
+    private int id_TK, id_NV;
+    private String user_name, pass;
 
     public TaiKhoanDTO() {
-    	id_NV=0;
-    	id_TK=0;
-    	user_name="";
-    	pass="";
+        id_NV = 0;
+        id_TK = 0;
+        user_name = "";
+        pass = "";
     }
 
-	public TaiKhoanDTO(int id_NV, String user_name, String pass) {
-		this.id_NV = id_NV;
-		this.user_name = user_name;
-		this.pass = pass;
-	}
+    public TaiKhoanDTO(int id_NV, String user_name, String pass) {
+        this.id_NV = id_NV;
+        this.user_name = user_name;
+        this.pass = pass;
+    }
 
-	public int getId_TK() {
-		return id_TK;
-	}
+    public int getId_TK() {
+        return id_TK;
+    }
 
-	public void setId_TK(int id_TK) {
-		this.id_TK = id_TK;
-	}
+    public void setId_TK(int id_TK) {
+        this.id_TK = id_TK;
+    }
 
-	public int getId_NV() {
-		return id_NV;
-	}
+    public int getId_NV() {
+        return id_NV;
+    }
 
-	public void setId_NV(int id_NV) {
-		this.id_NV = id_NV;
-	}
+    public void setId_NV(int id_NV) {
+        this.id_NV = id_NV;
+    }
 
-	public String getUser_name() {
-		return user_name;
-	}
+    public String getUser_name() {
+        return user_name;
+    }
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
 
-	public String getPass() {
-		return pass;
-	}
+    public String getPass() {
+        return pass;
+    }
 
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-    
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
 }

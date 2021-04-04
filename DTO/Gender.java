@@ -1,5 +1,5 @@
 package doanqlsieuthi.DTO;
 
 public enum Gender {
-	male,female
+    male, female
 }

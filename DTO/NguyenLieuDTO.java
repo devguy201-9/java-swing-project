@@ -10,52 +10,54 @@ package doanqlsieuthi.DTO;
  * @author ACER
  */
 public class NguyenLieuDTO {
-    private int id_NL,amount;
+
+    private int id_NL, amount;
     private String name;
     private float price;
-	public NguyenLieuDTO(int amount, String name, float price) {
-		this.amount = amount;
-		this.name = name;
-		this.price = price;
-	}
-	
-	public NguyenLieuDTO() {
-		id_NL=0;
-		amount=0;
-		name="";
-		price=0.f;
-	}
 
-	public int getId_NL() {
-		return id_NL;
-	}
+    public NguyenLieuDTO(int amount, String name, float price) {
+        this.amount = amount;
+        this.name = name;
+        this.price = price;
+    }
 
-	public void setId_NL(int id_NL) {
-		this.id_NL = id_NL;
-	}
+    public NguyenLieuDTO() {
+        id_NL = 0;
+        amount = 0;
+        name = "";
+        price = 0.f;
+    }
 
-	public int getAmount() {
-		return amount;
-	}
+    public int getId_NL() {
+        return id_NL;
+    }
 
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
+    public void setId_NL(int id_NL) {
+        this.id_NL = id_NL;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public int getAmount() {
+        return amount;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 
-	public float getPrice() {
-		return price;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setPrice(float price) {
-		this.price = price;
-	}
-    
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
 }

@@ -12,63 +12,64 @@ import java.util.Date;
  * @author ACER
  */
 public class KhuyenMaiDTO {
-	private int id_KM;
-    private String name,type;
-    private Date start_time,end_time;
-    
-	public KhuyenMaiDTO(String name, String type, Date start_time, Date end_time) {
-		this.name = name;
-		this.type = type;
-		this.start_time = start_time;
-		this.end_time = end_time;
-	}
 
-	public KhuyenMaiDTO() {
-		id_KM=0;
-		name = "";
-		type = "";
-		start_time = null;
-		end_time = null;
-	}
+    private int id_KM;
+    private String name, type;
+    private Date start_time, end_time;
 
-	public int getId_KM() {
-		return id_KM;
-	}
+    public KhuyenMaiDTO(String name, String type, Date start_time, Date end_time) {
+        this.name = name;
+        this.type = type;
+        this.start_time = start_time;
+        this.end_time = end_time;
+    }
 
-	public void setId_KM(int id_KM) {
-		this.id_KM = id_KM;
-	}
+    public KhuyenMaiDTO() {
+        id_KM = 0;
+        name = "";
+        type = "";
+        start_time = null;
+        end_time = null;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public int getId_KM() {
+        return id_KM;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId_KM(int id_KM) {
+        this.id_KM = id_KM;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Date getStart_time() {
-		return start_time;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setStart_time(Date start_time) {
-		this.start_time = start_time;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public Date getEnd_time() {
-		return end_time;
-	}
+    public Date getStart_time() {
+        return start_time;
+    }
 
-	public void setEnd_time(Date end_time) {
-		this.end_time = end_time;
-	}
-    
+    public void setStart_time(Date start_time) {
+        this.start_time = start_time;
+    }
+
+    public Date getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(Date end_time) {
+        this.end_time = end_time;
+    }
+
 }

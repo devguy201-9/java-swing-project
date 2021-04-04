@@ -10,7 +10,8 @@ package doanqlsieuthi.DTO;
  * @author ACER
  */
 public class LoaiDTO {
-	private int id_Loai;
+
+    private int id_Loai;
     private String name;
 
     public LoaiDTO(String name) {
@@ -18,24 +19,24 @@ public class LoaiDTO {
     }
 
     public LoaiDTO() {
-    	id_Loai=0;
-    	name="";
+        id_Loai = 0;
+        name = "";
     }
-    
+
     public int getId_Loai() {
-		return id_Loai;
-	}
+        return id_Loai;
+    }
 
-	public void setId_Loai(int id_Loai) {
-		this.id_Loai = id_Loai;
-	}
+    public void setId_Loai(int id_Loai) {
+        this.id_Loai = id_Loai;
+    }
 
-	public String getName() {
+    public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
-    
+
 }

@@ -10,7 +10,8 @@ package doanqlsieuthi.DTO;
  * @author ACER
  */
 public class ct_KhuyenMaiDTO {
-    private int id,id_KM,id_SP;
+
+    private int id, id_KM, id_SP;
     private float discount;
 
     public ct_KhuyenMaiDTO(int id_KM, int id_SP, float discount) {
@@ -18,44 +19,44 @@ public class ct_KhuyenMaiDTO {
         this.id_SP = id_SP;
         this.discount = discount;
     }
-    
+
     public ct_KhuyenMaiDTO() {
-    	id_KM=0;
-    	id=0;
-    	id_SP=0;
-    	discount=0.f;
+        id_KM = 0;
+        id = 0;
+        id_SP = 0;
+        discount = 0.f;
     }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public int getId_KM() {
-		return id_KM;
-	}
+    public int getId_KM() {
+        return id_KM;
+    }
 
-	public void setId_KM(int id_KM) {
-		this.id_KM = id_KM;
-	}
+    public void setId_KM(int id_KM) {
+        this.id_KM = id_KM;
+    }
 
-	public int getId_SP() {
-		return id_SP;
-	}
+    public int getId_SP() {
+        return id_SP;
+    }
 
-	public void setId_SP(int id_SP) {
-		this.id_SP = id_SP;
-	}
+    public void setId_SP(int id_SP) {
+        this.id_SP = id_SP;
+    }
 
-	public float getDiscount() {
-		return discount;
-	}
+    public float getDiscount() {
+        return discount;
+    }
 
-	public void setDiscount(float discount) {
-		this.discount = discount;
-	}
+    public void setDiscount(float discount) {
+        this.discount = discount;
+    }
 
 }
