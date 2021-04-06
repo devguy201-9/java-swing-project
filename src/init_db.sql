@@ -78,7 +78,7 @@ CREATE TABLE `hoadon` (
   `total_money` float DEFAULT NULL,
   `total_promo` float DEFAULT NULL,
   `total_remaining_money` float DEFAULT NULL,
-  `create_day` timestamp DEFAULT NULL
+  `create_day` timestamp DEFAULT CURRENT_TIMESTAMP 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
