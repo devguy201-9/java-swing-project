@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2021 at 06:46 AM
+-- Generation Time: Apr 06, 2021 at 11:37 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -208,7 +208,7 @@ CREATE TABLE `phieunhaphang` (
 --
 
 CREATE TABLE `quyen` (
-  `id_right` int(10) NOT NULL,
+  `id_permission` int(10) NOT NULL,
   `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -219,7 +219,7 @@ CREATE TABLE `quyen` (
 --
 
 CREATE TABLE `quyencuanhiemvu` (
-  `id_right` int(10) NOT NULL,
+  `id_permission` int(10) NOT NULL,
   `id_duty` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -249,7 +249,7 @@ CREATE TABLE `taikhoan` (
   `id_NV` int(10) UNSIGNED NOT NULL,
   `user_name` varchar(50) DEFAULT NULL,
   `pass` varchar(50) DEFAULT NULL,
-  `id_right` int(10) NOT NULL
+  `id_permission` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -350,13 +350,13 @@ ALTER TABLE `phieunhaphang`
 -- Indexes for table `quyen`
 --
 ALTER TABLE `quyen`
-  ADD PRIMARY KEY (`id_right`);
+  ADD PRIMARY KEY (`id_permission`);
 
 --
 -- Indexes for table `quyencuanhiemvu`
 --
 ALTER TABLE `quyencuanhiemvu`
-  ADD KEY `id_right` (`id_right`),
+  ADD KEY `id_permission` (`id_permission`),
   ADD KEY `id_duty` (`id_duty`);
 
 --
@@ -372,7 +372,7 @@ ALTER TABLE `sanpham`
 ALTER TABLE `taikhoan`
   ADD PRIMARY KEY (`id_TK`),
   ADD KEY `id_NV` (`id_NV`),
-  ADD KEY `taikhoan_ibfk_2` (`id_right`);
+  ADD KEY `taikhoan_ibfk_2` (`id_permission`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -460,7 +460,7 @@ ALTER TABLE `phieunhaphang`
 -- AUTO_INCREMENT for table `quyen`
 --
 ALTER TABLE `quyen`
-  MODIFY `id_right` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_permission` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `sanpham`
@@ -525,7 +525,7 @@ ALTER TABLE `phieunhaphang`
 --
 ALTER TABLE `quyencuanhiemvu`
   ADD CONSTRAINT `id_duty` FOREIGN KEY (`id_duty`) REFERENCES `nhiemvu` (`id_duty`),
-  ADD CONSTRAINT `id_right` FOREIGN KEY (`id_right`) REFERENCES `quyen` (`id_right`);
+  ADD CONSTRAINT `id_permission` FOREIGN KEY (`id_permission`) REFERENCES `quyen` (`id_permission`);
 
 --
 -- Constraints for table `sanpham`
@@ -538,7 +538,7 @@ ALTER TABLE `sanpham`
 --
 ALTER TABLE `taikhoan`
   ADD CONSTRAINT `taikhoan_ibfk_1` FOREIGN KEY (`id_NV`) REFERENCES `nhanvien` (`id_NV`),
-  ADD CONSTRAINT `taikhoan_ibfk_2` FOREIGN KEY (`id_right`) REFERENCES `quyen` (`id_right`);
+  ADD CONSTRAINT `taikhoan_ibfk_2` FOREIGN KEY (`id_permission`) REFERENCES `quyen` (`id_permission`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
