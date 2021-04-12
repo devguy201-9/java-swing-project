@@ -167,7 +167,4 @@ public class navItem extends JPanel implements MouseListener{
         }
     }
 
-    public void addMouseListenner(MouseAdapter mouseAdapter) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

@@ -84,14 +84,15 @@ public class GUI extends JFrame implements MouseListener{
         hmain.add(exit.isButton());
         hmain.add(mini.isButton());
         
-//        exit.addMouseListenner(new MouseAdapter(){
-//            public void MouseClicked(MouseEvent e){
-//                System.exit(0);
-//            }
-//        });
         
-        mini.addMouseListenner(new MouseAdapter(){
-            public void MouseClicked(MouseEvent e){
+        exit.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                System.exit(0);
+            }
+        });
+        
+        mini.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
                 setState(Frame.ICONIFIED);
             }
         });
