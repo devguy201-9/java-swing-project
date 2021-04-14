@@ -21,6 +21,7 @@ public class TaiKhoanMapper implements RowMapper<TaiKhoanDTO>{
             TaiKhoanDTO tk = new TaiKhoanDTO();
             tk.setId_TK(rs.getInt("id_TK"));
             tk.setId_NV(rs.getInt("id_NV"));
+            tk.setId_permission(rs.getInt("id_permission"));
             tk.setUser_name(rs.getString("user_name"));
             tk.setPass(rs.getString("pass"));
             return tk;

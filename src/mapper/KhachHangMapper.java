@@ -20,7 +20,6 @@ public class KhachHangMapper implements RowMapper<KhachHangDTO> {
         try {
             KhachHangDTO kh = new KhachHangDTO();
             kh.setId_KH(rs.getInt("id_KH"));
-            kh.setId_HD(rs.getInt("id_HD"));
             kh.setFirst_name(rs.getString("first_name"));
             kh.setLast_name(rs.getString("last_name"));
             kh.setPhone(rs.getString("phone"));

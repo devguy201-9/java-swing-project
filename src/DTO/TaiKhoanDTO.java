@@ -11,20 +11,22 @@ package DTO;
  */
 public class TaiKhoanDTO {
 
-    private int id_TK, id_NV;
+    private int id_TK, id_NV,id_permission;
     private String user_name, pass;
 
     public TaiKhoanDTO() {
         id_NV = 0;
         id_TK = 0;
+        id_permission=0;
         user_name = "";
         pass = "";
     }
 
-    public TaiKhoanDTO(int id_NV, String user_name, String pass) {
+    public TaiKhoanDTO(int id_NV, int id_permission, String user_name, String pass) {
         this.id_NV = id_NV;
         this.user_name = user_name;
         this.pass = pass;
+        this.id_permission = id_permission; 
     }
 
     public int getId_TK() {
@@ -57,6 +59,14 @@ public class TaiKhoanDTO {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public int getId_permission() {
+        return id_permission;
+    }
+
+    public void setId_permission(int id_permission) {
+        this.id_permission = id_permission;
     }
 
 }

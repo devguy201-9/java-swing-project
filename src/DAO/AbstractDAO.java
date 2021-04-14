@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class AbstractDAO<T> {
 	public Connection getConnection() throws FileNotFoundException {
 		try {
-                        ResourceBundle bundle = ResourceBundle.getBundle("doanqlsieuthi/Config/db");
+                        ResourceBundle bundle = ResourceBundle.getBundle("Config/db");
                         Class.forName(bundle.getString("driverName"));
                         String password = "";
 			return DriverManager.getConnection(bundle.getString("url"), bundle.getString("user"), password);
