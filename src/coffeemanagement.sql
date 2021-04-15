@@ -89,7 +89,6 @@ CREATE TABLE `hoadon` (
 
 CREATE TABLE `khachhang` (
   `id_KH` int(10) UNSIGNED NOT NULL,
-  `id_HD` int(10) UNSIGNED NOT NULL,
   `first_name` varchar(20) DEFAULT NULL,
   `last_name` varchar(20) DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL
