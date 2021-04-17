@@ -116,17 +116,12 @@ public class GUI extends JFrame implements MouseListener{
         scroll.setHorizontalScrollBarPolicy(scroll.HORIZONTAL_SCROLLBAR_NEVER);
         
         
-//        navItem = ;
-//        for(roleDTO role : navItem ){
-//            navItem.add();
-//        }
-
         QuyenCuaNhiemVuBUS permisisondetail = new QuyenCuaNhiemVuBUS();
         List<QuyenCuaNhiemVuDTO> detail = permisisondetail.getByIdPermission(id_permission);
         for(QuyenCuaNhiemVuDTO temp : detail){
             CategoryBUS category = new CategoryBUS();
             CategoryDTO cate = category.getByIdDuty(temp.getid_duty());
-//            navItem.add();
+            navItem.add(cate.toString());
         }
 
         outNav();
@@ -263,27 +258,22 @@ public class GUI extends JFrame implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mousePressed(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseReleased(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseEntered(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseExited(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

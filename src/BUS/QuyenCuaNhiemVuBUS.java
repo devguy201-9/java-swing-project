@@ -29,7 +29,7 @@ public class QuyenCuaNhiemVuBUS {
     
     public List<QuyenCuaNhiemVuDTO> getByIdPermission(int id_permission) throws FileNotFoundException{
         QuyenCuaNhiemVuDAO permissionDetail = new QuyenCuaNhiemVuDAO();
-        String sql = "SELECT `id_duty` FROM `quyencuanhiemvu` WHERE id_permission = ?";
+        StringBuilder sql =  new StringBuilder("SELECT * FROM `ct_quyen` WHERE id_permission = ?");
         List<QuyenCuaNhiemVuDTO> result = permissionDetail.query(sql.toString(),new QuyenCuaNhiemVuMapper() ,id_permission);
         return result;
     }
@@ -46,20 +46,20 @@ public class QuyenCuaNhiemVuBUS {
         }
     }
     
-    public void add(QuyenCuaNhiemVuDTO category){
-        detailList.add(category);
+    public void add(QuyenCuaNhiemVuDTO detail){
+        detailList.add(detail);
         QuyenCuaNhiemVuDAO QuyenCuaNhiemVuDAO = new QuyenCuaNhiemVuDAO();
         try {
-            QuyenCuaNhiemVuDAO.save(category);
+            QuyenCuaNhiemVuDAO.save(detail);
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
     
     public void delete(int id_permission) {
-        for(QuyenCuaNhiemVuDTO categoryDTO : detailList){
-            if(categoryDTO.getId_permission() == id_permission) {
-                detailList.remove(categoryDTO);
+        for(QuyenCuaNhiemVuDTO detailDTO : detailList){
+            if(detailDTO.getId_permission() == id_permission) {
+                detailList.remove(detailDTO);
                 QuyenCuaNhiemVuDAO QuyenCuaNhiemVuDAO = new QuyenCuaNhiemVuDAO();
                 try {
                     QuyenCuaNhiemVuDAO.delete(id_permission);
