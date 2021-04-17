@@ -89,7 +89,6 @@ CREATE TABLE `hoadon` (
 
 CREATE TABLE `khachhang` (
   `id_KH` int(10) UNSIGNED NOT NULL,
-  `id_HD` int(10) UNSIGNED NOT NULL,
   `first_name` varchar(20) DEFAULT NULL,
   `last_name` varchar(20) DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL
@@ -179,12 +178,14 @@ CREATE TABLE `nhanvien` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nhiemvu`
+-- Table structure for table `danhmuc`
 --
 
-CREATE TABLE `nhiemvu` (
+CREATE TABLE `danhmuc` (
   `id_duty` int(10) NOT NULL,
-  `name` varchar(50) NOT NULL
+  `name` varchar(50) NOT NULL,
+  `image` varchar(50),
+  `image_hover` varchar(50)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -215,10 +216,10 @@ CREATE TABLE `quyen` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `quyencuanhiemvu`
+-- Table structure for table `ct_quyen`
 --
 
-CREATE TABLE `quyencuanhiemvu` (
+CREATE TABLE `ct_quyen` (
   `id_permission` int(10) NOT NULL,
   `id_duty` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -276,7 +277,7 @@ ALTER TABLE `ct_khuyenmai`
 -- Indexes for table `ct_phieunhaphang`
 --
 ALTER TABLE `ct_phieunhaphang`
-  ADD PRIMARY KEY (`id_PNH`),
+  ADD KEY (`id_PNH`),
   ADD KEY `id_NL` (`id_NL`);
 
 --
@@ -333,9 +334,9 @@ ALTER TABLE `nhanvien`
   ADD PRIMARY KEY (`id_NV`);
 
 --
--- Indexes for table `nhiemvu`
+-- Indexes for table `danhmuc`
 --
-ALTER TABLE `nhiemvu`
+ALTER TABLE `danhmuc`
   ADD PRIMARY KEY (`id_duty`);
 
 --
@@ -353,9 +354,9 @@ ALTER TABLE `quyen`
   ADD PRIMARY KEY (`id_permission`);
 
 --
--- Indexes for table `quyencuanhiemvu`
+-- Indexes for table `ct_quyen`
 --
-ALTER TABLE `quyencuanhiemvu`
+ALTER TABLE `ct_quyen`
   ADD KEY `id_permission` (`id_permission`),
   ADD KEY `id_duty` (`id_duty`);
 
@@ -445,9 +446,9 @@ ALTER TABLE `nhanvien`
   MODIFY `id_NV` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `nhiemvu`
+-- AUTO_INCREMENT for table `danhmuc`
 --
-ALTER TABLE `nhiemvu`
+ALTER TABLE `danhmuc`
   MODIFY `id_duty` int(10) NOT NULL AUTO_INCREMENT;
 
 --
@@ -497,6 +498,7 @@ ALTER TABLE `ct_khuyenmai`
 --
 ALTER TABLE `ct_phieunhaphang`
   ADD CONSTRAINT `ct_phieunhaphang_ibfk_1` FOREIGN KEY (`id_NL`) REFERENCES `nguyenlieu` (`id_NL`);
+  
 
 --
 -- Constraints for table `hoadon`
@@ -521,10 +523,10 @@ ALTER TABLE `phieunhaphang`
   ADD CONSTRAINT `phieunhaphang_ibfk_2` FOREIGN KEY (`id_NV`) REFERENCES `nhanvien` (`id_NV`);
 
 --
--- Constraints for table `quyencuanhiemvu`
+-- Constraints for table `ct_quyen`
 --
-ALTER TABLE `quyencuanhiemvu`
-  ADD CONSTRAINT `id_duty` FOREIGN KEY (`id_duty`) REFERENCES `nhiemvu` (`id_duty`),
+ALTER TABLE `ct_quyen`
+  ADD CONSTRAINT `id_duty` FOREIGN KEY (`id_duty`) REFERENCES `danhmuc` (`id_duty`),
   ADD CONSTRAINT `id_permission` FOREIGN KEY (`id_permission`) REFERENCES `quyen` (`id_permission`);
 
 --

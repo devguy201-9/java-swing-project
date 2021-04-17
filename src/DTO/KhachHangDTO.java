@@ -12,16 +12,14 @@ package DTO;
 public class KhachHangDTO {
 
     private String last_name, first_name, phone;
-    private int id_KH, id_HD;
+    private int id_KH;
 
     public KhachHangDTO() {
         last_name = first_name = phone = "";
         id_KH = 0;
-        id_HD = 0;
     }
 
-    public KhachHangDTO(int id_HD, String last_name, String first_name, String phone) {
-        this.id_HD = id_HD;
+    public KhachHangDTO(String last_name, String first_name, String phone) {
         this.last_name = last_name;
         this.first_name = first_name;
         this.phone = phone;
@@ -58,13 +56,4 @@ public class KhachHangDTO {
     public void setId_KH(int id_KH) {
         this.id_KH = id_KH;
     }
-
-    public int getId_HD() {
-        return id_HD;
-    }
-
-    public void setId_HD(int id_HD) {
-        this.id_HD = id_HD;
-    }
-
 }

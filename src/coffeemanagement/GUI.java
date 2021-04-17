@@ -1,5 +1,9 @@
 package coffeemanagement;
 
+import BUS.CategoryBUS;
+import BUS.QuyenCuaNhiemVuBUS;
+import DTO.CategoryDTO;
+import DTO.QuyenCuaNhiemVuDTO;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,15 +22,17 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
 
 
 public class GUI extends JFrame implements MouseListener{
-    private String userId;
+    private int userId;
     private String userName;
-    private String role;
+    private int id_permission;
     private boolean flag = true;
     private JPanel header,nav,main;
     private int DEFAULT_HEIGHT = 730,DEFALUT_WIDTH = 1300 ;
@@ -34,14 +40,14 @@ public class GUI extends JFrame implements MouseListener{
     private ArrayList<navItem> navObj = new ArrayList<>();  //Chứa cái button trên thanh menu
    
     
-    public GUI(String userId , String userName , String role){
+    public GUI(int userId , String userName , int id_permission) throws FileNotFoundException{
         this.userId = userId;
         this.userName = userName;
-        this.role = role;
+        this.id_permission = id_permission;
         view();
     }
     
-    public void view(){
+    public void view() throws FileNotFoundException{
         Font font = new Font ("Time new",Font.BOLD,14);
         setTitle("Coffee Management");
 //        ImageIcon logo = ImageIcon("");
@@ -110,10 +116,18 @@ public class GUI extends JFrame implements MouseListener{
         scroll.setHorizontalScrollBarPolicy(scroll.HORIZONTAL_SCROLLBAR_NEVER);
         
         
-//        navItem = roleDAO();
+//        navItem = ;
 //        for(roleDTO role : navItem ){
 //            navItem.add();
 //        }
+
+        QuyenCuaNhiemVuBUS permisisondetail = new QuyenCuaNhiemVuBUS();
+        List<QuyenCuaNhiemVuDTO> detail = permisisondetail.getByIdPermission(id_permission);
+        for(QuyenCuaNhiemVuDTO temp : detail){
+            CategoryBUS category = new CategoryBUS();
+            CategoryDTO cate = category.getByIdDuty(temp.getid_duty());
+//            navItem.add();
+        }
 
         outNav();
         

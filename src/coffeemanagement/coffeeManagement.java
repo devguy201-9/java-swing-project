@@ -6,6 +6,7 @@
 package coffeemanagement;
 
 import coffeemanagement.GUI;
+import java.io.FileNotFoundException;
 
 
 /**
@@ -15,7 +16,7 @@ import coffeemanagement.GUI;
 public final class coffeeManagement{
     
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         // TODO code application logic here
 //        try{
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -23,7 +24,7 @@ public final class coffeeManagement{
 //        {
 //            
 //        }
-        GUI gui = new GUI("1", "thuan", "1");
+        GUI gui = new GUI(1, "thuan", 1);
     }
 
     
