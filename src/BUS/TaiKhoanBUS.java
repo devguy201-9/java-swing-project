@@ -32,12 +32,6 @@ public class TaiKhoanBUS {
         tkBUS = taiKhoanDAO.findAll();
     }
     
-    public void show(){
-        for(TaiKhoanDTO taiKhoan : tkBUS) {
-            System.out.println(taiKhoan.getUser_name());
-        }
-    }
-    
     public void add(TaiKhoanDTO taiKhoan){
         tkBUS.add(taiKhoan);
         TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
@@ -48,7 +42,8 @@ public class TaiKhoanBUS {
         }
     }
     
-    public void delete(int idTaiKhoan) {
+    public void delete(String id) {
++       int idTaiKhoan = Integer.parseInt(id);
         for(TaiKhoanDTO taiKhoanDTO : tkBUS){
             if(taiKhoanDTO.getId_TK() == idTaiKhoan) {
                 tkBUS.remove(taiKhoanDTO);
