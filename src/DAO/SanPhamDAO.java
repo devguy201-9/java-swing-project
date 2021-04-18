@@ -28,4 +28,16 @@ public class SanPhamDAO extends AbstractDAO<SanPhamDTO> {
         String sql = "select * from sanpham";
         return query(sql, new SanPhamMappper());
     }
+    
+     public void delete(int idSP) throws FileNotFoundException {
+        String sql = "DELETE FROM sanpham WHERE id_SP = ? ";
+        update(sql, idSP);
+    }
+
+    public void update(SanPhamDTO spUpdate) throws FileNotFoundException {
+        StringBuilder sql = new StringBuilder("UPDATE taikhoan SET id_Loai = ? , name = ? ,");
+        sql.append(" descrption = ?, amount = ?, price = ? WHERE id_SP = ?");
+        update(sql.toString(), spUpdate.getId_Loai(), spUpdate.getName(), spUpdate.getDescrption(), spUpdate.getAmount(), spUpdate.getPrice());
+    }
+
 }
