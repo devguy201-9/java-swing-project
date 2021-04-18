@@ -43,7 +43,7 @@ public class TaiKhoanBUS {
     }
     
     public void delete(String id) {
-+       int idTaiKhoan = Integer.parseInt(id);
+        int idTaiKhoan = Integer.parseInt(id);
         for(TaiKhoanDTO taiKhoanDTO : tkBUS){
             if(taiKhoanDTO.getId_TK() == idTaiKhoan) {
                 tkBUS.remove(taiKhoanDTO);
