@@ -27,4 +27,16 @@ public class KhachHangDAO extends AbstractDAO<KhachHangDTO> {
         String sql = "select * from khachhang";
         return query(sql, new KhachHangMapper());
     }
+
+    public void delete(int idKhachHang) throws FileNotFoundException {
+        String sql = "DELETE FROM khachhang WHERE id_KH = ? ";
+        update(sql, idKhachHang);
+    }
+
+    public void update(KhachHangDTO kh) throws FileNotFoundException {
+        StringBuilder sql = new StringBuilder("UPDATE khachhang SET first_name = ? , last_name = ? , phone = ?");
+        sql.append("WHERE id_KH = ?");
+        update(sql.toString(), kh.getFirst_name(), kh.getLast_name(), kh.getPhone(), kh.getId_KH());
+    }
+
 }

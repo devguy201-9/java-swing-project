@@ -3,13 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Java-Swing/Do_An/java-swing-project/src/mapper/CategoryMapper.java</file>
-            <file>file:/E:/Java-Swing/Do_An/java-swing-project/src/DTO/CategoryDTO.java</file>
-            <file>file:/E:/Java-Swing/Do_An/java-swing-project/src/coffeemanagement/GUI.java</file>
-            <file>file:/E:/Java-Swing/Do_An/java-swing-project/src/BUS/CategoryBUS.java</file>
-            <file>file:/E:/Java-Swing/Do_An/java-swing-project/src/DAO/PermissionDAO.java</file>
-            <file>file:/E:/Java-Swing/Do_An/java-swing-project/src/DAO/QuyenCuaNhiemVuDAO.java</file>
-            <file>file:/E:/Java-Swing/Do_An/java-swing-project/src/DAO/CategoryDAO.java</file>
+            <file>file:/C:/Users/Asus/Desktop/coffeeManagement/src/DAO/TaiKhoanDAO.java</file>
+            <file>file:/C:/Users/Asus/Desktop/coffeeManagement/src/coffeemanagement/coffeeManagement.java</file>
+            <file>file:/C:/Users/Asus/Desktop/coffeeManagement/src/DAO/NhanVienDAO.java</file>
         </group>
     </open-files>
 </project-private>

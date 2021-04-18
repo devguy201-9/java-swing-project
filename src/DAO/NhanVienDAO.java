@@ -6,6 +6,7 @@
 package DAO;
 
 import DTO.NhanVienDTO;
+import java.io.FileNotFoundException;
 import mapper.NhanVienMapper;
 import java.util.List;
 
@@ -13,10 +14,36 @@ import java.util.List;
  *
  * @author Asus
  */
-public class NhanVienDAO extends AbstractDAO<NhanVienDAO>{
+public class NhanVienDAO extends AbstractDAO<NhanVienDAO> {
+
     public NhanVienDTO findOneByCode(int id) {
         String sql = "SELECT * FROM nhanvien WHERE id = ?";
         List<NhanVienDTO> nhanviens = query(sql, new NhanVienMapper(), id);
         return nhanviens.isEmpty() ? null : nhanviens.get(0);
+    }
+
+    public Integer save(NhanVienDTO nv) throws FileNotFoundException {
+        StringBuilder sql = new StringBuilder("INSERT INTO nhanvien(name,age,");
+        sql.append("gender,address,phone,start_day)");
+        sql.append(" VALUES(?, ?, ?, ?, ?, ?)");
+        return insert(sql.toString(), nv.getName(), nv.getAge(), nv.getGender(), nv.getAddress(),
+                nv.getPhone(), nv.getStart_day());
+    }
+
+    public List<NhanVienDTO> findAll() {
+        String sql = "SELECT * FROM nhanvien";
+        return query(sql, new NhanVienMapper());
+    }
+
+    public void delete(int idNV) throws FileNotFoundException {
+        String sql = "DELETE FROM nhanvien WHERE id_NV = ? ";
+        update(sql, idNV);
+    }
+
+    public void update(NhanVienDTO nv) throws FileNotFoundException {
+        StringBuilder sql = new StringBuilder("UPDATE nhanvien SET name = ? , age = ? ,");
+        sql.append(" gender = ?, address = ?, phone = ?, start_day = ?  WHERE id_NV = ?");
+        update(sql.toString(), nv.getName(), nv.getAge(), nv.getGender(), nv.getAddress(),
+                nv.getPhone(), nv.getStart_day(), nv.getId_NV());
     }
 }
