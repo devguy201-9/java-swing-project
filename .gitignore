@@ -1,5 +1,4 @@
-/build/
-/*project.properties/
-/*private.properties/
-/nbproject/
-/dist/
+/build
+*.xml
+*.properties
+/nbproject
