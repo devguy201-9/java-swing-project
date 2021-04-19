@@ -15,6 +15,14 @@ import mapper.QuyenCuaNhiemVuMapper;
  * @author Thuan Vo
  */
 public class QuyenCuaNhiemVuDAO extends AbstractDAO<QuyenCuaNhiemVuDTO>{
+    
+    public List<QuyenCuaNhiemVuDTO> getByIdPermission(int id_permission) throws FileNotFoundException{
+        QuyenCuaNhiemVuDAO permissionDetail = new QuyenCuaNhiemVuDAO();
+        StringBuilder sql =  new StringBuilder("SELECT * FROM `ct_quyen` WHERE id_permission = ?");
+        List<QuyenCuaNhiemVuDTO> result = permissionDetail.query(sql.toString(),new QuyenCuaNhiemVuMapper() ,id_permission);
+        return result;
+    }
+    
     public Integer save(QuyenCuaNhiemVuDTO detail) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO ct_quyen(id_permission,id_duty");
         sql.append(" VALUES(?, ?)");

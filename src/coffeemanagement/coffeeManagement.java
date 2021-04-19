@@ -5,6 +5,8 @@
  */
 package coffeemanagement;
 
+import DAO.ct_PNHDAO;
+import DTO.ct_PhieuNhapHangDTO;
 import coffeemanagement.GUI;
 import java.io.FileNotFoundException;
 

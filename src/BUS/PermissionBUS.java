@@ -32,12 +32,6 @@ public class PermissionBUS {
         permissionList = permissionDAO.findAll();
     }
     
-    public void show(){
-        for(PermissionDTO permission : permissionList) {
-            System.out.println(permission.getName());
-        }
-    }
-    
     public void add(PermissionDTO permission){
         permissionList.add(permission);
         PermissionDAO permissionDAO = new PermissionDAO();

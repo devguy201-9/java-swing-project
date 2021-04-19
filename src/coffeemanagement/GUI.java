@@ -117,7 +117,8 @@ public class GUI extends JFrame implements MouseListener{
         
         
         QuyenCuaNhiemVuBUS permisisondetail = new QuyenCuaNhiemVuBUS();
-        List<QuyenCuaNhiemVuDTO> detail = permisisondetail.getByIdPermission(id_permission);
+        permisisondetail.getByIdPermission(id_permission);
+        List<QuyenCuaNhiemVuDTO> detail = permisisondetail.getPermissionList();
         for(QuyenCuaNhiemVuDTO temp : detail){
             CategoryBUS category = new CategoryBUS();
             CategoryDTO cate = category.getByIdDuty(temp.getid_duty());
