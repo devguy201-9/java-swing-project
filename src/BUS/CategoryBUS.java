@@ -29,10 +29,7 @@ public class CategoryBUS {
     
     public CategoryDTO getByIdDuty(int id_duty){
         CategoryDAO category = new CategoryDAO();
-        StringBuilder sql = new StringBuilder("SELECT * FROM `danhmuc` WHERE id_duty = ?");
-        List<CategoryDTO> temp = category.query(sql.toString(), new CategoryMapper(), id_duty);
-        CategoryDTO result = temp.get(0);
-        return result;
+        return category.getByIdDuty(id_duty);
     }
     
     public void list(){

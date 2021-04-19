@@ -14,11 +14,20 @@ import mapper.CategoryMapper;
  *
  * @author Thuan Vo
  */
-public class CategoryDAO extends AbstractDAO<CategoryDTO>{
+public class CategoryDAO extends AbstractDAO<CategoryDTO> {
+
+    public CategoryDTO getByIdDuty(int id_duty) {
+        CategoryDAO category = new CategoryDAO();
+        StringBuilder sql = new StringBuilder("SELECT * FROM `danhmuc` WHERE id_duty = ?");
+        List<CategoryDTO> temp = category.query(sql.toString(), new CategoryMapper(), id_duty);
+        CategoryDTO result = temp.get(0);
+        return result;
+    }
+
     public Integer save(CategoryDTO category) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO danhmuc(id_duty,name,image,image_hover");
         sql.append(" VALUES(?, ?, ?, ?)");
-        return insert(sql.toString(), category.getId_duty(), category.getName(), category.getImage(),category.getImage_hover());
+        return insert(sql.toString(), category.getId_duty(), category.getName(), category.getImage(), category.getImage_hover());
     }
 
     public List<CategoryDTO> findAll() {
@@ -30,11 +39,11 @@ public class CategoryDAO extends AbstractDAO<CategoryDTO>{
         String sql = "DELETE FROM danhmuc WHERE id_duty = ? ";
         update(sql, idCategory);
     }
-    
+
     public void update(CategoryDTO category) throws FileNotFoundException {
-		StringBuilder sql = new StringBuilder("UPDATE danhmuc SET name = ? , image = ? , image_hover = ?");
-		sql.append("WHERE id_duty = ?");
-		update(sql.toString(), category.getName(), category.getImage(),category.getImage_hover() , category.getId_duty());
-	}
-    
+        StringBuilder sql = new StringBuilder("UPDATE danhmuc SET name = ? , image = ? , image_hover = ?");
+        sql.append("WHERE id_duty = ?");
+        update(sql.toString(), category.getName(), category.getImage(), category.getImage_hover(), category.getId_duty());
+    }
+
 }

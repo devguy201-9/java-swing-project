@@ -72,5 +72,10 @@ public class TaiKhoanBUS {
             }
         }
     }
+    
+    public TaiKhoanDTO findTKByUserNameAndPass(String username, String password) {
+        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+        return tkDAO.findOneByUsernameAndPassword(username, password);
+    }
         
 }

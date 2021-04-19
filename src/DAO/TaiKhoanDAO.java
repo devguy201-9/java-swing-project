@@ -17,7 +17,8 @@ import mapper.TaiKhoanMapper;
 public class TaiKhoanDAO extends AbstractDAO<TaiKhoanDTO> {
 
     public TaiKhoanDTO findOneByUsernameAndPassword(String username, String password) {
-        String sql = "SELECT * FROM taikhoan WHERE user_name = ? AND pass = ?";
+        //search with username and password and get name permission of the account
+        String sql = "SELECT * FROM taikhoan AS tk INNER JOIN quyen AS q ON tk.id_permission  = q.id_permission  WHERE user_name = ? AND pass = ?";
         List<TaiKhoanDTO> taikhoan = query(sql, new TaiKhoanMapper(), username, password);
         return taikhoan.isEmpty() ? null : taikhoan.get(0);
     }
