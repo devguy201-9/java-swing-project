@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package coffeemanagement;
+package GUI;
 
 import DAO.ct_PNHDAO;
 import DTO.ct_PhieuNhapHangDTO;
-import coffeemanagement.GUI;
+import GUI.QLCoffee;
 import java.io.FileNotFoundException;
 
 
@@ -26,7 +26,7 @@ public final class coffeeManagement{
 //        {
 //            
 //        }
-        GUI gui = new GUI(1, "thuan", 1);
+        QLCoffee gui = new QLCoffee(1, "thuan", 1);
     }
 
     

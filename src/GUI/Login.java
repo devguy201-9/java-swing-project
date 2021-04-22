@@ -17,6 +17,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 //thu vien frame
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -167,20 +170,25 @@ public class Login extends JFrame {
 		JButton btnLogin = new JButton("Sign in");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//                            if(usBUS.getTkBUS()== null)usBUS.list();
-//                            String username = textUser.getText();
-//                            char[] passwd = textPasswd.getPassword();
-//                            TaiKhoanDTO user = usBUS.check(username, passwd);
-//                            if(user == null){
-//                               JOptionPane.showMessageDialog(null, "Sai tên tài khoản hoặc mật khẩu");
-//                                return;
-//                            }
                             
-//                            if(nvBUS.getList() == null)nvBUS.listNV();
+
+                            String username = textUser.getText();
+                            char[] passwd = textPasswd.getPassword();                          
+                            TaiKhoanDTO user = usBUS.findTKByUserNameAndPass(username, String.valueOf(passwd));
+                            if(user == null){
+                               JOptionPane.showMessageDialog(null, "Sai tên tài khoản hoặc mật khẩu");
+                                return;
+                            }
+                            
+                            try {
+                                //                            if(nvBUS.getList() == null)nvBUS.listNV();
 //                            NhanVienDTO nv = new NhanVienDTO();
 //                            nv = nvBUS.get(user.getId_NV());
-//                            qlcoffee = new QLCoffee(nv.getId_NV(),nv.getName().concat(" "+nv.getAddress()),user.getRole());
-                    
+                                qlcoffee = new QLCoffee(user.getId_NV(),user.getUser_name(),user.getId_permission());
+//                    
+                            } catch (FileNotFoundException ex) {
+                                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         
                             dispose();
 			}
