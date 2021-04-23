@@ -61,7 +61,8 @@ public class printBill {
             Paragraph l = new Paragraph(line);
             l.setAlignment(1);
             bill.add(l);
-
+            
+            //table
             String[] cellHeader = {"Mã SP", "Tên SP", "SL", "Đơn Giá (VNĐ)"};
 
             PdfPTable t = new PdfPTable(cellHeader.length);
