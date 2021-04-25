@@ -73,5 +73,35 @@ public class HoaDonBUS {
             }
         }
     }
+    
+    public String remindMaHD()
+    {
+        int max = 0;
+        String s ="";
+        for(HoaDonDTO hd : hdBUS)
+        {
+            int id = hd.getId();
+            if(id > max)
+            {
+                max = id;
+            }
+        }
+        for(int i = 0 ; i < 3-String.valueOf(max+1).length();i++ )
+        {
+            s+="0";
+        }
+        return s+(max+1);
+    }
+    public boolean check(int maHD)
+    {
+        for(HoaDonDTO hd : hdBUS)
+        {
+            if( hd.getId()== maHD)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

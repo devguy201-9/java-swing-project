@@ -7,7 +7,7 @@ package GUI;
 
 import DAO.ct_PNHDAO;
 import DTO.ct_PhieuNhapHangDTO;
-import GUI.QLCoffee;
+import DTO.TaiKhoanDTO;
 import java.io.FileNotFoundException;
 
 
@@ -19,14 +19,9 @@ public final class coffeeManagement{
     
     
     public static void main(String[] args) throws FileNotFoundException {
-        // TODO code application logic here
-//        try{
-//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//        }catch(ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e)
-//        {
-//            
-//        }
-        QLCoffee gui = new QLCoffee(1, "thuan", 1);
+        
+        TaiKhoanDTO tk = new TaiKhoanDTO();
+        QLCoffee gui = new QLCoffee(1, tk.getUser_name() , 1);
     }
 
     

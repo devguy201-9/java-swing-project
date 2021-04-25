@@ -18,10 +18,10 @@ public class SanPhamDAO extends AbstractDAO<SanPhamDTO> {
 
     public Integer save(SanPhamDTO sp) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO sanpham(id_Loai,name,");
-        sql.append("descrption,amount,price)");
+        sql.append("descrption,amount,price,img)");
         sql.append(" VALUES(?, ?, ?, ?, ?)");
         return insert(sql.toString(), sp.getId_Loai(), sp.getName(), sp.getDescrption(),
-                sp.getAmount(), sp.getPrice());
+                sp.getAmount(), sp.getPrice(), sp.getImg());
     }
 
     public List<SanPhamDTO> findAll() {
@@ -37,7 +37,7 @@ public class SanPhamDAO extends AbstractDAO<SanPhamDTO> {
     public void update(SanPhamDTO spUpdate) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("UPDATE taikhoan SET id_Loai = ? , name = ? ,");
         sql.append(" descrption = ?, amount = ?, price = ? WHERE id_SP = ?");
-        update(sql.toString(), spUpdate.getId_Loai(), spUpdate.getName(), spUpdate.getDescrption(), spUpdate.getAmount(), spUpdate.getPrice());
+        update(sql.toString(), spUpdate.getId_Loai(), spUpdate.getName(), spUpdate.getDescrption(), spUpdate.getAmount(), spUpdate.getPrice(), spUpdate.getImg());
     }
 
 }

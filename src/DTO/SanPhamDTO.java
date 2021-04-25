@@ -12,7 +12,7 @@ package DTO;
 public class SanPhamDTO {
 
     private int id_SP, id_Loai, amount;
-    private String name, descrption;
+    private String name, descrption, img;
     private float price;
 
     public SanPhamDTO() {
@@ -22,12 +22,13 @@ public class SanPhamDTO {
         price = 0.f;
     }
 
-    public SanPhamDTO(int id_Loai, int amount, String name, String descrption, float price) {
+    public SanPhamDTO(int id_Loai, int amount, String name, String descrption, float price, String img) {
         this.id_Loai = id_Loai;
         this.amount = amount;
         this.name = name;
         this.descrption = descrption;
         this.price = price;
+        this.img = img;
     }
 
     public int getId_SP() {
@@ -76,6 +77,14 @@ public class SanPhamDTO {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
 }

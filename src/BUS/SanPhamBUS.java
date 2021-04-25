@@ -10,6 +10,7 @@ import DTO.SanPhamDTO;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -73,5 +74,32 @@ public class SanPhamBUS {
             }
         }
     }
-
+    
+    public boolean checkSL(int masp , int sl)
+    {
+        for(SanPhamDTO sp : spBUS)
+         {
+             if(sp.getId_SP()== masp)
+             {
+                if(sl > sp.getAmount())
+                {
+                    JOptionPane.showMessageDialog(null, "Không đủ hàng");
+                    return false;
+                }
+             }
+         }
+         return true;
+    }
+    
+    public SanPhamDTO getSP(int masp)
+    {
+        for(SanPhamDTO sp : spBUS)
+        {
+            if(sp.getId_SP() == masp)
+            {
+                return sp;
+            }
+        }
+        return null;
+    }
 }

@@ -25,6 +25,7 @@ public class SanPhamMappper implements RowMapper<SanPhamDTO>{
             sp.setDescrption(rs.getString("descrption"));
             sp.setAmount(rs.getInt("amount"));
             sp.setPrice(rs.getFloat("price"));
+            sp.setImg(rs.getString("img"));
             return sp;
         } catch (SQLException e) {
             return null;

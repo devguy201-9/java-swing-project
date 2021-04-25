@@ -77,15 +77,15 @@ public class printBill {
 
             for (ct_HoaDonDTO ct : cthd) {
                 t.addCell(createCell(Integer.toString(ct.getId_SP())));
-//                t.addCell(createCell(ct.getTenSP()));
+                t.addCell(createCell(String.valueOf(ct.getName())));
                 t.addCell(createCell(String.valueOf(ct.getPrice())));
                 t.addCell(createCell(String.valueOf(ct.getAmount())));
-                t.addCell(createCell(String.valueOf(ct.getTotal_money())));
+//                t.addCell(createCell(String.valueOf(ct.getTotal_money())));
             }
             bill.add(t);
             bill.add(l);
 
-            Paragraph sum = new Paragraph("Tồng tiền : " + hd.getTotal_remaining_money() + "đ", new Font(bf, 20));
+            Paragraph sum = new Paragraph("Tồng tiền : " + hd.getTotal_money()+ "đ", new Font(bf, 20));
             sum.setAlignment(Element.ALIGN_RIGHT);
             bill.add(sum);
 

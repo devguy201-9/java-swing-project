@@ -18,10 +18,9 @@ public class ct_HDDAO extends AbstractDAO<ct_HoaDonDTO> {
 
     public Integer save(ct_HoaDonDTO cthd) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO ct_hoadon(id_HD,id_SP,");
-        sql.append("amount,price,promotion_price,total_money)");
+        sql.append("name,amount,price)");
         sql.append(" VALUES(?, ?, ?, ?, ?, ?)");
-        return insert(sql.toString(), cthd.getId_HD(), cthd.getId_SP(), cthd.getAmount(), cthd.getPrice(),
-                cthd.getPromotion_price(), cthd.getTotal_money());
+        return insert(sql.toString(), cthd.getId_HD(), cthd.getId_SP(), cthd.getAmount(), cthd.getPrice());
     }
 
     public List<ct_HoaDonDTO> findAll() {
@@ -37,7 +36,7 @@ public class ct_HDDAO extends AbstractDAO<ct_HoaDonDTO> {
     public void update(ct_HoaDonDTO cthd) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("UPDATE ct_hoadon SET id_HD = ? , id_SP = ? ,");
         sql.append(" amount = ?, price = ?, promotion_price = ?, total_money = ? WHERE id = ?");
-        update(sql.toString(), cthd.getId_HD(), cthd.getId_SP(), cthd.getAmount(), cthd.getPromotion_price(),
-                cthd.getTotal_money(), cthd.getId());
+        update(sql.toString(), cthd.getId_HD(), cthd.getId_SP(),cthd.getName(), cthd.getAmount(), 
+                cthd.getPrice());
     }
 }

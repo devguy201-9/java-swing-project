@@ -11,34 +11,25 @@ package DTO;
  */
 public class ct_HoaDonDTO {
 
-    private int id, id_HD, id_SP, amount;
-    private float price, promotion_price, total_money;
+    private int id_HD, id_SP, amount;
+    private String name;
+    private float price;
 
-    public ct_HoaDonDTO(int id_HD, int id_SP, int amount, float price, float promotion_price, float total_money) {
+    public ct_HoaDonDTO(int id_HD, int id_SP, String name, int amount, float price) {
         this.id_HD = id_HD;
         this.id_SP = id_SP;
+        this.name = name;
         this.amount = amount;
-        this.price = price;
-        this.promotion_price = promotion_price;
-        this.total_money = total_money;
+        this.price = price;        
+//        this.total_money = total_money;
     }
 
-    public ct_HoaDonDTO() {
-        id = 0;
+    public ct_HoaDonDTO() {       
         id_HD = 0;
         id_SP = 0;
         amount = 0;
-        price = 0.f;
-        promotion_price = 0.f;
-        total_money = 0.f;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        price = 0.f;        
+//        total_money = 0.f;
     }
 
     public int getId_HD() {
@@ -57,6 +48,14 @@ public class ct_HoaDonDTO {
         this.id_SP = id_SP;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getAmount() {
         return amount;
     }
@@ -71,22 +70,6 @@ public class ct_HoaDonDTO {
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public float getPromotion_price() {
-        return promotion_price;
-    }
-
-    public void setPromotion_price(float promotion_price) {
-        this.promotion_price = promotion_price;
-    }
-
-    public float getTotal_money() {
-        return total_money;
-    }
-
-    public void setTotal_money(float total_money) {
-        this.total_money = total_money;
     }
 
 }

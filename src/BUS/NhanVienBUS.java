@@ -73,4 +73,16 @@ public class NhanVienBUS {
             }
         }
     }
+    
+    public boolean check(int manv)
+    {
+        for(NhanVienDTO nv : nvBUS)
+        {
+            if(nv.getId_NV() == manv)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
