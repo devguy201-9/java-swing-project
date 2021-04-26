@@ -127,11 +127,12 @@ public class QLCoffee extends JFrame implements MouseListener{
 
         outNav();
         
-//        ****************************Mainview***********************************
+/************ PHẦN MAIN ( HIỂN THỊ ) **************************/        
         main = new JPanel(null);
         main.setBackground(Color.WHITE);
-//        navObj.get(0).doActive();
-        
+        navObj.get(0).doActive();
+        changeMainInfo(0);  //HIEN THI MAC DINH BAN HANG
+/**************************************************************/           
         
         add(header,BorderLayout.NORTH);
         add(scroll,BorderLayout.WEST);
@@ -258,8 +259,22 @@ public class QLCoffee extends JFrame implements MouseListener{
     }
 
     @Override
-    public void mouseClicked(MouseEvent me) {
+    public void mouseClicked(java.awt.event.MouseEvent e) {
+        for(int i  = 0 ; i<navObj.size();i++)
+        {
+            navItem item = navObj.get(i); // lấy vị trí item trong menu
+            if(e.getSource()== item)
+            {
+                item.doActive(); // Active NavItem đc chọn 
+                changeMainInfo(i); // Hiển thị ra phần main
+            }
+            else
+            {
+                item.noActive();
+            }
+        }
     }
+
 
     @Override
     public void mousePressed(MouseEvent me) {
