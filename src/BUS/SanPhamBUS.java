@@ -102,4 +102,33 @@ public class SanPhamBUS {
         }
         return null;
     }
+    public boolean checkMasp(int masp)
+    {
+        for(SanPhamDTO sp : spBUS)
+        {
+            if(sp.getId_SP() == masp)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public ArrayList<SanPhamDTO> searchSP(int masp,int maloai,int max,int min)
+    {
+        ArrayList<SanPhamDTO> search = new ArrayList<>();
+        masp = (masp==0) ?masp = 0: masp;
+        maloai = maloai==0 ?maloai = 0: maloai;
+     
+        for(SanPhamDTO sp : spBUS)
+        {
+            if( (sp.getId_SP()== masp) && 
+                (sp.getId_Loai()== maloai) &&                
+                sp.getPrice()>= min && 
+                sp.getPrice()<= max)
+            {
+                search.add(sp);
+            }
+        }
+        return search;
+    }
 }

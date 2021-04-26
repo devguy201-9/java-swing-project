@@ -73,4 +73,15 @@ public class LoaiBUS {
             }
         }
     }
+    public LoaiDTO searchMaLoai(int maloai)
+    {
+        for(LoaiDTO loai : loaiBUS)
+        {
+            if( loai.getId_Loai() == maloai)
+            {
+                return loai;
+            }
+        }
+        return null;
+    }
 }
