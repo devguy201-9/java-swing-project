@@ -7,18 +7,14 @@ package GUI;
 
 import BUS.KhachHangBUS;
 import DTO.KhachHangDTO;
-import java.awt.Choice;
 
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.Rectangle;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -46,7 +42,7 @@ import javax.swing.table.TableRowSorter;
  */
 public class SuggestKhachHang extends JDialog{
     private KhachHangBUS khBUS = new KhachHangBUS();
-    private JTextField txtMaKH,txtTen,txtPhai;
+    private JTextField txtMaKH,txtTen,txtPhone;
     private DefaultTableModel model;
     private JTable tbl;
     private int DWIDTH = 1200;
@@ -62,7 +58,7 @@ public class SuggestKhachHang extends JDialog{
     }
     public void init()
     {
-        setTitle("Danh sách sản phẩm");
+        setTitle("Danh sách khách hàng");
         setSize(DWIDTH,700);
         getContentPane().setBackground(new Color(55, 63, 81));
         setLayout(null);
@@ -83,10 +79,11 @@ public class SuggestKhachHang extends JDialog{
         lbMaKH.setBounds(20,20,100,30);
         txtMaKH = new JTextField();
         txtMaKH.setBounds(new Rectangle(120,20,250,30));
+        txtMaKH.setEditable(false);
         itemView.add(lbMaKH);
         itemView.add(txtMaKH);
         
-        JLabel lbHo = new JLabel("Họ và Tên");
+        JLabel lbHo = new JLabel("Họ");
         lbHo.setFont(font0);
         lbHo.setBounds(20,70,100,30);
         txtHo = new JTextField();
@@ -94,7 +91,7 @@ public class SuggestKhachHang extends JDialog{
         itemView.add(lbHo);
         itemView.add(txtHo);
         
-        JLabel lbTen = new JLabel("Địa chỉ ");
+        JLabel lbTen = new JLabel("Tên ");
         lbTen.setFont(font0);
         lbTen.setBounds(20,120,100,30);
         txtTen = new JTextField();
@@ -102,13 +99,13 @@ public class SuggestKhachHang extends JDialog{
         itemView.add(lbTen);
         itemView.add(txtTen);
         
-        JLabel lbPhai = new JLabel("SĐT ");
-        lbPhai.setFont(font0);
-        lbPhai.setBounds(20,170,100,30);
-        txtPhai = new JTextField();
-        txtPhai.setBounds(new Rectangle(120,170,250,30));
-        itemView.add(lbPhai);
-        itemView.add(txtPhai);
+        JLabel lbPhone = new JLabel("Số điện thoại ");
+        lbPhone.setFont(font0);
+        lbPhone.setBounds(20,170,100,30);
+        txtPhone = new JTextField();
+        txtPhone.setBounds(new Rectangle(120,170,250,30));
+        itemView.add(lbPhone);
+        itemView.add(txtPhone);
         
 /**************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL ********************/
 
@@ -141,14 +138,14 @@ public class SuggestKhachHang extends JDialog{
     /************** TẠO MODEL VÀ HEADER *********************************/
         Vector header = new Vector();
         header.add("Mă KH");
-        header.add("Họ và tên");
-        header.add("Địa chỉ");
-        header.add("SĐT");
-        model = new DefaultTableModel(header,5);
+        header.add("Họ");
+        header.add("Tên");
+        header.add("Số điện thoại");
+        model = new MyTable(header,5);
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
-        listSP();
+        listKH();
         
     /*******************************************************************/
         
@@ -194,7 +191,7 @@ public class SuggestKhachHang extends JDialog{
                 txtMaKH.setText(tbl.getModel().getValueAt(i, 0).toString());
                 txtHo.setText(tbl.getModel().getValueAt(i, 1).toString());
                 txtTen.setText(tbl.getModel().getValueAt(i, 2).toString()); 
-                txtPhai.setText(tbl.getModel().getValueAt(i, 3).toString());
+                txtPhone.setText(tbl.getModel().getValueAt(i, 3).toString());
              }
         });
 /*********************************************************************/
@@ -208,11 +205,11 @@ public class SuggestKhachHang extends JDialog{
         
         //PHẦN CHỌN SEARCH
         cmbChoice = new JComboBox();
-        cmbChoice.setEditable(true);
+        cmbChoice.setEditable(false);
         cmbChoice.setFont(new Font("Segoe UI",Font.PLAIN,14));
         cmbChoice.addItem("Mã KH");
         cmbChoice.addItem("Tên KH");
-        cmbChoice.addItem("Địa chỉ");
+        cmbChoice.addItem("Họ KH");
         cmbChoice.addItem("SĐT");
         cmbChoice.setBounds(new Rectangle(0,0,80,30));
         
@@ -289,15 +286,15 @@ public class SuggestKhachHang extends JDialog{
         for(KhachHangDTO s:kh)
         {
             data = new Vector();
-            data.add(s.getId_KH());
-            data.add(s.getLast_name().concat(" "+s.getFirst_name()));
-//            data.add(s.getDiaChi());    //LUU Y: KH CO DIA CHI
-            data.add(s.getPhone());
+            data.add(" "+s.getId_KH());
+            data.add(" "+s.getLast_name());
+            data.add(" "+s.getFirst_name());
+            data.add(" "+s.getPhone());
             model.addRow(data);
         }
         tbl.setModel(model);
     }
-    public void listSP() // Chép ArrayList lên table
+    public void listKH() 
     {
         if(khBUS.getKhBUS()== null)khBUS.list();
         ArrayList<KhachHangDTO> nv = (ArrayList<KhachHangDTO>) khBUS.getKhBUS();
@@ -307,5 +304,9 @@ public class SuggestKhachHang extends JDialog{
     public String getTextFieldContent() 
     {
         return txtMaKH.getText();
+    }
+    
+    public static void main(String[] args) {
+        SuggestKhachHang kh = new SuggestKhachHang();
     }
 }

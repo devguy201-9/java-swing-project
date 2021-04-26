@@ -61,7 +61,7 @@ public class SuggestNhanVien extends JDialog{
     }
     public void init()
     {
-        setTitle("Danh sách sản phẩm");
+        setTitle("Danh sách nhân viên");
         setSize(DWIDTH,700);
         getContentPane().setBackground(new Color(55, 63, 81));
         setLayout(null);
