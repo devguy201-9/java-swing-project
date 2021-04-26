@@ -22,6 +22,12 @@ public class NhanVienDAO extends AbstractDAO<NhanVienDAO> {
         return nhanviens.isEmpty() ? null : nhanviens.get(0);
     }
 
+    public NhanVienDTO getOneByPhone(String phone){
+        String sql = "SELECT * FROM nhanvien WHERE phone = ?";
+        List<NhanVienDTO> nhanviens = query(sql, new NhanVienMapper(), phone);
+        return nhanviens.isEmpty() ? null : nhanviens.get(0);
+    }
+    
     public Integer save(NhanVienDTO nv) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO nhanvien(name,age,");
         sql.append("gender,address,phone,start_day)");
