@@ -46,7 +46,7 @@ public class ct_HDBUS {
     public void delete(String id) {
         int idCTHD = Integer.parseInt(id);
         for (ct_HoaDonDTO cthdDTO : ct_hdBUS) {
-            if (cthdDTO.getId_HD()== idCTHD) {
+            if (cthdDTO.getId_HD() == idCTHD) {
                 ct_hdBUS.remove(cthdDTO);
                 ct_HDDAO cthdDAO = new ct_HDDAO();
                 try {
@@ -61,7 +61,7 @@ public class ct_HDBUS {
 
     public void set(ct_HoaDonDTO cthdDTO) {
         for (int i = 0; i < ct_hdBUS.size(); i++) {
-            if (ct_hdBUS.get(i).getId_HD()== cthdDTO.getId_HD()) {
+            if (ct_hdBUS.get(i).getId_HD() == cthdDTO.getId_HD()) {
                 ct_hdBUS.set(i, cthdDTO);
                 ct_HDDAO cthdDAO = new ct_HDDAO();
                 try {

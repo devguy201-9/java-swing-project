@@ -17,6 +17,8 @@ public class NhanVienDTO {
     private String name, address, phone, img;
     private Gender gender;
     private Date start_day;
+//    LocalDate localDate = LocalDate.now();
+//    Date date = Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 
     public NhanVienDTO() {
         id_NV = 0;
@@ -81,8 +83,7 @@ public class NhanVienDTO {
     }
 
     public void setGender(String gender) {
-        if(gender == "male")    this.gender = Gender.male;
-        else this.gender = Gender.female;
+        this.gender = (gender.equals("male")) ? Gender.male : Gender.female;
     }
 
     public Date getStart_day() {

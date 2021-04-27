@@ -24,7 +24,7 @@ public class KhachHangDAO extends AbstractDAO<KhachHangDTO> {
     }
 
     public List<KhachHangDTO> findAll() {
-        String sql = "select * from khachhang";
+        String sql = "SELECT * FROM khachhang";
         return query(sql, new KhachHangMapper());
     }
 

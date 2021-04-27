@@ -9,16 +9,16 @@ package DTO;
  *
  * @author Thuan Vo
  */
-public class QuyenCuaNhiemVuDTO {
+public class ct_quyenDTO {
     int id_permission;
     int id_duty;
 
-    public QuyenCuaNhiemVuDTO(int id_role, int id_duty) {
+    public ct_quyenDTO(int id_role, int id_duty) {
         this.id_permission = id_role;
         this.id_duty = id_duty;
     }
 
-    public QuyenCuaNhiemVuDTO() {
+    public ct_quyenDTO() {
         this.id_permission = 0;
         this.id_duty = 0;
     }

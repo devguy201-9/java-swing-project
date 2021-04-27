@@ -16,8 +16,9 @@ import java.util.List;
  * @author Thuan Vo
  */
 public class PermissionBUS {
+
     private List<PermissionDTO> permissionList;
-    
+
     public PermissionBUS() {
         permissionList = null;
     }
@@ -25,14 +26,14 @@ public class PermissionBUS {
     public List<PermissionDTO> getPermissionList() {
         return permissionList;
     }
-    
-    public void list(){
+
+    public void list() {
         PermissionDAO permissionDAO = new PermissionDAO();
         permissionList = new ArrayList<>();
         permissionList = permissionDAO.findAll();
     }
-    
-    public void add(PermissionDTO permission){
+
+    public void add(PermissionDTO permission) {
         permissionList.add(permission);
         PermissionDAO permissionDAO = new PermissionDAO();
         try {
@@ -41,10 +42,10 @@ public class PermissionBUS {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public void delete(int id_permission) {
-        for(PermissionDTO permissionDTO : permissionList){
-            if(permissionDTO.getId_Permission() == id_permission) {
+        for (PermissionDTO permissionDTO : permissionList) {
+            if (permissionDTO.getId_Permission() == id_permission) {
                 permissionList.remove(permissionDTO);
                 PermissionDAO permissionDAO = new PermissionDAO();
                 try {
@@ -56,10 +57,10 @@ public class PermissionBUS {
             }
         }
     }
-    
-    public void set(PermissionDTO permissionDTO){
-        for(int i = 0 ; i < permissionList.size() ; i++) {
-            if(permissionList.get(i).getId_Permission() == permissionDTO.getId_Permission()) {
+
+    public void set(PermissionDTO permissionDTO) {
+        for (int i = 0; i < permissionList.size(); i++) {
+            if (permissionList.get(i).getId_Permission() == permissionDTO.getId_Permission()) {
                 permissionList.set(i, permissionDTO);
                 PermissionDAO permissionDAO = new PermissionDAO();
                 try {

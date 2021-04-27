@@ -7,6 +7,7 @@ package DAO;
 
 import DTO.NhanVienDTO;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 import mapper.NhanVienMapper;
 import java.util.List;
 
@@ -22,18 +23,18 @@ public class NhanVienDAO extends AbstractDAO<NhanVienDAO> {
         return nhanviens.isEmpty() ? null : nhanviens.get(0);
     }
 
-    public NhanVienDTO getOneByPhone(String phone){
+    public NhanVienDTO getOneByPhone(String phone) {
         String sql = "SELECT * FROM nhanvien WHERE phone = ?";
         List<NhanVienDTO> nhanviens = query(sql, new NhanVienMapper(), phone);
         return nhanviens.isEmpty() ? null : nhanviens.get(0);
     }
-    
+
     public Integer save(NhanVienDTO nv) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO nhanvien(name,age,");
-        sql.append("gender,address,phone,start_day)");
-        sql.append(" VALUES(?, ?, ?, ?, ?, ?)");
-        return insert(sql.toString(), nv.getName(), nv.getAge(), nv.getGender(), nv.getAddress(),
-                nv.getPhone(), nv.getStart_day(), nv.getImg());
+        sql.append("gender,address,phone,start_day,img)");
+        sql.append(" VALUES(?, ?, ?, ?, ?, ?, ?)");
+        return insert(sql.toString(), nv.getName(), nv.getAge(), nv.getGender().toString(), nv.getAddress(),
+                nv.getPhone(), new SimpleDateFormat("yyyy/MM/dd").format(nv.getStart_day()), nv.getImg());
     }
 
     public List<NhanVienDTO> findAll() {
@@ -49,7 +50,8 @@ public class NhanVienDAO extends AbstractDAO<NhanVienDAO> {
     public void update(NhanVienDTO nv) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("UPDATE nhanvien SET name = ? , age = ? ,");
         sql.append(" gender = ?, address = ?, phone = ?, start_day = ?  WHERE id_NV = ?");
-        update(sql.toString(), nv.getName(), nv.getAge(), nv.getGender(), nv.getAddress(),
-                nv.getPhone(), nv.getStart_day(),nv.getImg(), nv.getId_NV());
+        update(sql.toString(), nv.getName(), nv.getAge(), nv.getGender().toString(), nv.getAddress(),
+                nv.getPhone(), new SimpleDateFormat("yyyy/MM/dd").format(nv.getStart_day()), nv.getImg(), nv.getId_NV());
     }
+
 }

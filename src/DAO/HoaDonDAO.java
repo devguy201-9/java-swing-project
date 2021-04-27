@@ -18,9 +18,9 @@ public class HoaDonDAO extends AbstractDAO<HoaDonDTO> {
 
     public Integer save(HoaDonDTO hd) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO hoadon(id_KH,");
-        sql.append("id_NV,total_money,total_promo,total_remaining_money,create_day)");
-        sql.append(" VALUES(?, ?, ?, ?, ?, ?, ?)");
-        return insert(sql.toString(), hd.getId_KH(), hd.getId_NV(), hd.getTotal_money(), 
+        sql.append("id_NV,total_money,create_day)");
+        sql.append(" VALUES(?, ?, ?, ?)");
+        return insert(sql.toString(), hd.getId_KH(), hd.getId_NV(), hd.getTotal_money(),
                 hd.getCreate_day());
     }
 
@@ -35,9 +35,9 @@ public class HoaDonDAO extends AbstractDAO<HoaDonDTO> {
     }
 
     public void update(HoaDonDTO hoaDon) throws FileNotFoundException {
-        StringBuilder sql = new StringBuilder("UPDATE hoadon SET id_KH  = ? , id_NV  = ?");     //, id_KM  = ? 
-        sql.append(" , total_money  = ? create_day  = ?  WHERE id = ?");    //, id_KM  = ? 
-        update(sql.toString(), hoaDon.getId_KH(), hoaDon.getId_NV(),hoaDon.getTotal_money(), hoaDon.getCreate_day(),
+        StringBuilder sql = new StringBuilder("UPDATE hoadon SET id_KH  = ? , id_NV  = ?");
+        sql.append(" , total_money  = ? create_day  = ?  WHERE id = ?");
+        update(sql.toString(), hoaDon.getId_KH(), hoaDon.getId_NV(), hoaDon.getTotal_money(), hoaDon.getCreate_day(),
                 hoaDon.getId());
     }
 
