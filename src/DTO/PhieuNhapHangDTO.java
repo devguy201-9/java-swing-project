@@ -5,6 +5,8 @@
  */
 package DTO;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -21,6 +23,13 @@ public class PhieuNhapHangDTO {
         id_NCC = id_NV = id_PNH = 0;
         date_add = null;
         total_money = 0.f;
+    }
+
+    public PhieuNhapHangDTO(int id_NCC, int id_NV, LocalDate date_add, float total_money) {
+        this.id_NCC = id_NCC;
+        this.id_NV = id_NV;
+        setDate_add(date_add);
+        this.total_money = total_money;
     }
 
     public PhieuNhapHangDTO(int id_NCC, int id_NV, Date date_add, float total_money) {
@@ -60,6 +69,10 @@ public class PhieuNhapHangDTO {
 
     public void setDate_add(Date date_add) {
         this.date_add = date_add;
+    }
+
+    public void setDate_add(LocalDate date_add) {
+        this.date_add = Date.from(date_add.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
     }
 
     public float getTotal_money() {

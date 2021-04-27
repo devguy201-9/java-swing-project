@@ -5,7 +5,9 @@
  */
 package DTO;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.time.ZoneId;
 
 /**
  *
@@ -17,8 +19,6 @@ public class NhanVienDTO {
     private String name, address, phone, img;
     private Gender gender;
     private Date start_day;
-//    LocalDate localDate = LocalDate.now();
-//    Date date = Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 
     public NhanVienDTO() {
         id_NV = 0;
@@ -26,6 +26,16 @@ public class NhanVienDTO {
         name = address = phone = "";
         gender = null;
         start_day = null;
+    }
+
+    public NhanVienDTO(int age, String name, String address, String phone, Gender gender, LocalDate start_day, String img) {
+        this.age = age;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.gender = gender;
+        setStart_day(start_day);
+        this.img = img;
     }
 
     public NhanVienDTO(int age, String name, String address, String phone, Gender gender, Date start_day, String img) {
@@ -92,6 +102,10 @@ public class NhanVienDTO {
 
     public void setStart_day(Date start_day) {
         this.start_day = start_day;
+    }
+
+    public void setStart_day(LocalDate start_day) {
+        this.start_day = Date.from(start_day.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
     }
 
     public String getImg() {
