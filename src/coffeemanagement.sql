@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: Apr 17, 2021 at 01:19 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.2
+-- Host: 127.0.0.1
+-- Generation Time: Apr 27, 2021 at 11:06 AM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `coffeemanagerment`
+-- Database: `coffeemanagement`
 --
 
 -- --------------------------------------------------------
@@ -28,13 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `ct_hoadon` (
-  `id` int(10) UNSIGNED NOT NULL,
   `id_HD` int(10) UNSIGNED NOT NULL,
   `id_SP` int(10) UNSIGNED NOT NULL,
+  `name` varchar(100) NOT NULL,
   `amount` int(10) UNSIGNED DEFAULT NULL,
-  `price` float DEFAULT NULL,
-  `promotion_price` float DEFAULT NULL,
-  `total_money` float DEFAULT NULL
+  `price` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -128,8 +126,6 @@ CREATE TABLE `hoadon` (
   `id_KM` int(10) UNSIGNED NOT NULL,
   `id_NV` int(10) UNSIGNED NOT NULL,
   `total_money` float DEFAULT NULL,
-  `total_promo` float DEFAULT NULL,
-  `total_remaining_money` float DEFAULT NULL,
   `create_day` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -224,15 +220,17 @@ CREATE TABLE `nhanvien` (
   `gender` enum('male','female') DEFAULT NULL,
   `address` text DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
-  `start_day` date DEFAULT NULL
+  `start_day` date DEFAULT NULL,
+  `img` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `nhanvien`
 --
 
-INSERT INTO `nhanvien` (`id_NV`, `name`, `age`, `gender`, `address`, `phone`, `start_day`) VALUES
-(1, 'admin', 20, 'male', NULL, '0123456789', '2021-04-17');
+INSERT INTO `nhanvien` (`id_NV`, `name`, `age`, `gender`, `address`, `phone`, `start_day`, `img`) VALUES
+(1, 'admin', 20, 'male', NULL, '0123456789', '2021-04-17', '001.jpg'),
+(2, 'Như', 20, 'female', NULL, NULL, NULL, '002.jpg');
 
 -- --------------------------------------------------------
 
@@ -278,7 +276,8 @@ CREATE TABLE `sanpham` (
   `name` varchar(50) DEFAULT NULL,
   `descrption` text DEFAULT NULL,
   `amount` int(10) UNSIGNED DEFAULT NULL,
-  `price` float DEFAULT NULL
+  `price` float DEFAULT NULL,
+  `img` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -300,7 +299,8 @@ CREATE TABLE `taikhoan` (
 --
 
 INSERT INTO `taikhoan` (`id_TK`, `id_NV`, `user_name`, `pass`, `id_permission`) VALUES
-(1, 1, 'admin', 'admin', 1);
+(1, 1, 'admin', 'admin', 1),
+(2, 2, 'vonhu', 'vonhu', 1);
 
 --
 -- Indexes for dumped tables
@@ -310,7 +310,6 @@ INSERT INTO `taikhoan` (`id_TK`, `id_NV`, `user_name`, `pass`, `id_permission`) 
 -- Indexes for table `ct_hoadon`
 --
 ALTER TABLE `ct_hoadon`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `id_HD` (`id_HD`),
   ADD KEY `id_SP` (`id_SP`);
 
@@ -348,7 +347,6 @@ ALTER TABLE `danhmuc`
 ALTER TABLE `hoadon`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_KH` (`id_KH`),
-  ADD KEY `id_KM` (`id_KM`),
   ADD KEY `id_NV` (`id_NV`);
 
 --
@@ -429,12 +427,6 @@ ALTER TABLE `taikhoan`
 --
 
 --
--- AUTO_INCREMENT for table `ct_hoadon`
---
-ALTER TABLE `ct_hoadon`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `ct_khuyenmai`
 --
 ALTER TABLE `ct_khuyenmai`
@@ -492,7 +484,7 @@ ALTER TABLE `nhacungcap`
 -- AUTO_INCREMENT for table `nhanvien`
 --
 ALTER TABLE `nhanvien`
-  MODIFY `id_NV` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_NV` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `phieunhaphang`
@@ -516,7 +508,7 @@ ALTER TABLE `sanpham`
 -- AUTO_INCREMENT for table `taikhoan`
 --
 ALTER TABLE `taikhoan`
-  MODIFY `id_TK` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_TK` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
