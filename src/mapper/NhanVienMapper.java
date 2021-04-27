@@ -26,8 +26,16 @@ public class NhanVienMapper implements RowMapper<NhanVienDTO> {
             nv.setAge(rs.getInt("age"));
             nv.setPhone(rs.getString("phone"));
             nv.setStart_day(rs.getDate("start_day"));
+<<<<<<< HEAD
             nv.setGender((Gender) rs.getObject("gender"));
             nv.setImg(rs.getString("img"));
+=======
+            if (rs.getObject("gender").toString().equals(Gender.female)) {
+                nv.setGender(Gender.female);
+            } else {
+                nv.setGender(Gender.male);
+            }
+>>>>>>> 7d9fe0f8fffbf1d95a98b73a14b548e114c37147
             return nv;
         } catch (SQLException e) {
             return null;

@@ -80,8 +80,9 @@ public class NhanVienDTO {
         return gender;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    public void setGender(String gender) {
+        if(gender == "male")    this.gender = Gender.male;
+        else this.gender = Gender.female;
     }
 
     public Date getStart_day() {
