@@ -38,7 +38,7 @@ import javax.swing.table.TableRowSorter;
 
 /**
  *
- * @author Minh Minion
+ * @author ACER
  */
 public class SuggestKhachHang extends JDialog{
     private KhachHangBUS khBUS = new KhachHangBUS();
@@ -306,7 +306,7 @@ public class SuggestKhachHang extends JDialog{
         return txtMaKH.getText();
     }
     
-    public static void main(String[] args) {
-        SuggestKhachHang kh = new SuggestKhachHang();
-    }
+//    public static void main(String[] args) {
+//        SuggestKhachHang kh = new SuggestKhachHang();
+//    }
 }

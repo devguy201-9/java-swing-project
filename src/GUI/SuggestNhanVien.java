@@ -41,7 +41,7 @@ import javax.swing.table.TableRowSorter;
 
 /**
  *
- * @author Shadow
+ * @author ACER
  */
 public class SuggestNhanVien extends JDialog{
     private NhanVienBUS nvBUS = new NhanVienBUS();
@@ -309,4 +309,5 @@ public class SuggestNhanVien extends JDialog{
     {
         return txtMaNV.getText();
     }
+
 }

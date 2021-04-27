@@ -85,4 +85,24 @@ public class NhanVienBUS {
         }
         return false;
     }
+    
+    public ArrayList<NhanVienDTO> search(int manv,String name,String phone,String phai)
+    {
+        ArrayList<NhanVienDTO> search = new ArrayList<>();
+        manv = (manv==0) ?manv = 0: manv;
+        name = name.isEmpty()?name = "": name;
+        phone = phone.isEmpty()?phone = "": phone;
+        for(NhanVienDTO nv : nvBUS)
+        {
+            if( (nv.getId_NV() == manv) && 
+                nv.getName().contains(name) &&
+                nv.getPhone().contains(phone) &&
+                nv.getGender().equals(phai))
+            {
+                search.add(nv);
+            }
+        }
+        return search;
+    }
+    
 }

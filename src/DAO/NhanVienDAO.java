@@ -27,7 +27,7 @@ public class NhanVienDAO extends AbstractDAO<NhanVienDAO> {
         sql.append("gender,address,phone,start_day)");
         sql.append(" VALUES(?, ?, ?, ?, ?, ?)");
         return insert(sql.toString(), nv.getName(), nv.getAge(), nv.getGender(), nv.getAddress(),
-                nv.getPhone(), nv.getStart_day());
+                nv.getPhone(), nv.getStart_day(), nv.getImg());
     }
 
     public List<NhanVienDTO> findAll() {
@@ -44,6 +44,6 @@ public class NhanVienDAO extends AbstractDAO<NhanVienDAO> {
         StringBuilder sql = new StringBuilder("UPDATE nhanvien SET name = ? , age = ? ,");
         sql.append(" gender = ?, address = ?, phone = ?, start_day = ?  WHERE id_NV = ?");
         update(sql.toString(), nv.getName(), nv.getAge(), nv.getGender(), nv.getAddress(),
-                nv.getPhone(), nv.getStart_day(), nv.getId_NV());
+                nv.getPhone(), nv.getStart_day(),nv.getImg(), nv.getId_NV());
     }
 }

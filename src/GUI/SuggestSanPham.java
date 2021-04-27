@@ -36,7 +36,7 @@ import javax.swing.table.TableRowSorter;
 
 /**
  *
- * @author Shadow
+ * @author ACER
  */
 class SuggestSanPham extends JDialog{
     private String maSP;

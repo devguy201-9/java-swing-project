@@ -14,7 +14,7 @@ import java.util.Date;
 public class NhanVienDTO {
 
     private int id_NV, age;
-    private String name, address, phone;
+    private String name, address, phone, img;
     private Gender gender;
     private Date start_day;
 
@@ -26,13 +26,14 @@ public class NhanVienDTO {
         start_day = null;
     }
 
-    public NhanVienDTO(int age, String name, String address, String phone, Gender gender, Date start_day) {
+    public NhanVienDTO(int age, String name, String address, String phone, Gender gender, Date start_day, String img) {
         this.age = age;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.gender = gender;
         this.start_day = start_day;
+        this.img = img;
     }
 
     public int getId_NV() {
@@ -89,6 +90,14 @@ public class NhanVienDTO {
 
     public void setStart_day(Date start_day) {
         this.start_day = start_day;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
 }

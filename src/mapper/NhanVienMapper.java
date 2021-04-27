@@ -27,6 +27,7 @@ public class NhanVienMapper implements RowMapper<NhanVienDTO> {
             nv.setPhone(rs.getString("phone"));
             nv.setStart_day(rs.getDate("start_day"));
             nv.setGender((Gender) rs.getObject("gender"));
+            nv.setImg(rs.getString("img"));
             return nv;
         } catch (SQLException e) {
             return null;
