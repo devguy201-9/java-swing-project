@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 27, 2021 at 11:06 AM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.3
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th4 27, 2021 lúc 02:08 PM
+-- Phiên bản máy phục vụ: 10.4.13-MariaDB
+-- Phiên bản PHP: 7.4.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `coffeemanagement`
+-- Cơ sở dữ liệu: `coffeemanagement`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ct_hoadon`
+-- Cấu trúc bảng cho bảng `ct_hoadon`
 --
 
 CREATE TABLE `ct_hoadon` (
@@ -38,20 +38,7 @@ CREATE TABLE `ct_hoadon` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ct_khuyenmai`
---
-
-CREATE TABLE `ct_khuyenmai` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `id_KM` int(10) UNSIGNED DEFAULT NULL,
-  `id_SP` int(10) UNSIGNED DEFAULT NULL,
-  `discount` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ct_phieunhaphang`
+-- Cấu trúc bảng cho bảng `ct_phieunhaphang`
 --
 
 CREATE TABLE `ct_phieunhaphang` (
@@ -65,7 +52,7 @@ CREATE TABLE `ct_phieunhaphang` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ct_quyen`
+-- Cấu trúc bảng cho bảng `ct_quyen`
 --
 
 CREATE TABLE `ct_quyen` (
@@ -74,7 +61,7 @@ CREATE TABLE `ct_quyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ct_quyen`
+-- Đang đổ dữ liệu cho bảng `ct_quyen`
 --
 
 INSERT INTO `ct_quyen` (`id_permission`, `id_duty`) VALUES
@@ -90,7 +77,7 @@ INSERT INTO `ct_quyen` (`id_permission`, `id_duty`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `danhmuc`
+-- Cấu trúc bảng cho bảng `danhmuc`
 --
 
 CREATE TABLE `danhmuc` (
@@ -101,7 +88,7 @@ CREATE TABLE `danhmuc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `danhmuc`
+-- Đang đổ dữ liệu cho bảng `danhmuc`
 --
 
 INSERT INTO `danhmuc` (`id_duty`, `name`, `image`, `image_hover`) VALUES
@@ -117,13 +104,12 @@ INSERT INTO `danhmuc` (`id_duty`, `name`, `image`, `image_hover`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hoadon`
+-- Cấu trúc bảng cho bảng `hoadon`
 --
 
 CREATE TABLE `hoadon` (
   `id` int(10) UNSIGNED NOT NULL,
   `id_KH` int(10) UNSIGNED NOT NULL,
-  `id_KM` int(10) UNSIGNED NOT NULL,
   `id_NV` int(10) UNSIGNED NOT NULL,
   `total_money` float DEFAULT NULL,
   `create_day` timestamp NOT NULL DEFAULT current_timestamp()
@@ -132,7 +118,7 @@ CREATE TABLE `hoadon` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `khachhang`
+-- Cấu trúc bảng cho bảng `khachhang`
 --
 
 CREATE TABLE `khachhang` (
@@ -145,21 +131,7 @@ CREATE TABLE `khachhang` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `khuyenmai`
---
-
-CREATE TABLE `khuyenmai` (
-  `id_KM` int(10) UNSIGNED NOT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `type` varchar(50) DEFAULT NULL,
-  `start_time` date DEFAULT NULL,
-  `end_time` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `loai`
+-- Cấu trúc bảng cho bảng `loai`
 --
 
 CREATE TABLE `loai` (
@@ -170,7 +142,7 @@ CREATE TABLE `loai` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nguyenlieu`
+-- Cấu trúc bảng cho bảng `nguyenlieu`
 --
 
 CREATE TABLE `nguyenlieu` (
@@ -183,7 +155,7 @@ CREATE TABLE `nguyenlieu` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nguyenlieudadung`
+-- Cấu trúc bảng cho bảng `nguyenlieudadung`
 --
 
 CREATE TABLE `nguyenlieudadung` (
@@ -197,7 +169,7 @@ CREATE TABLE `nguyenlieudadung` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nhacungcap`
+-- Cấu trúc bảng cho bảng `nhacungcap`
 --
 
 CREATE TABLE `nhacungcap` (
@@ -210,7 +182,7 @@ CREATE TABLE `nhacungcap` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nhanvien`
+-- Cấu trúc bảng cho bảng `nhanvien`
 --
 
 CREATE TABLE `nhanvien` (
@@ -225,7 +197,7 @@ CREATE TABLE `nhanvien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `nhanvien`
+-- Đang đổ dữ liệu cho bảng `nhanvien`
 --
 
 INSERT INTO `nhanvien` (`id_NV`, `name`, `age`, `gender`, `address`, `phone`, `start_day`, `img`) VALUES
@@ -235,7 +207,7 @@ INSERT INTO `nhanvien` (`id_NV`, `name`, `age`, `gender`, `address`, `phone`, `s
 -- --------------------------------------------------------
 
 --
--- Table structure for table `phieunhaphang`
+-- Cấu trúc bảng cho bảng `phieunhaphang`
 --
 
 CREATE TABLE `phieunhaphang` (
@@ -249,7 +221,7 @@ CREATE TABLE `phieunhaphang` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `quyen`
+-- Cấu trúc bảng cho bảng `quyen`
 --
 
 CREATE TABLE `quyen` (
@@ -258,7 +230,7 @@ CREATE TABLE `quyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `quyen`
+-- Đang đổ dữ liệu cho bảng `quyen`
 --
 
 INSERT INTO `quyen` (`id_permission`, `name`) VALUES
@@ -267,7 +239,7 @@ INSERT INTO `quyen` (`id_permission`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sanpham`
+-- Cấu trúc bảng cho bảng `sanpham`
 --
 
 CREATE TABLE `sanpham` (
@@ -283,7 +255,7 @@ CREATE TABLE `sanpham` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `taikhoan`
+-- Cấu trúc bảng cho bảng `taikhoan`
 --
 
 CREATE TABLE `taikhoan` (
@@ -295,7 +267,7 @@ CREATE TABLE `taikhoan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `taikhoan`
+-- Đang đổ dữ liệu cho bảng `taikhoan`
 --
 
 INSERT INTO `taikhoan` (`id_TK`, `id_NV`, `user_name`, `pass`, `id_permission`) VALUES
@@ -303,46 +275,38 @@ INSERT INTO `taikhoan` (`id_TK`, `id_NV`, `user_name`, `pass`, `id_permission`) 
 (2, 2, 'vonhu', 'vonhu', 1);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `ct_hoadon`
+-- Chỉ mục cho bảng `ct_hoadon`
 --
 ALTER TABLE `ct_hoadon`
   ADD KEY `id_HD` (`id_HD`),
   ADD KEY `id_SP` (`id_SP`);
 
 --
--- Indexes for table `ct_khuyenmai`
---
-ALTER TABLE `ct_khuyenmai`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_KM` (`id_KM`),
-  ADD KEY `id_SP` (`id_SP`);
-
---
--- Indexes for table `ct_phieunhaphang`
+-- Chỉ mục cho bảng `ct_phieunhaphang`
 --
 ALTER TABLE `ct_phieunhaphang`
   ADD KEY `id_PNH` (`id_PNH`),
   ADD KEY `id_NL` (`id_NL`);
 
 --
--- Indexes for table `ct_quyen`
+-- Chỉ mục cho bảng `ct_quyen`
 --
 ALTER TABLE `ct_quyen`
   ADD KEY `id_permission` (`id_permission`),
   ADD KEY `id_duty` (`id_duty`);
 
 --
--- Indexes for table `danhmuc`
+-- Chỉ mục cho bảng `danhmuc`
 --
 ALTER TABLE `danhmuc`
   ADD PRIMARY KEY (`id_duty`);
 
 --
--- Indexes for table `hoadon`
+-- Chỉ mục cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD PRIMARY KEY (`id`),
@@ -350,31 +314,25 @@ ALTER TABLE `hoadon`
   ADD KEY `id_NV` (`id_NV`);
 
 --
--- Indexes for table `khachhang`
+-- Chỉ mục cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
   ADD PRIMARY KEY (`id_KH`);
 
 --
--- Indexes for table `khuyenmai`
---
-ALTER TABLE `khuyenmai`
-  ADD PRIMARY KEY (`id_KM`);
-
---
--- Indexes for table `loai`
+-- Chỉ mục cho bảng `loai`
 --
 ALTER TABLE `loai`
   ADD PRIMARY KEY (`id_Loai`);
 
 --
--- Indexes for table `nguyenlieu`
+-- Chỉ mục cho bảng `nguyenlieu`
 --
 ALTER TABLE `nguyenlieu`
   ADD PRIMARY KEY (`id_NL`);
 
 --
--- Indexes for table `nguyenlieudadung`
+-- Chỉ mục cho bảng `nguyenlieudadung`
 --
 ALTER TABLE `nguyenlieudadung`
   ADD PRIMARY KEY (`id`),
@@ -382,19 +340,19 @@ ALTER TABLE `nguyenlieudadung`
   ADD KEY `id_SP` (`id_SP`);
 
 --
--- Indexes for table `nhacungcap`
+-- Chỉ mục cho bảng `nhacungcap`
 --
 ALTER TABLE `nhacungcap`
   ADD PRIMARY KEY (`id_NCC`);
 
 --
--- Indexes for table `nhanvien`
+-- Chỉ mục cho bảng `nhanvien`
 --
 ALTER TABLE `nhanvien`
   ADD PRIMARY KEY (`id_NV`);
 
 --
--- Indexes for table `phieunhaphang`
+-- Chỉ mục cho bảng `phieunhaphang`
 --
 ALTER TABLE `phieunhaphang`
   ADD PRIMARY KEY (`id_PNH`),
@@ -402,20 +360,20 @@ ALTER TABLE `phieunhaphang`
   ADD KEY `id_NV` (`id_NV`);
 
 --
--- Indexes for table `quyen`
+-- Chỉ mục cho bảng `quyen`
 --
 ALTER TABLE `quyen`
   ADD PRIMARY KEY (`id_permission`);
 
 --
--- Indexes for table `sanpham`
+-- Chỉ mục cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
   ADD PRIMARY KEY (`id_SP`),
   ADD KEY `id_Loai` (`id_Loai`);
 
 --
--- Indexes for table `taikhoan`
+-- Chỉ mục cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
   ADD PRIMARY KEY (`id_TK`),
@@ -423,155 +381,135 @@ ALTER TABLE `taikhoan`
   ADD KEY `taikhoan_ibfk_2` (`id_permission`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `ct_khuyenmai`
---
-ALTER TABLE `ct_khuyenmai`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `danhmuc`
+-- AUTO_INCREMENT cho bảng `danhmuc`
 --
 ALTER TABLE `danhmuc`
   MODIFY `id_duty` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `hoadon`
+-- AUTO_INCREMENT cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `khachhang`
+-- AUTO_INCREMENT cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
   MODIFY `id_KH` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `khuyenmai`
---
-ALTER TABLE `khuyenmai`
-  MODIFY `id_KM` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `loai`
+-- AUTO_INCREMENT cho bảng `loai`
 --
 ALTER TABLE `loai`
   MODIFY `id_Loai` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `nguyenlieu`
+-- AUTO_INCREMENT cho bảng `nguyenlieu`
 --
 ALTER TABLE `nguyenlieu`
   MODIFY `id_NL` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `nguyenlieudadung`
+-- AUTO_INCREMENT cho bảng `nguyenlieudadung`
 --
 ALTER TABLE `nguyenlieudadung`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `nhacungcap`
+-- AUTO_INCREMENT cho bảng `nhacungcap`
 --
 ALTER TABLE `nhacungcap`
   MODIFY `id_NCC` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `nhanvien`
+-- AUTO_INCREMENT cho bảng `nhanvien`
 --
 ALTER TABLE `nhanvien`
   MODIFY `id_NV` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `phieunhaphang`
+-- AUTO_INCREMENT cho bảng `phieunhaphang`
 --
 ALTER TABLE `phieunhaphang`
   MODIFY `id_PNH` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `quyen`
+-- AUTO_INCREMENT cho bảng `quyen`
 --
 ALTER TABLE `quyen`
   MODIFY `id_permission` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `sanpham`
+-- AUTO_INCREMENT cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
   MODIFY `id_SP` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `taikhoan`
+-- AUTO_INCREMENT cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
   MODIFY `id_TK` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `ct_hoadon`
+-- Các ràng buộc cho bảng `ct_hoadon`
 --
 ALTER TABLE `ct_hoadon`
   ADD CONSTRAINT `ct_hoadon_ibfk_1` FOREIGN KEY (`id_HD`) REFERENCES `hoadon` (`id`),
   ADD CONSTRAINT `ct_hoadon_ibfk_2` FOREIGN KEY (`id_SP`) REFERENCES `sanpham` (`id_SP`);
 
 --
--- Constraints for table `ct_khuyenmai`
---
-ALTER TABLE `ct_khuyenmai`
-  ADD CONSTRAINT `ct_khuyenmai_ibfk_1` FOREIGN KEY (`id_KM`) REFERENCES `khuyenmai` (`id_KM`),
-  ADD CONSTRAINT `ct_khuyenmai_ibfk_2` FOREIGN KEY (`id_SP`) REFERENCES `sanpham` (`id_SP`);
-
---
--- Constraints for table `ct_phieunhaphang`
+-- Các ràng buộc cho bảng `ct_phieunhaphang`
 --
 ALTER TABLE `ct_phieunhaphang`
   ADD CONSTRAINT `ct_phieunhaphang_ibfk_1` FOREIGN KEY (`id_NL`) REFERENCES `nguyenlieu` (`id_NL`),
   ADD CONSTRAINT `ct_phieunhaphang_ibfk_2` FOREIGN KEY (`id_PNH`) REFERENCES `phieunhaphang` (`id_PNH`);
 
 --
--- Constraints for table `ct_quyen`
+-- Các ràng buộc cho bảng `ct_quyen`
 --
 ALTER TABLE `ct_quyen`
   ADD CONSTRAINT `id_duty` FOREIGN KEY (`id_duty`) REFERENCES `danhmuc` (`id_duty`),
   ADD CONSTRAINT `id_permission` FOREIGN KEY (`id_permission`) REFERENCES `quyen` (`id_permission`);
 
 --
--- Constraints for table `hoadon`
+-- Các ràng buộc cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD CONSTRAINT `hoadon_ibfk_1` FOREIGN KEY (`id_KH`) REFERENCES `khachhang` (`id_KH`),
-  ADD CONSTRAINT `hoadon_ibfk_2` FOREIGN KEY (`id_KM`) REFERENCES `khuyenmai` (`id_KM`),
   ADD CONSTRAINT `hoadon_ibfk_3` FOREIGN KEY (`id_NV`) REFERENCES `nhanvien` (`id_NV`);
 
 --
--- Constraints for table `nguyenlieudadung`
+-- Các ràng buộc cho bảng `nguyenlieudadung`
 --
 ALTER TABLE `nguyenlieudadung`
   ADD CONSTRAINT `nguyenlieudadung_ibfk_1` FOREIGN KEY (`id_NL`) REFERENCES `nguyenlieu` (`id_NL`),
   ADD CONSTRAINT `nguyenlieudadung_ibfk_2` FOREIGN KEY (`id_SP`) REFERENCES `sanpham` (`id_SP`);
 
 --
--- Constraints for table `phieunhaphang`
+-- Các ràng buộc cho bảng `phieunhaphang`
 --
 ALTER TABLE `phieunhaphang`
   ADD CONSTRAINT `phieunhaphang_ibfk_1` FOREIGN KEY (`id_NCC`) REFERENCES `nhacungcap` (`id_NCC`),
   ADD CONSTRAINT `phieunhaphang_ibfk_2` FOREIGN KEY (`id_NV`) REFERENCES `nhanvien` (`id_NV`);
 
 --
--- Constraints for table `sanpham`
+-- Các ràng buộc cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
   ADD CONSTRAINT `sanpham_ibfk_1` FOREIGN KEY (`id_Loai`) REFERENCES `loai` (`id_Loai`);
 
 --
--- Constraints for table `taikhoan`
+-- Các ràng buộc cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
   ADD CONSTRAINT `taikhoan_ibfk_1` FOREIGN KEY (`id_NV`) REFERENCES `nhanvien` (`id_NV`),
