@@ -9,6 +9,7 @@ import DTO.Gender;
 import DTO.NhanVienDTO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneId;
 
 /**
  *
@@ -35,6 +36,7 @@ public class NhanVienMapper implements RowMapper<NhanVienDTO> {
             } else {
                 nv.setGender(Gender.male);
             }
+
 
             return nv;
         } catch (SQLException e) {

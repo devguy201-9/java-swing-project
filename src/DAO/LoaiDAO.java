@@ -33,7 +33,7 @@ public class LoaiDAO extends AbstractDAO<LoaiDTO> {
     }
 
     public void update(LoaiDTO loaiUpdate) throws FileNotFoundException {
-        StringBuilder sql = new StringBuilder("UPDATE loai SET  name = ? WHERE id_Loai = ?");
-        update(sql.toString(), loaiUpdate.getName(), loaiUpdate.getId_Loai());
+        String sql = "UPDATE loai SET  name = ? WHERE id_Loai = ?";
+        update(sql, loaiUpdate.getName(), loaiUpdate.getId_Loai());
     }
 }

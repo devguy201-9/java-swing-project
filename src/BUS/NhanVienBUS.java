@@ -11,20 +11,19 @@ import DTO.NhanVienDTO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import static java.lang.String.valueOf;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+//import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+//import org.apache.poi.ss.usermodel.Cell;
+//import org.apache.poi.ss.usermodel.IndexedColors;
+//import org.apache.poi.ss.usermodel.Row;
 //import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 //import org.apache.poi.xssf.usermodel.XSSFFont;
 //import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -51,9 +50,9 @@ public class NhanVienBUS {
         nvBUS = new ArrayList<>();
         nvBUS = nvDAO.findAll();
     }
-    
-    public NhanVienDTO getEmployeeByPhone(String phone){
-        NhanVienDAO nvDAO = new  NhanVienDAO();
+
+    public NhanVienDTO getEmployeeByPhone(String phone) {
+        NhanVienDAO nvDAO = new NhanVienDAO();
         nvBUS.add(nvDAO.getOneByPhone(phone));
         return nvBUS.get(nvBUS.size());
     }
@@ -98,39 +97,32 @@ public class NhanVienBUS {
             }
         }
     }
-    
-    public boolean check(int manv)
-    {
-        for(NhanVienDTO nv : nvBUS)
-        {
-            if(nv.getId_NV() == manv)
-            {
+
+    public boolean check(int manv) {
+        for (NhanVienDTO nv : nvBUS) {
+            if (nv.getId_NV() == manv) {
                 return true;
             }
         }
         return false;
     }
-    
 
-    public ArrayList<NhanVienDTO> search(int manv,String name,String phone,String phai)
-    {
+    public ArrayList<NhanVienDTO> search(int manv, String name, String phone, String phai) {
         ArrayList<NhanVienDTO> search = new ArrayList<>();
-        manv = (manv==0) ?manv = 0: manv;
-        name = name.isEmpty()?name = "": name;
-        phone = phone.isEmpty()?phone = "": phone;
-        for(NhanVienDTO nv : nvBUS)
-        {
-            if( (nv.getId_NV() == manv) && 
-                nv.getName().contains(name) &&
-                nv.getPhone().contains(phone) &&
-                nv.getGender().equals(phai))
-            {
+        manv = (manv == 0) ? manv = 0 : manv;
+        name = name.isEmpty() ? name = "" : name;
+        phone = phone.isEmpty() ? phone = "" : phone;
+        for (NhanVienDTO nv : nvBUS) {
+            if ((nv.getId_NV() == manv)
+                    && nv.getName().contains(name)
+                    && nv.getPhone().contains(phone)
+                    && nv.getGender().equals(phai)) {
                 search.add(nv);
             }
         }
         return search;
     }
-    
+
 
 //    public void export(String excelFilePath){
 //    
@@ -241,5 +233,4 @@ public class NhanVienBUS {
 //                
 //            }
 //    }
-
 }

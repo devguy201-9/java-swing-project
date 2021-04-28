@@ -5,25 +5,19 @@
  */
 package GUI;
 
-import DAO.ct_PNHDAO;
-import DTO.ct_PhieuNhapHangDTO;
 import DTO.TaiKhoanDTO;
 import java.io.FileNotFoundException;
-
 
 /**
  *
  * @author Thuan Vo
  */
-public final class coffeeManagement{
-    
-    
+public final class coffeeManagement {
+
     public static void main(String[] args) throws FileNotFoundException {
-        
+
         TaiKhoanDTO tk = new TaiKhoanDTO();
-        QLCoffee gui = new QLCoffee(1, tk.getUser_name() , 1);
+        QLCoffee gui = new QLCoffee(1, tk.getUser_name(), 1);
     }
 
-    
 }
-

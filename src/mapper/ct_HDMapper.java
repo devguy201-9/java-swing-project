@@ -19,14 +19,11 @@ public class ct_HDMapper implements RowMapper<ct_HoaDonDTO>{
     public ct_HoaDonDTO mapRow(ResultSet rs) {
         try {
             ct_HoaDonDTO cthd = new ct_HoaDonDTO();
-//            cthd.setId(rs.getInt("id"));
             cthd.setId_HD(rs.getInt("id_HD"));
             cthd.setId_SP(rs.getInt("id_SP"));
             cthd.setName(rs.getString("name"));
             cthd.setAmount(rs.getInt("amount"));
             cthd.setPrice(rs.getFloat("price"));
-//            cthd.setPromotion_price(rs.getFloat("promotion_price"));
-//            cthd.setTotal_money(rs.getFloat("total_money"));
             return cthd;
         } catch (SQLException e) {
             return null;

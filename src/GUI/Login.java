@@ -3,9 +3,7 @@ package GUI;
 //thu vien func
 import BUS.NhanVienBUS;
 import BUS.TaiKhoanBUS;
-import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
-import GUI.model.header;
 //thu vien event
 import java.awt.Color;
 import java.awt.Cursor;

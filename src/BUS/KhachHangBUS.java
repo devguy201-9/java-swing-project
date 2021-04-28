@@ -73,13 +73,10 @@ public class KhachHangBUS {
             }
         }
     }
-    
-    public boolean check(int makh)
-    {
-        for(KhachHangDTO kh : khBUS)
-        {
-            if(kh.getId_KH() == makh)
-            {
+
+    public boolean check(int makh) {
+        for (KhachHangDTO kh : khBUS) {
+            if (kh.getId_KH() == makh) {
                 return true;
             }
         }

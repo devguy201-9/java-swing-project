@@ -10,15 +10,15 @@ import DTO.CategoryDTO;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import mapper.CategoryMapper;
 
 /**
  *
  * @author Thuan Vo
  */
 public class CategoryBUS {
+
     private List<CategoryDTO> CategoryList;
-    
+
     public CategoryBUS() {
         CategoryList = null;
     }
@@ -26,25 +26,25 @@ public class CategoryBUS {
     public List<CategoryDTO> getCategoryList() {
         return CategoryList;
     }
-    
-    public CategoryDTO getByIdDuty(int id_duty){
+
+    public CategoryDTO getByIdDuty(int id_duty) {
         CategoryDAO category = new CategoryDAO();
         return category.getByIdDuty(id_duty);
     }
-    
-    public void list(){
+
+    public void list() {
         CategoryDAO categoryDAO = new CategoryDAO();
         CategoryList = new ArrayList<>();
         CategoryList = categoryDAO.findAll();
     }
-    
-    public void show(){
-        for(CategoryDTO category : CategoryList) {
+
+    public void show() {
+        for (CategoryDTO category : CategoryList) {
             System.out.println(category.getName());
         }
     }
-    
-    public void add(CategoryDTO category){
+
+    public void add(CategoryDTO category) {
         CategoryList.add(category);
         CategoryDAO categoryDAO = new CategoryDAO();
         try {
@@ -53,10 +53,10 @@ public class CategoryBUS {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public void delete(int id_duty) {
-        for(CategoryDTO categoryDTO : CategoryList){
-            if(categoryDTO.getId_duty() == id_duty) {
+        for (CategoryDTO categoryDTO : CategoryList) {
+            if (categoryDTO.getId_duty() == id_duty) {
                 CategoryList.remove(categoryDTO);
                 CategoryDAO categoryDAO = new CategoryDAO();
                 try {
@@ -68,10 +68,10 @@ public class CategoryBUS {
             }
         }
     }
-    
-    public void set(CategoryDTO categoryDTO){
-        for(int i = 0 ; i < CategoryList.size() ; i++) {
-            if(CategoryList.get(i).getId_duty() == categoryDTO.getId_duty()) {
+
+    public void set(CategoryDTO categoryDTO) {
+        for (int i = 0; i < CategoryList.size(); i++) {
+            if (CategoryList.get(i).getId_duty() == categoryDTO.getId_duty()) {
                 CategoryList.set(i, categoryDTO);
                 CategoryDAO categoryDAO = new CategoryDAO();
                 try {

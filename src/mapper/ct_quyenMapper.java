@@ -5,7 +5,7 @@
  */
 package mapper;
 
-import DTO.QuyenCuaNhiemVuDTO;
+import DTO.ct_quyenDTO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -13,12 +13,12 @@ import java.sql.SQLException;
  *
  * @author Thuan Vo
  */
-public class QuyenCuaNhiemVuMapper implements RowMapper<QuyenCuaNhiemVuDTO>{
+public class ct_quyenMapper implements RowMapper<ct_quyenDTO>{
 
     @Override
-    public QuyenCuaNhiemVuDTO mapRow(ResultSet rs) {
+    public ct_quyenDTO mapRow(ResultSet rs) {
         try {
-            QuyenCuaNhiemVuDTO pm = new QuyenCuaNhiemVuDTO();
+            ct_quyenDTO pm = new ct_quyenDTO();
             pm.setId_permission(rs.getInt("id_permission"));
             pm.setid_duty(rs.getInt("id_duty"));
             return pm;

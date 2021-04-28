@@ -16,8 +16,9 @@ import java.util.List;
  * @author Asus
  */
 public class TaiKhoanBUS {
+
     private List<TaiKhoanDTO> tkBUS;
-    
+
     public TaiKhoanBUS() {
         tkBUS = null;
     }
@@ -25,14 +26,14 @@ public class TaiKhoanBUS {
     public List<TaiKhoanDTO> getTkBUS() {
         return tkBUS;
     }
-    
-    public void list(){
+
+    public void list() {
         TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
         tkBUS = new ArrayList<>();
         tkBUS = taiKhoanDAO.findAll();
     }
-    
-    public void add(TaiKhoanDTO taiKhoan){
+
+    public void add(TaiKhoanDTO taiKhoan) {
         tkBUS.add(taiKhoan);
         TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
         try {
@@ -41,11 +42,11 @@ public class TaiKhoanBUS {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public void delete(String id) {
         int idTaiKhoan = Integer.parseInt(id);
-        for(TaiKhoanDTO taiKhoanDTO : tkBUS){
-            if(taiKhoanDTO.getId_TK() == idTaiKhoan) {
+        for (TaiKhoanDTO taiKhoanDTO : tkBUS) {
+            if (taiKhoanDTO.getId_TK() == idTaiKhoan) {
                 tkBUS.remove(taiKhoanDTO);
                 TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
                 try {
@@ -57,10 +58,10 @@ public class TaiKhoanBUS {
             }
         }
     }
-    
-    public void set(TaiKhoanDTO taiKhoanDTO){
-        for(int i = 0 ; i < tkBUS.size() ; i++) {
-            if(tkBUS.get(i).getId_TK() == taiKhoanDTO.getId_TK()) {
+
+    public void set(TaiKhoanDTO taiKhoanDTO) {
+        for (int i = 0; i < tkBUS.size(); i++) {
+            if (tkBUS.get(i).getId_TK() == taiKhoanDTO.getId_TK()) {
                 tkBUS.set(i, taiKhoanDTO);
                 TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
                 try {
@@ -72,10 +73,10 @@ public class TaiKhoanBUS {
             }
         }
     }
-    
+
     public TaiKhoanDTO findTKByUserNameAndPass(String username, String password) {
         TaiKhoanDAO tkDAO = new TaiKhoanDAO();
         return tkDAO.findOneByUsernameAndPassword(username, password);
     }
-        
+
 }
