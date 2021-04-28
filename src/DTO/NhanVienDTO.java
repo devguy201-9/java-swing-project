@@ -93,10 +93,8 @@ public class NhanVienDTO {
     }
 
 
-    public void setGender(Gender gender) {
-        if(gender.equals(Gender.male))    this.gender = Gender.male;
-        else this.gender = Gender.female;
-
+    public void setGender(String gender) {
+        this.gender = (gender.equals("male")) ? Gender.male : Gender.female;
     }
 
     public Date getStart_day() {
