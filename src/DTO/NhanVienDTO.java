@@ -80,8 +80,8 @@ public class NhanVienDTO {
         return gender;
     }
 
-    public void setGender(String gender) {
-        if(gender == "male")    this.gender = Gender.male;
+    public void setGender(Gender gender) {
+        if(gender.equals(Gender.male))    this.gender = Gender.male;
         else this.gender = Gender.female;
     }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2021 at 11:06 AM
+-- Generation Time: Apr 28, 2021 at 05:09 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -167,6 +167,15 @@ CREATE TABLE `loai` (
   `name` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `loai`
+--
+
+INSERT INTO `loai` (`id_Loai`, `name`) VALUES
+(1, 'TEAFRT'),
+(2, 'FREEZE'),
+(3, 'CFPM');
+
 -- --------------------------------------------------------
 
 --
@@ -280,6 +289,21 @@ CREATE TABLE `sanpham` (
   `img` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `sanpham`
+--
+
+INSERT INTO `sanpham` (`id_SP`, `id_Loai`, `name`, `descrption`, `amount`, `price`, `img`) VALUES
+(1, 1, 'Trà Đào', 'Mùi vị chua ngọt thanh mát kết hợp đào miếng ngon tuyệt', NULL, 50000, 'frt-001.jpg'),
+(2, 1, 'Trà Cocktail', 'Vị trà thanh mát kết hợp với các loại trái cây tươi', NULL, 50000, 'frt-002.jpg'),
+(3, 1, 'Trà Vải - Lài', 'Trà lài thanh nhẹ kết hợp cùng vải tươi', NULL, 45000, 'frt-003-4.jpg'),
+(4, 2, 'Chocolate Đá Xay', 'Chocolate sữa đá xay kết hợp kem tươi mát lạnh', NULL, 55000, 'frz-001.jpg'),
+(5, 2, 'Matcha Đá Xanh', 'Matcha sữa đá xay kết hợp kem tươi mát lạnh', NULL, 55000, 'frz-002.jpg'),
+(6, 2, 'Cà phê Dừa Đá Xay và Thạch', 'Cà phê kết hợp với dừa tươi xay đậm đà thơm béo cùng thạch dai giòn', NULL, 65000, 'frt-003.jpg'),
+(7, 3, 'Cappuccino', 'Bắt đầu với cà phê espresso, sau đó thêm một lượng tương đương giữa sữa tươi và bọt sữa', NULL, 50000, 'mcf-001.jpg'),
+(8, 3, 'Latte', 'Bắt đầu với cà phê espresso, sau đó thêm một lượng tương đương giữa sữa tươi và bọt sữa', NULL, 50000, 'mcf-002.jpg'),
+(9, 3, 'Caramel Macchiato', 'Bắt đầu từ dòng sữa tươi và lớp bọt sữa, sau đó hòa quyện cùng cà phê espresso đậm đà và sốt caramel', NULL, 59000, 'mcf-003.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -347,7 +371,8 @@ ALTER TABLE `danhmuc`
 ALTER TABLE `hoadon`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_KH` (`id_KH`),
-  ADD KEY `id_NV` (`id_NV`);
+  ADD KEY `id_NV` (`id_NV`),
+  ADD KEY `hoadon_ibfk_2` (`id_KM`);
 
 --
 -- Indexes for table `khachhang`
@@ -460,7 +485,7 @@ ALTER TABLE `khuyenmai`
 -- AUTO_INCREMENT for table `loai`
 --
 ALTER TABLE `loai`
-  MODIFY `id_Loai` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_Loai` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `nguyenlieu`
@@ -502,7 +527,7 @@ ALTER TABLE `quyen`
 -- AUTO_INCREMENT for table `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `id_SP` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_SP` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `taikhoan`

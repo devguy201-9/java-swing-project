@@ -376,7 +376,7 @@ public class SanPhamGUI extends JPanel implements KeyListener{
                         int sl = Integer.parseInt(txtSl.getText());
                         int gia = Integer.parseInt(txtGia.getText());
                         String mota = txtMT.getText();
-                        LoaiDTO loai = (LoaiDTO) cmbLoai.getSelectedItem();
+                        LoaiDTO loai =  (LoaiDTO) cmbLoai.getSelectedItem();
                         int maLoai = loai.getId_Loai();                      
                         String IMG = imgName;
 
