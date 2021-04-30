@@ -7,6 +7,7 @@ package BUS;
 
 import DAO.NhanVienDAO;
 import DAO.SanPhamDAO;
+import DTO.Gender;
 import DTO.NhanVienDTO;
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,6 +56,12 @@ public class NhanVienBUS {
         NhanVienDAO nvDAO = new NhanVienDAO();
         nvBUS.add(nvDAO.getOneByPhone(phone));
         return nvBUS.get(nvBUS.size());
+    }
+    
+    public NhanVienDTO getEmployeeByGender(Gender phai){
+        NhanVienDAO nvDAO = new NhanVienDAO();
+        nvBUS.add(nvDAO.getOneByGender(phai));
+        return nvBUS.get(nvBUS.size());        
     }
 
     public void add(NhanVienDTO nvDTO) {

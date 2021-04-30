@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import DTO.Gender;
 import DTO.NhanVienDTO;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
@@ -27,6 +28,12 @@ public class NhanVienDAO extends AbstractDAO<NhanVienDAO> {
         String sql = "SELECT * FROM nhanvien WHERE phone = ?";
         List<NhanVienDTO> nhanviens = query(sql, new NhanVienMapper(), phone);
         return nhanviens.isEmpty() ? null : nhanviens.get(0);
+    }
+    
+    public NhanVienDTO getOneByGender(Gender gender){
+        String sql = "SECLECT * FROM nhanvien WHERE gender = ?";
+        List<NhanVienDTO> nhanvien = query(sql, new NhanVienMapper(), gender);
+        return nhanvien.isEmpty() ? null : nhanvien.get(0);
     }
 
     public Integer save(NhanVienDTO nv) throws FileNotFoundException {

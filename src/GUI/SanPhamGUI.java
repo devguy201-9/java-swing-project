@@ -144,7 +144,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         cmbLoai.setBounds(new Rectangle(470, 200, 100, 30));
         listLoai(cmbLoai);
 
-        img = new JLabel("Image");
+        img = new JLabel("Thêm hình");
         img.setBorder(createLineBorder(Color.BLACK));
         img.setBounds(new Rectangle(0, 0, 200, 230));
 
@@ -452,17 +452,19 @@ public class SanPhamGUI extends JPanel implements KeyListener {
          */
         // Chỉnh width các cột 
         tbl.getColumnModel().getColumn(0).setPreferredWidth(40);
-        tbl.getColumnModel().getColumn(1).setPreferredWidth(140);
+        tbl.getColumnModel().getColumn(1).setPreferredWidth(120);
         tbl.getColumnModel().getColumn(2).setPreferredWidth(40);
-        tbl.getColumnModel().getColumn(3).setPreferredWidth(50);
-        tbl.getColumnModel().getColumn(4).setPreferredWidth(140);
-        tbl.getColumnModel().getColumn(5).setPreferredWidth(40);
+        tbl.getColumnModel().getColumn(3).setPreferredWidth(40);
+        tbl.getColumnModel().getColumn(4).setPreferredWidth(180);
+        tbl.getColumnModel().getColumn(5).setPreferredWidth(30);
         tbl.getColumnModel().getColumn(6).setPreferredWidth(40);
 
-        DefaultTableCellRenderer leftAlign = new DefaultTableCellRenderer();
-        leftAlign.setHorizontalAlignment(JLabel.LEFT);
-        tbl.getColumnModel().getColumn(2).setCellRenderer(leftAlign);
-        tbl.getColumnModel().getColumn(3).setCellRenderer(leftAlign);
+        DefaultTableCellRenderer centerAlign = new DefaultTableCellRenderer();
+        centerAlign.setHorizontalAlignment(JLabel.CENTER);
+        tbl.getColumnModel().getColumn(0).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(2).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(3).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(5).setCellRenderer(centerAlign);
 
         // Custom table
         tbl.setFocusable(false);
@@ -493,7 +495,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                 if (tbl.getRowSorter() != null) {
                     i = tbl.getRowSorter().convertRowIndexToModel(i);
                 }
-                imgName = tbl.getModel().getValueAt(i, 7).toString();
+                imgName = tbl.getModel().getValueAt(i, 6).toString();
                 Image newImage;
                 try {
                     newImage = new ImageIcon("./src/image/SanPham/" + imgName).getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
@@ -605,7 +607,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         lbSortMaSP.setBounds(0, 40, 50, 30);
         sort.add(lbSortMaSP);
 
-        sortMaSP = new JTextField();
+        sortMaSP = new JTextField("");
         sortMaSP.setFont(font0);
         sortMaSP.setBounds(new Rectangle(50, 42, 100, 30));
         sortMaSP.addKeyListener(this);
@@ -623,10 +625,10 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         sort.add(lbSortMaLoai);
 
         cmbSortLoai = new JComboBox();
-//        cmbSortLoai.setEditable(true);
+        cmbSortLoai.setEditable(true);
         cmbSortLoai.setFont(font0);
         cmbSortLoai.setBounds(new Rectangle(210, 42, 110, 30));
-        cmbSortLoai.addItem("Không");
+        cmbSortLoai.addItem("Tất cả");
         cmbSortLoai.addKeyListener(this);
         listLoai(cmbSortLoai);
         sort.add(cmbSortLoai);
@@ -634,24 +636,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         /**
          * **********************************
          */
-        /**
-         * ****** SORT MANSX *************
-         */
-//        JLabel lbSortMaNSX = new JLabel("Mă NSX :");
-//        lbSortMaNSX.setFont(font0);
-//        lbSortMaNSX.setBounds(340,40,60,30);
-//        sort.add(lbSortMaNSX);
-//
-//        cmbSortNSX = new JComboBox();
-//        cmbSortNSX.setFont(font0);
-//        cmbSortNSX.setBounds(new Rectangle(400,42,100,30));
-//        cmbSortNSX.addItem("Không");
-//        cmbSortNSX.addKeyListener(this);
-//        listNSX(cmbSortNSX);
-//        sort.add(cmbSortNSX);
-        /**
-         * **********************************
-         */
+        
         /**
          * ********** SORT THEO GIÁ **************
          */
@@ -660,7 +645,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         sortPrice.setBounds(510, 40, 70, 30);
         sort.add(sortPrice);
 
-        txtMinPrice = new JTextField();
+        txtMinPrice = new JTextField("");
         txtMinPrice.setFont(font0);
         txtMinPrice.setBounds(new Rectangle(580, 42, 100, 30));
         txtMinPrice.addKeyListener(this);
@@ -670,7 +655,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         sepPrice.setBounds(690, 56, 10, 6);
         sort.add(sepPrice);
 
-        txtMaxPrice = new JTextField();
+        txtMaxPrice = new JTextField("");
         txtMaxPrice.setFont(font0);
         txtMaxPrice.setBounds(new Rectangle(710, 42, 100, 30));
         txtMaxPrice.addKeyListener(this);
@@ -703,10 +688,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         }
     }
 
-    public void listLoai(JComboBox cmb) {
-        if (loaiBUS.getLoaiBUS() == null) {
-            loaiBUS.list();
-        }
+    public void listLoai(JComboBox cmb)
+    {
+        if(loaiBUS.getLoaiBUS()== null)loaiBUS.list();
         ArrayList<LoaiDTO> loai = (ArrayList<LoaiDTO>) loaiBUS.getLoaiBUS();
         addCombo(cmb, loai);
     }
