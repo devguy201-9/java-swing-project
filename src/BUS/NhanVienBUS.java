@@ -53,8 +53,8 @@ public class NhanVienBUS {
 
     public NhanVienDTO getEmployeeByPhone(String phone) {
         NhanVienDAO nvDAO = new NhanVienDAO();
-        nvBUS.add(nvDAO.getOneByPhone(phone));
-        return nvBUS.get(nvBUS.size());
+        NhanVienDTO nv = nvDAO.getOneByPhone(phone);
+        return nv;
     }
 
     public void add(NhanVienDTO nvDTO) {
@@ -228,6 +228,7 @@ public class NhanVienBUS {
 //                    nv.setId_NV(temp.getId_NV());
 //                    set(nv);
 //                }else {
+//                    nvBUS.add(nv);
 //                    add(nv);
 //                }
 //                

@@ -2,17 +2,6 @@
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
-<<<<<<< HEAD
--- Host: 127.0.0.1
--- Generation Time: Apr 28, 2021 at 05:09 AM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.3
-=======
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 27, 2021 lúc 02:08 PM
--- Phiên bản máy phục vụ: 10.4.13-MariaDB
--- Phiên bản PHP: 7.4.8
->>>>>>> 6ac766d88b34ed4a6013f3d689bc11225cf0e2ed
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -342,8 +331,7 @@ ALTER TABLE `danhmuc`
 ALTER TABLE `hoadon`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_KH` (`id_KH`),
-  ADD KEY `id_NV` (`id_NV`),
-  ADD KEY `hoadon_ibfk_2` (`id_KM`);
+  ADD KEY `id_NV` (`id_NV`);
 
 --
 -- Chỉ mục cho bảng `khachhang`

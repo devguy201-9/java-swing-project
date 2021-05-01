@@ -24,6 +24,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -382,7 +383,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
         btnXuatExcel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-//                spBUS.ExportExcelDatabase();    //LUU Y: LAM CHO NAY
+//                spBUS.exportProduct();    //LUU Y: LAM CHO NAY
                 JOptionPane.showMessageDialog(null, "Xuat file excel thanh cong");
             }
         });
@@ -395,11 +396,15 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                 fc.setFileFilter(filter);
                 int result = fc.showOpenDialog(null);
                 if (result == JFileChooser.APPROVE_OPTION) {
-                    File file = fc.getSelectedFile(); //Lấy URL
-//                    spBUS.ImportExcelDatabase(file);    //LUU Y: LAM CHO NAY
-                    spBUS.list();
-                    outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
-                    JOptionPane.showMessageDialog(null, "Nhap file excel thanh cong");
+//                    try {
+                        File file = fc.getSelectedFile(); //Lấy URL
+//                        spBUS.importProduct(file);    //LUU Y: LAM CHO NAY
+                        spBUS.list();
+                        outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
+                        JOptionPane.showMessageDialog(null, "Nhap file excel thanh cong");
+//                    } catch (IOException | ParseException ex) {
+//                        Logger.getLogger(SanPhamGUI.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
                 }
             }
         });
