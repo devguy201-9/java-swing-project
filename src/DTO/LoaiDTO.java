@@ -15,6 +15,7 @@ public class LoaiDTO {
     private String name;
 
     public LoaiDTO(String name) {
+//        this.id_Loai = id_Loai;
         this.name = name;
     }
 

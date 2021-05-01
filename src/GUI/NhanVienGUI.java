@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -128,7 +129,7 @@ public class NhanVienGUI extends JPanel {
         txtDiaChi.setBounds(new Rectangle(350, 160, 220, 30));
 
         JLabel lbNamSinh = new JLabel("Tuổi");
-        lbNamSinh.setBounds(new Rectangle(420, 200, 80, 30));
+        lbNamSinh.setBounds(new Rectangle(440, 200, 80, 30));
         lbNamSinh.setFont(font0);
         txtNamSinh = new JTextField("");
         txtNamSinh.setBounds(new Rectangle(490, 200, 80, 30));
@@ -138,9 +139,9 @@ public class NhanVienGUI extends JPanel {
         lbPhai.setFont(font0);
         String[] phai = {"Nam", "Nữ"};   //LUU Y: dua vao Array cua gender?
         cmbPhai = new JComboBox(phai);
-        cmbPhai.setBounds(new Rectangle(310, 200, 80, 30));
+        cmbPhai.setBounds(new Rectangle(290, 200, 80, 30));
 
-        img = new JLabel("Image");
+        img = new JLabel("Thêm hình");
         img.setBorder(createLineBorder(Color.BLACK));
         img.setBounds(new Rectangle(0, 0, 200, 230));
 
@@ -424,18 +425,22 @@ public class NhanVienGUI extends JPanel {
          * ************** TẠO TABLE ***********************************************************
          */
         // Chỉnh width các cột 
-        tbl.getColumnModel().getColumn(0).setPreferredWidth(40);
+        tbl.getColumnModel().getColumn(0).setPreferredWidth(30);
         tbl.getColumnModel().getColumn(1).setPreferredWidth(100);
-        tbl.getColumnModel().getColumn(2).setPreferredWidth(40);
-        tbl.getColumnModel().getColumn(3).setPreferredWidth(40);
-        tbl.getColumnModel().getColumn(4).setPreferredWidth(20);
-        tbl.getColumnModel().getColumn(5).setPreferredWidth(50);
-        tbl.getColumnModel().getColumn(6).setPreferredWidth(100);
+        tbl.getColumnModel().getColumn(2).setPreferredWidth(50);
+        tbl.getColumnModel().getColumn(3).setPreferredWidth(30);
+        tbl.getColumnModel().getColumn(4).setPreferredWidth(30);
+        tbl.getColumnModel().getColumn(5).setPreferredWidth(70);
+        tbl.getColumnModel().getColumn(6).setPreferredWidth(130);
 
-        DefaultTableCellRenderer leftAlign = new DefaultTableCellRenderer();
-        leftAlign.setHorizontalAlignment(JLabel.LEFT);
-        tbl.getColumnModel().getColumn(3).setCellRenderer(leftAlign);
-        tbl.getColumnModel().getColumn(5).setCellRenderer(leftAlign);
+        DefaultTableCellRenderer centerAlign = new DefaultTableCellRenderer();
+        centerAlign.setHorizontalAlignment(JLabel.CENTER);
+        tbl.getColumnModel().getColumn(0).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(2).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(3).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(4).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(5).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(7).setCellRenderer(centerAlign);
 
         // Custom table
         tbl.setFocusable(false);
@@ -475,7 +480,6 @@ public class NhanVienGUI extends JPanel {
                 txtSDT.setText(tbl.getModel().getValueAt(i, 2).toString());
                 txtNamSinh.setText(tbl.getModel().getValueAt(i, 3).toString());
                 cmbPhai.setSelectedItem(tbl.getModel().getValueAt(i, 4).toString());
-//                txtPhai.setText( tbl.getModel().getValueAt(i, 4).toString());
                 txtNgay.setText(tbl.getModel().getValueAt(i, 5).toString());
                 txtDiaChi.setText(tbl.getModel().getValueAt(i, 6).toString());
                 img.setText("");
@@ -578,7 +582,7 @@ public class NhanVienGUI extends JPanel {
 
         sortMaNV = new JTextField();
         sortMaNV.setFont(font0);
-        sortMaNV.setBounds(new Rectangle(50, 42, 100, 30));
+        sortMaNV.setBounds(new Rectangle(50, 42, 70, 30));
         sort.add(sortMaNV);
         /**
          * **********************************
@@ -587,9 +591,9 @@ public class NhanVienGUI extends JPanel {
         /**
          * ****** SORT HONV *************
          */
-        JLabel lbSortHoNV = new JLabel("Họ tên:");
+        JLabel lbSortHoNV = new JLabel("Họ tên :");
         lbSortHoNV.setFont(font0);
-        lbSortHoNV.setBounds(170, 40, 30, 30);
+        lbSortHoNV.setBounds(140, 40, 50, 30);
         sort.add(lbSortHoNV);
 
         sortHoNV = new JTextField();
@@ -603,9 +607,9 @@ public class NhanVienGUI extends JPanel {
         /**
          * ****** SORT SDT NV *************
          */
-        JLabel lbSortSDT = new JLabel("Số điện thoại :");
+        JLabel lbSortSDT = new JLabel("SDT :");
         lbSortSDT.setFont(font0);
-        lbSortSDT.setBounds(320, 40, 30, 30);
+        lbSortSDT.setBounds(320, 40, 50, 30);
         sort.add(lbSortSDT);
 
         sortSDT = new JTextField();
@@ -625,6 +629,8 @@ public class NhanVienGUI extends JPanel {
 
         sortPhai = new Choice();
         sortPhai.addItem("Tất cả");
+              
+        
         sortPhai.addItem("Nam");
         sortPhai.addItem("Nữ");
         sortPhai.setFont(font0);
