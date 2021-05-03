@@ -8,7 +8,9 @@ package BUS;
 import DAO.HoaDonDAO;
 import DTO.HoaDonDTO;
 import java.io.FileNotFoundException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -98,4 +100,33 @@ public class HoaDonBUS {
         return false;
     }
 
+    //phần thống kê
+    public boolean checkTime(Calendar from,Calendar to,Calendar time)
+    {
+//        System.err.print(from.getTime()+" ");
+//        System.err.print(to.getTime()+" ");
+//        System.err.println(time.getTime());
+        if(time.after(from) && time.before(to))
+        {
+            return true;
+        }
+        return false;
+    }
+    public ArrayList<HoaDonDTO> ListTime(Calendar from,Calendar to)
+    {
+        ArrayList<HoaDonDTO> list = new ArrayList<>();
+        for(HoaDonDTO hd : hdBUS)
+        {
+            Timestamp date = hd.getCreate_day();
+            Calendar time = Calendar.getInstance();
+            time.setTimeInMillis(date.getTime());
+            if(checkTime(from, to, time))
+            {
+                list.add(hd);
+            }
+        }
+        return list;
+    }
+    
+    
 }

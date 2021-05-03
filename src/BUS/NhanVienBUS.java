@@ -64,6 +64,18 @@ public class NhanVienBUS {
         return nvBUS.get(nvBUS.size());        
     }
 
+    public NhanVienDTO getEmployeeById(String MaNV)        //Như thêm á?? hên xui :>>
+    {
+        for(NhanVienDTO nv : nvBUS )
+        {
+            if(nv.getId_NV()==Integer.parseInt(MaNV))
+            {
+                return nv;
+            }
+        }
+        return null;
+    }
+    
     public void add(NhanVienDTO nvDTO) {
         nvBUS.add(nvDTO);
         NhanVienDAO nvDAO = new NhanVienDAO();
@@ -105,6 +117,8 @@ public class NhanVienBUS {
         }
     }
 
+    
+    
     public boolean check(int manv) {
         for (NhanVienDTO nv : nvBUS) {
             if (nv.getId_NV() == manv) {

@@ -293,8 +293,8 @@ public class NhaCungCapGUI extends JPanel{
     tbl.getTableHeader().setForeground(Color.WHITE);
     tbl.setSelectionBackground(new Color(52,152,219));
     tbl.setFillsViewportHeight(true);
-//    tbl.getTableHeader().setOpaque(false);
-//    tbl.setIntercellSpacing(new Dimension(0,0)); 
+    tbl.getTableHeader().setOpaque(false);
+    tbl.setIntercellSpacing(new Dimension(0,0)); 
     
     
     //Add table vào scrollPane

@@ -8,7 +8,9 @@ package BUS;
 import DAO.PhieuNhapHangDAO;
 import DTO.PhieuNhapHangDTO;
 import java.io.FileNotFoundException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -73,5 +75,36 @@ public class PhieuNhapHangBUS {
             }
         }
     }
+    
+    //phần thống kê
+    public boolean checkTime(Calendar from,Calendar to,Calendar time)
+    {
+//        System.err.print(from.getTime()+" ");
+//        System.err.print(to.getTime()+" ");
+//        System.err.println(time.getTime());
+        if(time.after(from) && time.before(to))
+        {
+            return true;
+        }
+        return false;
+    }
+    public ArrayList<PhieuNhapHangDTO> ListTime(Calendar from,Calendar to)
+    {
+        ArrayList<PhieuNhapHangDTO> list = new ArrayList<>();
+        for(PhieuNhapHangDTO nh : pnhBUS)
+        {
+            Timestamp date = (Timestamp) nh.getDate_add();
+            Calendar time = Calendar.getInstance();
+            time.setTimeInMillis(date.getTime());
+            if(checkTime(from, to, time))
+            {
+                list.add(nh);
+            }
+        }
+        return list;
+    }
+    
+    
+    
 
 }

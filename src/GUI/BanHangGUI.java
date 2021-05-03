@@ -620,7 +620,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             } else if (a.equals(txtMaSP)) //Enter MASP
             {
                 try {
-                    SanPhamDTO sp = spBUS.getSP(Integer.parseInt(txtMaSP.getText()));
+                    SanPhamDTO sp = spBUS.getSP(txtMaSP.getText());
                     Image img = new ImageIcon("./src/image/SanPham/" + sp.getImg()).getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
                     imgSP.setIcon(new ImageIcon(img));
                     txtCTTenSP.setText(sp.getName());
