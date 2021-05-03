@@ -73,4 +73,17 @@ public class NCCBUS {
             }
         }
     }
+    
+    public boolean checkIdNCC(int idNCC){
+        for(NhaCungCapDTO ncc : nccBUS){
+            if(ncc.getId_NCC() == idNCC)
+                return true;            
+        }
+        return false;
+    }
+    
+    
+    
+    
+    
 }

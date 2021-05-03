@@ -24,7 +24,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -32,7 +31,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -55,7 +53,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author ACER
  */
-public class SanPhamGUI extends JPanel implements KeyListener {
+public class SPGUI extends JPanel implements KeyListener {
 
     private SanPhamBUS spBUS = new SanPhamBUS();
     private LoaiBUS loaiBUS = new LoaiBUS();
@@ -78,10 +76,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
     private JComboBox cmbNSX;
     private JComboBox cmbSortLoai;
     private JComboBox cmbSortNSX;
-    private JButton btnAdd,btnEdit,btnDelete,btnConfirm,btnBack,btnFile;
 
     //        
-    public SanPhamGUI(int width) {
+    public SPGUI(int width) {
         DEFALUT_WIDTH = width;
         init();
     }
@@ -91,67 +88,65 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         setBackground(null);
         setBounds(new Rectangle(50, 0, this.DEFALUT_WIDTH - 220, 1000));
         Font font0 = new Font("Segoe UI", Font.PLAIN, 13);
-        Font font1 = new Font("Segoe UI", Font.BOLD, 13);     
-        Font font2 = new Font("Tahoma", Font.PLAIN, 25);
-        
-        
+        Font font1 = new Font("Segoe UI", Font.BOLD, 13);
         /**
          * **************************** PHẦN HIỂN THỊ THÔNG TIN *****************************************
          */
 
         JPanel ItemView = new JPanel(null);
         ItemView.setBounds(new Rectangle(30, 20, this.DEFALUT_WIDTH - 220, 250));
-        ItemView.setBackground(new Color(201, 211, 203));
+        ItemView.setBackground(Color.WHITE);
 
         /**
          * ****** Tao Cac Label & TextField ***********************
          */
         JLabel lbId = new JLabel("Mă Sản Phẩm");
-        lbId.setBounds(new Rectangle(0, 0, 200, 30));
-        lbId.setFont(font1);
+        lbId.setBounds(new Rectangle(250, 0, 200, 30));
+        lbId.setFont(font0);
         txtId = new JTextField("");
-        txtId.setBounds(new Rectangle(100, 0, 220, 30));
+        txtId.setBounds(new Rectangle(350, 0, 220, 30));
         txtId.setFont(font0);
 
         JLabel lbName = new JLabel("Tên Sản Phẩm");
-        lbName.setBounds(new Rectangle(0, 40, 200, 30));
-        lbName.setFont(font1);
+        lbName.setBounds(new Rectangle(250, 40, 200, 30));
+        lbName.setFont(font0);
         txtTenSP = new JTextField("");
-        txtTenSP.setBounds(new Rectangle(100, 40, 220, 30));
+        txtTenSP.setBounds(new Rectangle(350, 40, 220, 30));
         txtTenSP.setFont(font0);
 
         JLabel lbSl = new JLabel("Số lượng");
-        lbSl.setBounds(new Rectangle(0, 80, 200, 30));
-        lbSl.setFont(font1);
+        lbSl.setBounds(new Rectangle(250, 80, 200, 30));
+        lbSl.setFont(font0);
         txtSl = new JTextField("");
-        txtSl.setBounds(new Rectangle(100, 80, 220, 30));
+        txtSl.setBounds(new Rectangle(350, 80, 220, 30));
         txtSl.setFont(font0);
 
         JLabel lbGia = new JLabel("Đơn giá (VNĐ)");
-        lbGia.setBounds(new Rectangle(0, 120, 200, 30));
-        lbGia.setFont(font1);
+        lbGia.setBounds(new Rectangle(250, 120, 200, 30));
+        lbGia.setFont(font0);
         txtGia = new JTextField("");
-        txtGia.setBounds(new Rectangle(100, 120, 220, 30));
+        txtGia.setBounds(new Rectangle(350, 120, 220, 30));
         txtGia.setFont(font0);
 
         JLabel lbmota = new JLabel("Mô tả");
-        lbmota.setBounds(new Rectangle(0, 160, 200, 30));
-        lbmota.setFont(font1);
+        lbmota.setBounds(new Rectangle(250, 160, 200, 30));
+        lbmota.setFont(font0);
+//        String[] mota ={"Lon","Hộp","Chai","Gói","Cái","Tuýp"};
         txtMT = new JTextField("");
-        txtMT.setBounds(new Rectangle(100, 160, 220, 30));
+        txtMT.setBounds(new Rectangle(350, 160, 220, 30));
         txtMT.setFont(font0);
 
         JLabel lbLoai = new JLabel("Loại");
-        lbLoai.setBounds(new Rectangle(0, 200, 40, 30));
-        lbLoai.setFont(font1);
+        lbLoai.setBounds(new Rectangle(430, 200, 40, 30));
+        lbLoai.setFont(font0);
         cmbLoai = new JComboBox();
         cmbLoai.setFont(font0);
-        cmbLoai.setBounds(new Rectangle(100, 200, 100, 30));
+        cmbLoai.setBounds(new Rectangle(470, 200, 100, 30));
         listLoai(cmbLoai);
 
         img = new JLabel("Thêm hình");
         img.setBorder(createLineBorder(Color.BLACK));
-        img.setBounds(new Rectangle(350, 0, 200, 230));
+        img.setBounds(new Rectangle(0, 0, 200, 230));
 
         // THÊM VÀO PHẦN HIỂN THỊ
         ItemView.add(img);
@@ -173,90 +168,38 @@ public class SanPhamGUI extends JPanel implements KeyListener {
          */
         /**
          * ************** TẠO CÁC BTN THÊM ,XÓA, SỬA *******************
-         */  
-//        btnEdit,btnDelete,btnConfirm,btnBack,btnFile
-        btnAdd = new JButton("THÊM");
-        btnEdit = new JButton("SỬA");
-        btnDelete = new JButton("XÓA");
-        btnConfirm = new JButton("XÁC NHẬN");
-        btnBack = new JButton("QUAY LẠI");
-        btnFile = new JButton("CHỌN ẢNH");
-               
-        //font chữ
-        btnAdd.setFont(font2);        
-        btnAdd.setForeground(Color.WHITE);
-        btnEdit.setFont(font2);        
-        btnEdit.setForeground(Color.WHITE);
-        btnDelete.setFont(font2);        
-        btnDelete.setForeground(Color.WHITE);
-        btnConfirm.setFont(font2);        
-        btnConfirm.setForeground(Color.WHITE);
-        btnBack.setFont(font2);        
-        btnBack.setForeground(Color.WHITE);
-        btnFile.setFont(font2);        
-        btnFile.setForeground(Color.WHITE);
-        
-        //màu nền
-        Color colorAdd = new Color(85, 239, 196);
-        btnAdd.setBackground(colorAdd);
-        Color colorEdit = new Color(196, 69, 105);
-        btnEdit.setBackground(colorEdit);
-        Color colorDelete = new Color(56, 103, 214);
-        btnDelete.setBackground(colorDelete);
-        Color colorConfirm = new Color(250, 130, 49);
-        btnConfirm.setBackground(colorConfirm);
-        Color colorBack = new Color(181, 52, 113);
-        btnBack.setBackground(colorBack);
-        Color colorFile = new Color(60, 64, 198);
-        btnFile.setBackground(colorFile);
-        
-        
-        //vị trí và con trỏ
+         */
+        JLabel btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd.png"));
         btnAdd.setBounds(new Rectangle(620, 0, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
+
+        JLabel btnEdit = new JLabel(new ImageIcon("./src/image/btnEdit.png"));
         btnEdit.setBounds(new Rectangle(620, 70, 200, 50));
         btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
+
+        JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete.png"));
         btnDelete.setBounds(new Rectangle(620, 140, 200, 50));
         btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
+
+        ItemView.add(btnAdd);
+        ItemView.add(btnEdit);
+        ItemView.add(btnDelete);
+
+        JLabel btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm.png"));
         btnConfirm.setVisible(false);
         btnConfirm.setBounds(new Rectangle(620, 0, 200, 50));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
+
+        JLabel btnBack = new JLabel(new ImageIcon("./src/image/btnBack.png"));
         btnBack.setVisible(false);
         btnBack.setBounds(new Rectangle(620, 70, 200, 50));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        JLabel btnFile = new JLabel(new ImageIcon("./src/image/btnFile.png"));
         btnFile.setVisible(false);
         btnFile.setBounds(new Rectangle(620, 140, 200, 50));
         btnFile.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        
-        
-        
-        
-        //icon
-        JLabel lbAdd = new JLabel(new ImageIcon("./src/image/add-icon.png"));
-        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));      
-        btnAdd.add(lbAdd);
-
-        JLabel lbEdit = new JLabel(new ImageIcon("./src/image/icons8-gear-32.png"));
-        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));      
-        btnEdit.add(lbEdit);
-
-        JLabel lbDelete = new JLabel(new ImageIcon("./src/image/icons8-delete-32.png"));
-        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));      
-        btnDelete.add(lbDelete);
-       
-
-//        JLabel lbConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm.png"));       
-//
-//        JLabel lbBack = new JLabel(new ImageIcon("./src/image/btnBack.png"));
-//        
-//        JLabel lbFile = new JLabel(new ImageIcon("./src/image/btnFile.png"));
-        
         JLabel btnXuatExcel = new JLabel(new ImageIcon("./src/image/btnXuatExcel.png"));
         btnXuatExcel.setBounds(new Rectangle(820, 0, 200, 50));
         btnXuatExcel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -265,10 +208,6 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnNhapExcel.setBounds(new Rectangle(820, 60, 200, 50));
         btnNhapExcel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        //hiển thị
-        ItemView.add(btnAdd);
-        ItemView.add(btnEdit);
-        ItemView.add(btnDelete);
         ItemView.add(btnConfirm);
         ItemView.add(btnBack);
         ItemView.add(btnFile);
@@ -443,7 +382,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
         btnXuatExcel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-//                spBUS.exportProduct();    //LUU Y: LAM CHO NAY
+//                spBUS.ExportExcelDatabase();    //LUU Y: LAM CHO NAY
                 JOptionPane.showMessageDialog(null, "Xuat file excel thanh cong");
             }
         });
@@ -456,15 +395,11 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                 fc.setFileFilter(filter);
                 int result = fc.showOpenDialog(null);
                 if (result == JFileChooser.APPROVE_OPTION) {
-//                    try {
-                        File file = fc.getSelectedFile(); //Lấy URL
-//                        spBUS.importProduct(file);    //LUU Y: LAM CHO NAY
-                        spBUS.list();
-                        outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
-                        JOptionPane.showMessageDialog(null, "Nhap file excel thanh cong");
-//                    } catch (IOException | ParseException ex) {
-//                        Logger.getLogger(SanPhamGUI.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
+                    File file = fc.getSelectedFile(); //Lấy URL
+//                    spBUS.ImportExcelDatabase(file);    //LUU Y: LAM CHO NAY
+                    spBUS.list();
+                    outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
+                    JOptionPane.showMessageDialog(null, "Nhap file excel thanh cong");
                 }
             }
         });
@@ -539,7 +474,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         tbl.setShowVerticalLines(false);
         tbl.getTableHeader().setOpaque(false);
         tbl.setFillsViewportHeight(true);
-        tbl.getTableHeader().setBackground(new Color(134, 64, 0)); //232, 57, 99
+        tbl.getTableHeader().setBackground(new Color(232, 57, 99));
         tbl.getTableHeader().setForeground(Color.WHITE);
         tbl.setSelectionBackground(new Color(52, 152, 219));
 

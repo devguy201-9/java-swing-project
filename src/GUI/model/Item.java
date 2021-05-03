@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -45,7 +45,6 @@ public class Item extends JPanel{
         
         setLayout(null);
         setBounds(new Rectangle(x, y, 200, 300));
-//        setBackground(Color.red);
         JSeparator sep1 = new JSeparator(1);
         sep1.setBounds(new Rectangle(100,240,1,20));
 

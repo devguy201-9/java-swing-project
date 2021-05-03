@@ -93,7 +93,7 @@ public class NhanVienGUI extends JPanel {
 
         JPanel ItemView = new JPanel(null);
         ItemView.setBounds(new Rectangle(30, 20, this.DEFALUT_WIDTH - 220, 250));
-        ItemView.setBackground(Color.WHITE);
+        ItemView.setBackground(new Color(201, 211, 203));
 
         /**
          * ****** Tao Cac Label & TextField ***********************
@@ -450,7 +450,7 @@ public class NhanVienGUI extends JPanel {
         tbl.setShowVerticalLines(false);
         tbl.getTableHeader().setOpaque(false);
         tbl.setFillsViewportHeight(true);
-        tbl.getTableHeader().setBackground(new Color(232, 57, 99));
+        tbl.getTableHeader().setBackground(new Color(134, 64, 0)); //tieu de nâu
         tbl.getTableHeader().setForeground(Color.WHITE);
         tbl.setSelectionBackground(new Color(52, 152, 219));
 

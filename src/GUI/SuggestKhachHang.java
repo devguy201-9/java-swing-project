@@ -173,7 +173,7 @@ public class SuggestKhachHang extends JDialog {
         tbl.setShowVerticalLines(false);
         tbl.getTableHeader().setOpaque(false);
         tbl.setFillsViewportHeight(true);
-        tbl.getTableHeader().setBackground(new Color(232, 57, 99));
+        tbl.getTableHeader().setBackground(new Color(134, 64, 0));
         tbl.getTableHeader().setForeground(Color.WHITE);
         tbl.setSelectionBackground(new Color(52, 152, 219));
 
@@ -222,8 +222,8 @@ public class SuggestKhachHang extends JDialog {
         cmbChoice.setEditable(false);
         cmbChoice.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         cmbChoice.addItem("Mã KH");
-        cmbChoice.addItem("Tên KH");
         cmbChoice.addItem("Họ KH");
+        cmbChoice.addItem("Tên KH");
         cmbChoice.addItem("SĐT");
         cmbChoice.setBounds(new Rectangle(0, 0, 80, 30));
 
