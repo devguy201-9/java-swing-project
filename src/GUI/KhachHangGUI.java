@@ -350,8 +350,8 @@ public class KhachHangGUI extends JPanel {
         cmbChoice.setEditable(true);
         cmbChoice.setFont(new Font("Segoe UI",Font.PLAIN,14));
         cmbChoice.addItem("Mã KH");
-        cmbChoice.addItem("SĐT");     
         cmbChoice.addItem("Tên KH");
+        cmbChoice.addItem("SĐT");     
         cmbChoice.setBounds(new Rectangle(0,0,120,30));
         
         //Phần TextField
@@ -389,7 +389,7 @@ public class KhachHangGUI extends JPanel {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = txtSearch.getText();
-                int choice = cmbChoice.getSelectedIndex();
+                int choice = cmbChoice.getSelectedIndex() == 2 ? 3 : cmbChoice.getSelectedIndex();
                 
                 if (text.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
@@ -401,7 +401,7 @@ public class KhachHangGUI extends JPanel {
             @Override
             public void removeUpdate(DocumentEvent e) {
                 String text = txtSearch.getText();
-                int choice = cmbChoice.getSelectedIndex();
+                int choice = cmbChoice.getSelectedIndex() == 2 ? 3 : cmbChoice.getSelectedIndex();
                 
                 if (text.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
@@ -439,8 +439,8 @@ public class KhachHangGUI extends JPanel {
         {
             data = new Vector();
             data.add(n.getId_KH());
-            data.add(n.getLast_name());
             data.add(n.getFirst_name());
+            data.add(n.getLast_name());
             data.add(n.getPhone());            
             model.addRow(data);
         }

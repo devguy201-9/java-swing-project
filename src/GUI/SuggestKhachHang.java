@@ -144,8 +144,8 @@ public class SuggestKhachHang extends JDialog {
          */
         Vector header = new Vector();
         header.add("Mă KH");
-        header.add("Họ");
         header.add("Tên");
+        header.add("Họ");
         header.add("Số điện thoại");
         model = new MyTable(header, 5);
         tbl = new JTable(model);
@@ -222,8 +222,8 @@ public class SuggestKhachHang extends JDialog {
         cmbChoice.setEditable(false);
         cmbChoice.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         cmbChoice.addItem("Mã KH");
-        cmbChoice.addItem("Họ KH");
         cmbChoice.addItem("Tên KH");
+        cmbChoice.addItem("Họ KH");
         cmbChoice.addItem("SĐT");
         cmbChoice.setBounds(new Rectangle(0, 0, 80, 30));
 
@@ -301,8 +301,8 @@ public class SuggestKhachHang extends JDialog {
         for (KhachHangDTO s : kh) {
             data = new Vector();
             data.add(" " + s.getId_KH());
-            data.add(" " + s.getLast_name());
             data.add(" " + s.getFirst_name());
+            data.add(" " + s.getLast_name());
             data.add(" " + s.getPhone());
             model.addRow(data);
         }

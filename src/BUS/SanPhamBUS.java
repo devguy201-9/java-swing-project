@@ -132,16 +132,25 @@ public class SanPhamBUS {
 
     public ArrayList<SanPhamDTO> searchSP(int masp, int maloai, int max, int min) {
         ArrayList<SanPhamDTO> search = new ArrayList<>();
-        masp = (masp == 0) ? masp = 0 : masp;
-        maloai = maloai == 0 ? maloai = 0 : maloai;
 
         for (SanPhamDTO sp : spBUS) {
-            if ((sp.getId_SP() == masp)
-                    && (sp.getId_Loai() == maloai)
-                    && sp.getPrice() >= min
-                    && sp.getPrice() <= max) {
-                search.add(sp);
+            SanPhamDTO spTemp = null;
+            if(masp == 0 && maloai == 0 ) {
+                spTemp = sp;
+            } else if (masp == 0) {
+                if (sp.getId_Loai() == maloai) {
+                    spTemp = sp;
+                }
+            } else if (maloai == 0) {
+                if (sp.getId_SP() == masp) {
+                    spTemp = sp;
+                }
             }
+            
+            if (spTemp != null && spTemp.getPrice() >= min && spTemp.getPrice() <= max) {
+                search.add(spTemp);
+            }
+            
         }
         return search;
     }
