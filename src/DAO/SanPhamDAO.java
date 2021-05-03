@@ -6,7 +6,7 @@
 package DAO;
 
 import DTO.SanPhamDTO;
-import mapper.SanPhamMappper;
+import mapper.SanPhamMapper;
 import java.io.FileNotFoundException;
 import java.util.List;
 
@@ -19,14 +19,20 @@ public class SanPhamDAO extends AbstractDAO<SanPhamDTO> {
     public Integer save(SanPhamDTO sp) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO sanpham(id_Loai,name,");
         sql.append("descrption,amount,price,img)");
-        sql.append(" VALUES(?, ?, ?, ?, ?)");
+        sql.append(" VALUES(?, ?, ?, ?, ?, ?)");
         return insert(sql.toString(), sp.getId_Loai(), sp.getName(), sp.getDescrption(),
                 sp.getAmount(), sp.getPrice(), sp.getImg());
     }
 
     public List<SanPhamDTO> findAll() {
         String sql = "select * from sanpham";
-        return query(sql, new SanPhamMappper());
+        return query(sql, new SanPhamMapper());
+    }
+    
+    public SanPhamDTO getOneByName (String name){
+        String sql = "SELECT * FROM sanpham WHERE phone LIKE ?";
+        List<SanPhamDTO> sp = query(sql, new SanPhamMapper(), name);
+        return sp.isEmpty() ? null : sp.get(0);
     }
     
      public void delete(int idSP) throws FileNotFoundException {

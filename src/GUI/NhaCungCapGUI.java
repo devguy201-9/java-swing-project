@@ -74,6 +74,7 @@ public class NhaCungCapGUI extends JPanel{
         txtMaNCC.setFont(font0);
         txtMaNCC.setBorder(null);
         txtMaNCC.setBounds(new Rectangle(110, 0, 220, 30));
+        txtMaNCC.setEditable(false);
         
         lbTenNCC = new JLabel("Tên NCC");
         lbTenNCC.setFont(font1);
@@ -171,7 +172,7 @@ public class NhaCungCapGUI extends JPanel{
                 
                 EditOrAdd = true;
                 
-                txtMaNCC.setEditable(!EditOrAdd);
+                txtMaNCC.setEditable(false);
                 btnAdd.setVisible(!EditOrAdd);
                 btnEdit.setVisible(!EditOrAdd);
                 btnDelete.setVisible(!EditOrAdd);
@@ -269,7 +270,7 @@ public class NhaCungCapGUI extends JPanel{
         header.add("Tên NCC");
         header.add("Địa chỉ");
         header.add("SDT");
-        model = new DefaultTableModel(header, 4);
+        model = new MyTable(header, 4);
         tbl = new JTable(model);
         //sap xep
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
@@ -327,6 +328,7 @@ public class NhaCungCapGUI extends JPanel{
         cmbChoice.addItem("Địa chỉ");
         cmbChoice.addItem("SDT");
         cmbChoice.setBounds(new Rectangle(0, 180, 100, 30));
+        cmbChoice.setEditable(false);
         
         // Custem Icon search
         iconSearch = new JLabel(new ImageIcon("./src/image/search_25px.png"));
@@ -403,7 +405,7 @@ public class NhaCungCapGUI extends JPanel{
 
 //FUNCTION
     public void cleanView(){
-        txtMaNCC.setEditable(true);
+        txtMaNCC.setEditable(false);
         txtTenNCC.setText("");
         txtDiaChi.setText("");
         txtDienThoai.setText("");

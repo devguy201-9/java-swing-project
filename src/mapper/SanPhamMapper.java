@@ -13,7 +13,7 @@ import java.sql.SQLException;
  *
  * @author Asus
  */
-public class SanPhamMappper implements RowMapper<SanPhamDTO>{
+public class SanPhamMapper implements RowMapper<SanPhamDTO>{
 
     @Override
     public SanPhamDTO mapRow(ResultSet rs) {

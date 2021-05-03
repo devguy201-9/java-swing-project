@@ -24,6 +24,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -93,6 +94,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         Font font1 = new Font("Segoe UI", Font.BOLD, 13);     
         Font font2 = new Font("Tahoma", Font.PLAIN, 25);
         
+        LoaiModel loaiModel = listLoai();
         
         /**
          * **************************** PHẦN HIỂN THỊ THÔNG TIN *****************************************
@@ -111,6 +113,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         txtId = new JTextField("");
         txtId.setBounds(new Rectangle(100, 0, 220, 30));
         txtId.setFont(font0);
+        txtId.setEditable(false);
 
         JLabel lbName = new JLabel("Tên Sản Phẩm");
         lbName.setBounds(new Rectangle(0, 40, 200, 30));
@@ -143,10 +146,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         JLabel lbLoai = new JLabel("Loại");
         lbLoai.setBounds(new Rectangle(0, 200, 40, 30));
         lbLoai.setFont(font1);
-        cmbLoai = new JComboBox();
+        cmbLoai = new JComboBox<>(loaiModel);
         cmbLoai.setFont(font0);
         cmbLoai.setBounds(new Rectangle(100, 200, 100, 30));
-        listLoai(cmbLoai);
 
         img = new JLabel("Thêm hình");
         img.setBorder(createLineBorder(Color.BLACK));
@@ -442,7 +444,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
         btnXuatExcel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-//                spBUS.ExportExcelDatabase();    //LUU Y: LAM CHO NAY
+//                spBUS.exportProduct();    //LUU Y: LAM CHO NAY
                 JOptionPane.showMessageDialog(null, "Xuat file excel thanh cong");
             }
         });
@@ -455,11 +457,15 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                 fc.setFileFilter(filter);
                 int result = fc.showOpenDialog(null);
                 if (result == JFileChooser.APPROVE_OPTION) {
-                    File file = fc.getSelectedFile(); //Lấy URL
-//                    spBUS.ImportExcelDatabase(file);    //LUU Y: LAM CHO NAY
-                    spBUS.list();
-                    outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
-                    JOptionPane.showMessageDialog(null, "Nhap file excel thanh cong");
+//                    try {
+                        File file = fc.getSelectedFile(); //Lấy URL
+//                        spBUS.importProduct(file);    //LUU Y: LAM CHO NAY
+                        spBUS.list();
+                        outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
+                        JOptionPane.showMessageDialog(null, "Nhap file excel thanh cong");
+//                    } catch (IOException | ParseException ex) {
+//                        Logger.getLogger(SanPhamGUI.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
                 }
             }
         });
@@ -482,7 +488,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         header.add("Loại");
 //        header.add("Mă NSX");
         header.add("IMG");
-        model = new DefaultTableModel(header, 0) {
+        model = new MyTable(header, 0) {
             public Class getColumnClass(int column) {
                 switch (column) {
                     case 0:
@@ -670,7 +676,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         sortMaSP = new JTextField("");
         sortMaSP.setFont(font0);
         sortMaSP.setBounds(new Rectangle(50, 42, 100, 30));
-        sortMaSP.addKeyListener(this);
+//        sortMaSP.addKeyListener(this);
         sort.add(sortMaSP);
         /**
          * **********************************
@@ -684,13 +690,11 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         lbSortMaLoai.setBounds(170, 40, 40, 30);
         sort.add(lbSortMaLoai);
 
-        cmbSortLoai = new JComboBox();
-        cmbSortLoai.setEditable(true);
+        cmbSortLoai = new JComboBox<>(loaiModel);
+        cmbSortLoai.setEditable(false);
         cmbSortLoai.setFont(font0);
         cmbSortLoai.setBounds(new Rectangle(210, 42, 110, 30));
-        cmbSortLoai.addItem("Tất cả");
         cmbSortLoai.addKeyListener(this);
-        listLoai(cmbSortLoai);
         sort.add(cmbSortLoai);
 
         /**
@@ -742,17 +746,28 @@ public class SanPhamGUI extends JPanel implements KeyListener {
     }
 
     //FUNCTION
-    public void addCombo(JComboBox cmb, ArrayList list) {
-        for (Object a : list) {
-            cmb.addItem(a);
-        }
+    public void addCombo(JComboBox cmb,LoaiModel loai) {
+//        for (Object a : list) {
+//            cmb.addItem(a);
+//        }
+        cmb.addItem(loai);
     }
 
-    public void listLoai(JComboBox cmb)
+    public LoaiModel listLoai()
     {
         if(loaiBUS.getLoaiBUS()== null)loaiBUS.list();
-        ArrayList<LoaiDTO> loai = (ArrayList<LoaiDTO>) loaiBUS.getLoaiBUS();
-        addCombo(cmb, loai);
+        LoaiDTO[] loai = new LoaiDTO[loaiBUS.getLoaiBUS().size()+1];
+        LoaiDTO all = new LoaiDTO();
+        all.setId_Loai(0);
+        all.setName("Loại sản phẩm");
+        int i =0;
+        loai[i] = all;
+        for (LoaiDTO loaiDTO : loaiBUS.getLoaiBUS()) {
+            i++;
+            loai[i] = loaiDTO;
+        }
+        LoaiModel model = new LoaiModel(loai);
+        return  model;
     }
 
     public void listSP() // Chép ArrayList lên table
@@ -768,7 +783,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
     //FUNCTION FOR BTN
     public void cleanView() //Xóa trắng các TextField
     {
-        txtId.setEditable(true);
+        txtId.setEditable(false);
 
         txtId.setText("");
         txtTenSP.setText("");
@@ -815,9 +830,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
     }
 
     public void search() {
-        int masp = Integer.parseInt(sortMaSP.getText());
+        int masp = sortMaSP.getText().equals("") ? 0 : Integer.parseInt(sortMaSP.getText());
         int maloai = 0;
-//        String mansx = "";
+        String mansx = "";
         if (cmbSortLoai.getSelectedIndex() != 0) {
             LoaiDTO loai = (LoaiDTO) cmbSortLoai.getSelectedItem();
             maloai = loai.getId_Loai();

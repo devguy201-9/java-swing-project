@@ -75,6 +75,7 @@ public class KhachHangGUI extends JPanel {
         lbMaKH.setBounds(new Rectangle(50,0,200,30));
         lbMaKH.setFont(font0);
         txtMaKH.setBounds(new Rectangle(150,0,220,30));
+        txtMaKH.setEditable(false);
         
         JLabel lbSDT = new JLabel("Số điện thoại");
         txtSDT = new JTextField("");
@@ -284,10 +285,10 @@ public class KhachHangGUI extends JPanel {
 /************** TẠO MODEL VÀ HEADER *********************/
         Vector header = new Vector();
         header.add("Mă KH");
-        header.add("Họ KH");
         header.add("Tên KH");
+        header.add("Họ KH");
         header.add("SĐT");
-        model = new DefaultTableModel(header,5);
+        model = new MyTable(header,5);
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
@@ -350,9 +351,10 @@ public class KhachHangGUI extends JPanel {
         cmbChoice.setEditable(true);
         cmbChoice.setFont(new Font("Segoe UI",Font.PLAIN,14));
         cmbChoice.addItem("Mã KH");
-        cmbChoice.addItem("SĐT");     
         cmbChoice.addItem("Tên KH");
+        cmbChoice.addItem("SĐT");     
         cmbChoice.setBounds(new Rectangle(0,0,120,30));
+        cmbChoice.setEditable(false);
         
         //Phần TextField
         JTextField txtSearch = new JTextField();
@@ -389,7 +391,7 @@ public class KhachHangGUI extends JPanel {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = txtSearch.getText();
-                int choice = cmbChoice.getSelectedIndex();
+                int choice = cmbChoice.getSelectedIndex() == 2 ? 3 : cmbChoice.getSelectedIndex();
                 
                 if (text.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
@@ -401,7 +403,7 @@ public class KhachHangGUI extends JPanel {
             @Override
             public void removeUpdate(DocumentEvent e) {
                 String text = txtSearch.getText();
-                int choice = cmbChoice.getSelectedIndex();
+                int choice = cmbChoice.getSelectedIndex() == 2 ? 3 : cmbChoice.getSelectedIndex();
                 
                 if (text.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
@@ -423,7 +425,7 @@ public class KhachHangGUI extends JPanel {
     
     public void cleanView() //Xóa trắng các TextField
     {
-        txtMaKH.setEditable(true);
+        txtMaKH.setEditable(false);
 
         txtMaKH.setText("");
         txtHoKH.setText("");
@@ -439,8 +441,8 @@ public class KhachHangGUI extends JPanel {
         {
             data = new Vector();
             data.add(n.getId_KH());
-            data.add(n.getLast_name());
             data.add(n.getFirst_name());
+            data.add(n.getLast_name());
             data.add(n.getPhone());            
             model.addRow(data);
         }
