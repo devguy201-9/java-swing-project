@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import BUS.RandomCode;
 import BUS.LoaiBUS;
 import BUS.SanPhamBUS;
 import DTO.LoaiDTO;
@@ -78,7 +79,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
     private JComboBox cmbNSX;
     private JComboBox cmbSortLoai;
     private JComboBox cmbSortNSX;
-    private JButton btnAdd,btnEdit,btnDelete,btnConfirm,btnBack,btnFile;
+    private JButton btnAdd, btnEdit, btnDelete, btnConfirm, btnBack, btnFile;
+
+    private boolean tableSelectionActive = true;
 
     //        
     public SanPhamGUI(int width) {
@@ -91,15 +94,16 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         setBackground(null);
         setBounds(new Rectangle(50, 0, this.DEFALUT_WIDTH - 220, 1000));
         Font font0 = new Font("Segoe UI", Font.PLAIN, 13);
-        Font font1 = new Font("Segoe UI", Font.BOLD, 13);     
+        Font font1 = new Font("Segoe UI", Font.BOLD, 13);
         Font font2 = new Font("Tahoma", Font.PLAIN, 25);
-        
-        LoaiModel loaiModel = listLoai();
-        
-        /**
-         * **************************** PHẦN HIỂN THỊ THÔNG TIN *****************************************
-         */
 
+        LoaiModel loaiModel1 = listLoai();
+        LoaiModel loaiModel2 = listLoai();
+
+        /**
+         * **************************** PHẦN HIỂN THỊ THÔNG TIN
+         * *****************************************
+         */
         JPanel ItemView = new JPanel(null);
         ItemView.setBounds(new Rectangle(30, 20, this.DEFALUT_WIDTH - 220, 250));
         ItemView.setBackground(new Color(201, 211, 203));
@@ -128,6 +132,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         txtSl = new JTextField("");
         txtSl.setBounds(new Rectangle(100, 80, 220, 30));
         txtSl.setFont(font0);
+        txtSl.setInputVerifier(new MyInputVerifier());
 
         JLabel lbGia = new JLabel("Đơn giá (VNĐ)");
         lbGia.setBounds(new Rectangle(0, 120, 200, 30));
@@ -135,6 +140,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         txtGia = new JTextField("");
         txtGia.setBounds(new Rectangle(100, 120, 220, 30));
         txtGia.setFont(font0);
+        txtGia.setInputVerifier(new MyInputVerifier());
 
         JLabel lbmota = new JLabel("Mô tả");
         lbmota.setBounds(new Rectangle(0, 160, 200, 30));
@@ -146,7 +152,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         JLabel lbLoai = new JLabel("Loại");
         lbLoai.setBounds(new Rectangle(0, 200, 40, 30));
         lbLoai.setFont(font1);
-        cmbLoai = new JComboBox<>(loaiModel);
+        cmbLoai = new JComboBox<>(loaiModel1);
         cmbLoai.setFont(font0);
         cmbLoai.setBounds(new Rectangle(100, 200, 100, 30));
 
@@ -174,7 +180,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
          */
         /**
          * ************** TẠO CÁC BTN THÊM ,XÓA, SỬA *******************
-         */  
+         */
 //        btnEdit,btnDelete,btnConfirm,btnBack,btnFile
         btnAdd = new JButton("THÊM");
         btnEdit = new JButton("SỬA");
@@ -182,21 +188,21 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnConfirm = new JButton("XÁC NHẬN");
         btnBack = new JButton("QUAY LẠI");
         btnFile = new JButton("CHỌN ẢNH");
-               
+
         //font chữ
-        btnAdd.setFont(font2);        
+        btnAdd.setFont(font2);
         btnAdd.setForeground(Color.WHITE);
-        btnEdit.setFont(font2);        
+        btnEdit.setFont(font2);
         btnEdit.setForeground(Color.WHITE);
-        btnDelete.setFont(font2);        
+        btnDelete.setFont(font2);
         btnDelete.setForeground(Color.WHITE);
-        btnConfirm.setFont(font2);        
+        btnConfirm.setFont(font2);
         btnConfirm.setForeground(Color.WHITE);
-        btnBack.setFont(font2);        
+        btnBack.setFont(font2);
         btnBack.setForeground(Color.WHITE);
-        btnFile.setFont(font2);        
+        btnFile.setFont(font2);
         btnFile.setForeground(Color.WHITE);
-        
+
         //màu nền
         Color colorAdd = new Color(85, 239, 196);
         btnAdd.setBackground(colorAdd);
@@ -210,22 +216,21 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnBack.setBackground(colorBack);
         Color colorFile = new Color(60, 64, 198);
         btnFile.setBackground(colorFile);
-        
-        
+
         //vị trí và con trỏ
         btnAdd.setBounds(new Rectangle(620, 0, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
+
         btnEdit.setBounds(new Rectangle(620, 70, 200, 50));
         btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
+
         btnDelete.setBounds(new Rectangle(620, 140, 200, 50));
         btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
+
         btnConfirm.setVisible(false);
         btnConfirm.setBounds(new Rectangle(620, 0, 200, 50));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
+
         btnBack.setVisible(false);
         btnBack.setBounds(new Rectangle(620, 70, 200, 50));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -234,30 +239,24 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnFile.setBounds(new Rectangle(620, 140, 200, 50));
         btnFile.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        
-        
-        
-        
         //icon
         JLabel lbAdd = new JLabel(new ImageIcon("./src/image/add-icon.png"));
-        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));      
+        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));
         btnAdd.add(lbAdd);
 
         JLabel lbEdit = new JLabel(new ImageIcon("./src/image/icons8-gear-32.png"));
-        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));      
+        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));
         btnEdit.add(lbEdit);
 
         JLabel lbDelete = new JLabel(new ImageIcon("./src/image/icons8-delete-32.png"));
-        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));      
+        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));
         btnDelete.add(lbDelete);
-       
 
 //        JLabel lbConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm.png"));       
 //
 //        JLabel lbBack = new JLabel(new ImageIcon("./src/image/btnBack.png"));
 //        
 //        JLabel lbFile = new JLabel(new ImageIcon("./src/image/btnFile.png"));
-        
         JLabel btnXuatExcel = new JLabel(new ImageIcon("./src/image/btnXuatExcel.png"));
         btnXuatExcel.setBounds(new Rectangle(820, 0, 200, 50));
         btnXuatExcel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -281,7 +280,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 EditOrAdd = true;
-
+                tableSelectionActive=false;
                 cleanView();
 
                 btnAdd.setVisible(false);
@@ -300,6 +299,10 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         // MouseClick btnDelete
         btnDelete.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+                if (txtId.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xóa !!!");
+                    return;
+                }
                 int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     spBUS.delete(txtId.getText());
@@ -317,7 +320,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần sửa !!!");
                     return;
                 }
-
+                tableSelectionActive=false;
                 EditOrAdd = false;
 
                 txtId.setEditable(false);
@@ -347,7 +350,8 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                     try {
                         File file = fc.getSelectedFile(); //Lấy URL hình
                         i = ImageIO.read(file); // Lấy hình
-                        imgName = txtId.getText().concat(".jpg"); //Tên hình
+                        String name = RandomCode.randomAlphaNumeric(8);
+                        imgName = name.concat(".jpg"); //Tên hình
 
                         // Thay đổi hình hiển thị
                         img.setText("");
@@ -366,7 +370,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnBack.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 cleanView();
-
+                tableSelectionActive=true;
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
                 btnDelete.setVisible(true);
@@ -388,26 +392,26 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                     i = JOptionPane.showConfirmDialog(null, "Xác nhận thêm sản phẩm", "", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {
                         //Lấy dữ liệu từ TextField
-                        int maSP = Integer.parseInt(txtId.getText());
                         String tenSP = txtTenSP.getText();
-                        int sl = Integer.parseInt(txtSl.getText());
-                        int gia = Integer.parseInt(txtGia.getText());
+                        int sl = txtSl.getText().equals("") ?  0 : Integer.parseInt(txtSl.getText());
+                        float gia = txtGia.getText().equals("") ?  0 : Float.parseFloat(txtGia.getText());
                         String mota = txtMT.getText();
                         LoaiDTO loai = (LoaiDTO) cmbLoai.getSelectedItem();
                         int maLoai = loai.getId_Loai();
                         String IMG = imgName;
-                        if (spBUS.checkMasp(maSP)) {
-                            JOptionPane.showMessageDialog(null, "Mã sản phẩm đă tồn tại !!!");
+                        //Upload sản phẩm lên DAO và BUS
+                        if (tenSP.equals("") || sl ==0 || gia == 0 || mota.equals("") ||IMG.equals("") || maLoai == 0) {
+                            JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin để thêm sản phẩm", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
                             return;
                         }
-                        //Upload sản phẩm lên DAO và BUS
                         SanPhamDTO sp = new SanPhamDTO(maLoai, sl, tenSP, mota, gia, IMG);
                         spBUS.add(sp);
 
                         outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
 
                         saveIMG();// Lưu hình ảnh 
-
+                         JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                         tableSelectionActive=true;
                         cleanView();
                     }
                 } else // Edit Sản phẩm
@@ -418,27 +422,27 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         int maSP = Integer.parseInt(txtId.getText());
                         String tenSP = txtTenSP.getText();
                         int sl = Integer.parseInt(txtSl.getText());
-                        int gia = Integer.parseInt(txtGia.getText());
+                         float gia = Float.parseFloat(txtGia.getText());
                         String mota = txtMT.getText();
-                        
+
                         LoaiDTO loai = (LoaiDTO) cmbLoai.getSelectedItem();
                         int maLoai = loai.getId_Loai();
 
                         String IMG = imgName;
-
+                         if (tenSP.equals("") || sl ==0 || gia == 0 || mota.equals("") ||IMG.equals("") || maLoai == 0) {
+                            JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin để thêm sản phẩm", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            return;
+                        }
                         //Upload sản phẩm lên DAO và BUS
                         SanPhamDTO sp = new SanPhamDTO(maLoai, sl, tenSP, mota, gia, IMG);
+                        sp.setId_SP(maSP);
                         spBUS.set(sp);
-
                         outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
-
                         saveIMG();// Lưu hình ảnh 
-
                         JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-
+                        tableSelectionActive=true;
                     }
                 }
-
             }
         });
 
@@ -458,11 +462,11 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                 int result = fc.showOpenDialog(null);
                 if (result == JFileChooser.APPROVE_OPTION) {
 //                    try {
-                        File file = fc.getSelectedFile(); //Lấy URL
+                    File file = fc.getSelectedFile(); //Lấy URL
 //                        spBUS.importProduct(file);    //LUU Y: LAM CHO NAY
-                        spBUS.list();
-                        outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
-                        JOptionPane.showMessageDialog(null, "Nhap file excel thanh cong");
+                    spBUS.list();
+                    outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
+                    JOptionPane.showMessageDialog(null, "Nhap file excel thanh cong");
 //                    } catch (IOException | ParseException ex) {
 //                        Logger.getLogger(SanPhamGUI.class.getName()).log(Level.SEVERE, null, ex);
 //                    }
@@ -474,7 +478,8 @@ public class SanPhamGUI extends JPanel implements KeyListener {
          * *************************************************************
          */
         /**
-         * *********************** PHẦN TABLE ************************************
+         * *********************** PHẦN TABLE
+         * ************************************
          */
         /**
          * ************ TẠO MODEL VÀ HEADER ********************
@@ -514,7 +519,8 @@ public class SanPhamGUI extends JPanel implements KeyListener {
          */
 
         /**
-         * ************** TẠO TABLE ***********************************************************
+         * ************** TẠO TABLE
+         * ***********************************************************
          */
         // Chỉnh width các cột 
         tbl.getColumnModel().getColumn(0).setPreferredWidth(40);
@@ -557,31 +563,35 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
         tbl.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                int i = tbl.getSelectedRow();
-                if (tbl.getRowSorter() != null) {
-                    i = tbl.getRowSorter().convertRowIndexToModel(i);
-                }
-                imgName = tbl.getModel().getValueAt(i, 6).toString();
-                Image newImage;
-                try {
-                    newImage = new ImageIcon("./src/image/SanPham/" + imgName).getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
-                } catch (NullPointerException E) {
-                    newImage = new ImageIcon("./src/image/SanPham/NoImage.jpg").getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
-                }
-                txtId.setText(tbl.getModel().getValueAt(i, 0).toString());
-                txtTenSP.setText(tbl.getModel().getValueAt(i, 1).toString());
-                txtSl.setText(tbl.getModel().getValueAt(i, 2).toString());
-                txtGia.setText(tbl.getModel().getValueAt(i, 3).toString());
-                txtMT.setText(tbl.getModel().getValueAt(i, 4).toString());
-                cmbLoai.setSelectedItem(loaiBUS.searchMaLoai((int) tbl.getModel().getValueAt(i, 5)));
+                if (tableSelectionActive) {
 
-                img.setText("");
-                img.setIcon(new ImageIcon(newImage));
+                    int i = tbl.getSelectedRow();
+                    if (tbl.getRowSorter() != null) {
+                        i = tbl.getRowSorter().convertRowIndexToModel(i);
+                    }
+                    imgName = tbl.getModel().getValueAt(i, 6).toString();
+                    Image newImage;
+                    try {
+                        newImage = new ImageIcon("./src/image/SanPham/" + imgName).getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
+                    } catch (NullPointerException E) {
+                        newImage = new ImageIcon("./src/image/SanPham/NoImage.jpg").getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
+                    }
+                    txtId.setText(tbl.getModel().getValueAt(i, 0).toString());
+                    txtTenSP.setText(tbl.getModel().getValueAt(i, 1).toString());
+                    txtSl.setText(tbl.getModel().getValueAt(i, 2).toString());
+                    txtGia.setText(tbl.getModel().getValueAt(i, 3).toString());
+                    txtMT.setText(tbl.getModel().getValueAt(i, 4).toString());
+                    cmbLoai.setSelectedItem(loaiBUS.searchMaLoai((int) tbl.getModel().getValueAt(i, 5)));
+
+                    img.setText("");
+                    img.setIcon(new ImageIcon(newImage));
+                }
 
             }
         });
         /**
-         * ******************* THANH SEARCH **********************************************
+         * ******************* THANH SEARCH
+         * **********************************************
          */
 
 //         Tạo Search Box
@@ -690,7 +700,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         lbSortMaLoai.setBounds(170, 40, 40, 30);
         sort.add(lbSortMaLoai);
 
-        cmbSortLoai = new JComboBox<>(loaiModel);
+        cmbSortLoai = new JComboBox<>(loaiModel2);
         cmbSortLoai.setEditable(false);
         cmbSortLoai.setFont(font0);
         cmbSortLoai.setBounds(new Rectangle(210, 42, 110, 30));
@@ -700,7 +710,6 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         /**
          * **********************************
          */
-        
         /**
          * ********** SORT THEO GIÁ **************
          */
@@ -746,28 +755,29 @@ public class SanPhamGUI extends JPanel implements KeyListener {
     }
 
     //FUNCTION
-    public void addCombo(JComboBox cmb,LoaiModel loai) {
+    public void addCombo(JComboBox cmb, LoaiModel loai) {
 //        for (Object a : list) {
 //            cmb.addItem(a);
 //        }
         cmb.addItem(loai);
     }
 
-    public LoaiModel listLoai()
-    {
-        if(loaiBUS.getLoaiBUS()== null)loaiBUS.list();
-        LoaiDTO[] loai = new LoaiDTO[loaiBUS.getLoaiBUS().size()+1];
+    public LoaiModel listLoai() {
+        if (loaiBUS.getLoaiBUS() == null) {
+            loaiBUS.list();
+        }
+        LoaiDTO[] loai = new LoaiDTO[loaiBUS.getLoaiBUS().size() + 1];
         LoaiDTO all = new LoaiDTO();
         all.setId_Loai(0);
         all.setName("Loại sản phẩm");
-        int i =0;
+        int i = 0;
         loai[i] = all;
         for (LoaiDTO loaiDTO : loaiBUS.getLoaiBUS()) {
             i++;
             loai[i] = loaiDTO;
         }
         LoaiModel model = new LoaiModel(loai);
-        return  model;
+        return model;
     }
 
     public void listSP() // Chép ArrayList lên table
@@ -793,7 +803,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
         img.setIcon(null);
         img.setText("Image");
-
+        cmbLoai.setSelectedIndex(0);
         imgName = "null";
     }
 

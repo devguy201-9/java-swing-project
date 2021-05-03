@@ -41,9 +41,9 @@ public class SanPhamDAO extends AbstractDAO<SanPhamDTO> {
     }
 
     public void update(SanPhamDTO spUpdate) throws FileNotFoundException {
-        StringBuilder sql = new StringBuilder("UPDATE taikhoan SET id_Loai = ? , name = ? ,");
-        sql.append(" descrption = ?, amount = ?, price = ? WHERE id_SP = ?");
-        update(sql.toString(), spUpdate.getId_Loai(), spUpdate.getName(), spUpdate.getDescrption(), spUpdate.getAmount(), spUpdate.getPrice(), spUpdate.getImg());
+        StringBuilder sql = new StringBuilder("UPDATE sanpham SET id_Loai = ? , name = ? ,");
+        sql.append(" descrption = ?, amount = ?, price = ?, img = ? WHERE id_SP = ?");
+        update(sql.toString(), spUpdate.getId_Loai(), spUpdate.getName(), spUpdate.getDescrption(), spUpdate.getAmount(), spUpdate.getPrice(), spUpdate.getImg(), spUpdate.getId_SP());
     }
 
 }
