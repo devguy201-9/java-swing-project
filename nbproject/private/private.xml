@@ -3,11 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Asus/Desktop/coffeeManagement/src/BUS/SanPhamBUS.java</file>
-            <file>file:/C:/Users/Asus/Desktop/coffeeManagement/src/GUI/SuggestKhachHang.java</file>
-            <file>file:/C:/Users/Asus/Desktop/coffeeManagement/src/GUI/SuggestNhanVien.java</file>
-            <file>file:/C:/Users/Asus/Desktop/coffeeManagement/src/GUI/SanPhamGUI.java</file>
-            <file>file:/C:/Users/Asus/Desktop/coffeeManagement/src/GUI/LoaiModel.java</file>
+            <file>file:/C:/Users/Asus/Desktop/coffeeManagement/src/GUI/NhaCungCapGUI.java</file>
+            <file>file:/C:/Users/Asus/Desktop/coffeeManagement/src/GUI/TaiKhoanGUI.java</file>
             <file>file:/C:/Users/Asus/Desktop/coffeeManagement/src/GUI/KhachHangGUI.java</file>
         </group>
     </open-files>

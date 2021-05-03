@@ -116,14 +116,19 @@ public class NhanVienBUS {
 
     public ArrayList<NhanVienDTO> search(int manv, String name, String phone, String phai) {
         ArrayList<NhanVienDTO> search = new ArrayList<>();
-        manv = (manv == 0) ? manv = 0 : manv;
-        name = name.isEmpty() ? name = "" : name;
-        phone = phone.isEmpty() ? phone = "" : phone;
+        name = name.toLowerCase();
+        Gender gender = Gender.female;
+        if (!phai.equals("")) {
+            if (phai.equals("Nam")) {
+                gender = Gender.male;
+            } else if (phai.equals("Nữ")) {
+                gender = Gender.female;
+            }
+        }
         for (NhanVienDTO nv : nvBUS) {
-            if ((nv.getId_NV() == manv)
-                    && nv.getName().contains(name)
-                    && nv.getPhone().contains(phone)
-                    && nv.getGender().equals(phai)) {
+            if ((nv.getId_NV() == manv) && nv.getName().toLowerCase().contains(name) && nv.getPhone().contains(phone) && ( nv.getGender().toString().equals(gender.toString()) || phai.equals(""))) {
+                search.add(nv);
+            } else if ((manv == 0) && nv.getName().toLowerCase().contains(name) && nv.getPhone().contains(phone) && ( nv.getGender().toString().equals(gender.toString()) || phai.equals(""))) {
                 search.add(nv);
             }
         }

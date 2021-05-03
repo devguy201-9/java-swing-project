@@ -103,6 +103,7 @@ public class NhanVienGUI extends JPanel {
         lbMaNV.setFont(font0);
         txtMaNV = new JTextField("");
         txtMaNV.setBounds(new Rectangle(350, 0, 220, 30));
+        txtMaNV.setEditable(false);
 
         JLabel lbHoNV = new JLabel("Họ và tên");
         lbHoNV.setBounds(new Rectangle(250, 40, 200, 30));
@@ -137,7 +138,7 @@ public class NhanVienGUI extends JPanel {
         JLabel lbPhai = new JLabel("Phái");
         lbPhai.setBounds(new Rectangle(250, 200, 30, 30));
         lbPhai.setFont(font0);
-        String[] phai = {"Nam", "Nữ"};   //LUU Y: dua vao Array cua gender?
+        String[] phai = {"Nam", "Nữ"};
         cmbPhai = new JComboBox(phai);
         cmbPhai.setBounds(new Rectangle(290, 200, 80, 30));
 
@@ -209,7 +210,7 @@ public class NhanVienGUI extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 EditOrAdd = true;
-                txtMaNV.requestFocus();
+                txtHoNV.requestFocus();
                 cleanView();
 
                 btnAdd.setVisible(false);
@@ -400,7 +401,7 @@ public class NhanVienGUI extends JPanel {
         header.add("Ngày bắt đầu");
         header.add("Địa chỉ");
         header.add("IMG");
-        model = new DefaultTableModel(header, 5) {
+        model = new MyTable(header, 5) {
             public Class getColumnClass(int column) {
                 switch (column) {
                     case 0:
@@ -648,9 +649,7 @@ public class NhanVienGUI extends JPanel {
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSearch.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                System.out.println(sortPhai.getSelectedItem());
-                System.out.println(sortPhai.getSelectedIndex());
-                int manv = Integer.parseInt(sortMaNV.getText());
+                int manv =sortMaNV.getText().equals("") ? 0 : Integer.parseInt(sortMaNV.getText());
                 String hoten = sortHoNV.getText();
                 String sdt = sortSDT.getText();
                 String phai = sortPhai.getSelectedIndex() != 0 ? sortPhai.getSelectedItem() : "";
@@ -669,7 +668,7 @@ public class NhanVienGUI extends JPanel {
     //FUNCTION
     public void cleanView() //Xóa trắng các TextField
     {
-        txtMaNV.setEditable(true);
+        txtMaNV.setEditable(false);
 
         txtMaNV.setText("");
         txtHoNV.setText("");
@@ -694,7 +693,11 @@ public class NhanVienGUI extends JPanel {
             data.add(n.getName());
             data.add(n.getPhone());
             data.add(n.getAge());
-            data.add(n.getGender());
+            if (n.getGender() == Gender.female) {
+                data.add("Nữ");
+            } else {
+                data.add("Nam");
+            }
             data.add(n.getStart_day());
             data.add(n.getAddress());
             data.add(n.getImg());

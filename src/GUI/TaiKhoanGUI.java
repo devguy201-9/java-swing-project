@@ -68,6 +68,7 @@ public class TaiKhoanGUI extends JPanel{
         lbMaNV.setBounds(20,20,100,30);
         txtMaNV = new JTextField();
         txtMaNV.setBounds(new Rectangle(120,20,250,30));
+        txtMaNV.setEditable(false);
         itemView.add(lbMaNV);
         itemView.add(txtMaNV);
         
@@ -79,7 +80,7 @@ public class TaiKhoanGUI extends JPanel{
         itemView.add(lbUser);
         itemView.add(txtUser);
         
-        lbPass = new JLabel("Password");
+        lbPass = new JLabel("Mật khẩu");
         lbPass.setFont(font0);
         lbPass.setBounds(20,120,100,30);
         txtPass = new JTextField("");
@@ -203,7 +204,7 @@ public class TaiKhoanGUI extends JPanel{
         header.add("Username");
         header.add("Pass");
         header.add("Role");
-        model = new DefaultTableModel(header,5);
+        model = new MyTable(header,5);
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
@@ -283,7 +284,7 @@ public class TaiKhoanGUI extends JPanel{
     
     public void cleanView() //Xóa trắng các TextField
     {
-        txtMaNV.setEditable(true);
+        txtMaNV.setEditable(false);
 
         txtMaNV.setText("");
         txtUser.setText("");

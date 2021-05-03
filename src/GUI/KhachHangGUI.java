@@ -75,6 +75,7 @@ public class KhachHangGUI extends JPanel {
         lbMaKH.setBounds(new Rectangle(50,0,200,30));
         lbMaKH.setFont(font0);
         txtMaKH.setBounds(new Rectangle(150,0,220,30));
+        txtMaKH.setEditable(false);
         
         JLabel lbSDT = new JLabel("Số điện thoại");
         txtSDT = new JTextField("");
@@ -284,10 +285,10 @@ public class KhachHangGUI extends JPanel {
 /************** TẠO MODEL VÀ HEADER *********************/
         Vector header = new Vector();
         header.add("Mă KH");
-        header.add("Họ KH");
         header.add("Tên KH");
+        header.add("Họ KH");
         header.add("SĐT");
-        model = new DefaultTableModel(header,5);
+        model = new MyTable(header,5);
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
@@ -353,6 +354,7 @@ public class KhachHangGUI extends JPanel {
         cmbChoice.addItem("Tên KH");
         cmbChoice.addItem("SĐT");     
         cmbChoice.setBounds(new Rectangle(0,0,120,30));
+        cmbChoice.setEditable(false);
         
         //Phần TextField
         JTextField txtSearch = new JTextField();
@@ -423,7 +425,7 @@ public class KhachHangGUI extends JPanel {
     
     public void cleanView() //Xóa trắng các TextField
     {
-        txtMaKH.setEditable(true);
+        txtMaKH.setEditable(false);
 
         txtMaKH.setText("");
         txtHoKH.setText("");
