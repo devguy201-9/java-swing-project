@@ -55,7 +55,7 @@ public class QLCoffee extends JFrame implements MouseListener {
 
 //    ****************************Header****************************************
         header = new JPanel(null);
-        header.setBackground(new Color(27, 27, 30));
+        header.setBackground(new Color(25, 25, 34));
         header.setPreferredSize(new Dimension(DEFALUT_WIDTH, 40));
 
         header hmain = new header(DEFALUT_WIDTH, 40);
@@ -99,7 +99,8 @@ public class QLCoffee extends JFrame implements MouseListener {
 
 //       *************************************nav********************************
         nav = new JPanel(null);
-        nav.setBackground(new Color(55, 63, 81));
+//        nav.setBackground(new Color(55, 63, 81));
+        nav.setBackground(new Color(204, 142, 53));
         nav.setPreferredSize(new Dimension(220, DEFAULT_HEIGHT));
 
         JScrollPane scroll = new JScrollPane(nav);
@@ -121,7 +122,7 @@ public class QLCoffee extends JFrame implements MouseListener {
          * ********** PHẦN MAIN ( HIỂN THỊ ) *************************
          */
         main = new JPanel(null);
-        main.setBackground(Color.WHITE);
+        main.setBackground(new Color(201, 211, 203));
         navObj.get(0).doActive();
         changeMainInfo(0);  //HIEN THI MAC DINH BAN HANG
         /**
@@ -146,8 +147,8 @@ public class QLCoffee extends JFrame implements MouseListener {
         }
         if (!flag && navObj.size() > 8) //Đổi màu phần DropDown của thống kê
         {
-            navObj.get(5).setColorNormal(new Color(86, 94, 127));
-            navObj.get(6).setColorNormal(new Color(86, 94, 127));
+            navObj.get(5).setColorNormal(new Color(255, 177, 66));
+            navObj.get(6).setColorNormal(new Color(255, 177, 66));
         }
 
         //Xuất ra Naigation
@@ -225,13 +226,13 @@ public class QLCoffee extends JFrame implements MouseListener {
                 break;
             case 7: //NHÀ CUNG CẤP
                 main.removeAll();
-//                main.add(new NhaCungCapGUI(DEFALUT_WIDTH));
+                main.add(new NhaCungCapGUI(DEFALUT_WIDTH));
                 main.repaint();
                 main.revalidate();
                 break;
             case 8: //USER
                 main.removeAll();
-//                main.add(new UserGUI(DEFALUT_WIDTH));
+                main.add(new TaiKhoanGUI(DEFALUT_WIDTH));
                 main.repaint();
                 main.revalidate();
                 break;

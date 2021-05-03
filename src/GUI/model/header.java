@@ -38,7 +38,7 @@ public class header extends JPanel{
         JLabel logo = new JLabel(new ImageIcon("./src/image/SieuThi_25px.png"),JLabel.CENTER);
         logo.setBounds(new Rectangle(30,10, 25, 25));
         Font font = new Font("Segoe UI",Font.BOLD,15);
-        JLabel name = new JLabel("QUẢN LÝ SIÊU THỊ",JLabel.CENTER);
+        JLabel name = new JLabel("QUẢN LÝ COFFEE",JLabel.CENTER);
         name.setFont(font);
         name.setForeground(Color.white);
         name.setBounds(new Rectangle(60, 0, 150, 40));
