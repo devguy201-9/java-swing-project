@@ -26,6 +26,18 @@ public class KhachHangBUS {
     public List<KhachHangDTO> getKhBUS() {
         return khBUS;
     }
+    
+    public KhachHangDTO getCustomerById(String MaKH)
+    {
+        for(KhachHangDTO kh : khBUS )
+        {
+            if(kh.getId_KH()== Integer.parseInt(MaKH))
+            {
+                return kh;
+            }
+        }
+        return null;
+    }
 
     public void list() {
         KhachHangDAO hdDAO = new KhachHangDAO();

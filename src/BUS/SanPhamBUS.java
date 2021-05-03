@@ -112,9 +112,9 @@ public class SanPhamBUS {
         return true;
     }
 
-    public SanPhamDTO getSP(int masp) {
+    public SanPhamDTO getSP(String masp) {
         for (SanPhamDTO sp : spBUS) {
-            if (sp.getId_SP() == masp) {
+            if (sp.getId_SP() == Integer.parseInt(masp)) {
                 return sp;
             }
         }
