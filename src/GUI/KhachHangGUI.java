@@ -236,7 +236,7 @@ public class KhachHangGUI extends JPanel {
                     if(i == 0)
                     {
                         //Lấy dữ liệu từ TextField
-                        int maKH = Integer.parseInt(txtMaKH.getText());
+                        String maKH = txtMaKH.getText();
                         String hoKH = txtHoKH.getText();
                         String tenKH = txtTenKH.getText();
                         String dienThoai = txtSDT.getText();

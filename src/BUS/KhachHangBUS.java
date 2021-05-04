@@ -86,9 +86,9 @@ public class KhachHangBUS {
         }
     }
 
-    public boolean check(int makh) {
+    public boolean check(String makh) {
         for (KhachHangDTO kh : khBUS) {
-            if (kh.getId_KH() == makh) {
+            if (String.valueOf(kh.getId_KH()).equals(makh)) {
                 return true;
             }
         }

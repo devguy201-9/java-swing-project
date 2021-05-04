@@ -319,7 +319,7 @@ public class NhanVienGUI extends JPanel {
                     if (i == 0) {
                         try {
                             //Lấy dữ liệu từ TextField
-                            int maNV = Integer.parseInt(txtMaNV.getText());
+                            
                             String hoTen = txtHoNV.getText();
                             String sdt = txtSDT.getText();
                             int namSinh = Integer.parseInt(txtNamSinh.getText());
@@ -328,12 +328,12 @@ public class NhanVienGUI extends JPanel {
                             String diaChi = txtDiaChi.getText();
                             String IMG = imgName;
 
-                            if (nvBUS.check(maNV)) {
+                            if (nvBUS.check(txtMaNV.getText())) {
                                 JOptionPane.showMessageDialog(null, "Mã nhân viên đă tồn tại !!!");
                                 return;
                             }
                             //Upload nhân viên lên DAO và BUS
-                            NhanVienDTO nv = new NhanVienDTO(maNV, IMG, diaChi, phai, Gender.male, ngayBD, IMG);
+                            NhanVienDTO nv = new NhanVienDTO(namSinh, hoTen, diaChi, sdt, Gender.male, ngayBD, IMG);
                             nvBUS.add(nv);
 //                        TaiKhoanBUS usBUS = new TaiKhoanBUS();
 //                        TaiKhoanDTO user = new TaiKhoanDTO(maNV, removeAccent(sdt.concat(maNV)).toLowerCase(), "123456", "Nhân Viên", "1");

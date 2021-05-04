@@ -100,9 +100,9 @@ public class SanPhamBUS {
         }
     }
 
-    public boolean checkSL(int masp, int sl) {
+    public boolean checkSL(String masp, int sl) {
         for (SanPhamDTO sp : spBUS) {
-            if (sp.getId_SP() == masp) {
+            if (String.valueOf(sp.getId_SP()).equals(masp)) {
                 if (sl > sp.getAmount()) {
                     JOptionPane.showMessageDialog(null, "Không đủ hàng");
                     return false;

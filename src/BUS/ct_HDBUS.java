@@ -32,6 +32,20 @@ public class ct_HDBUS {
         ct_hdBUS = new ArrayList<>();
         ct_hdBUS = cthdDAO.findAll();
     }
+    
+    public ArrayList<Integer> getHDBySP(int maSP)
+    {
+        ArrayList<Integer> s = new ArrayList<>();
+//        if(maSP.isEmpty()) return null;
+        for(ct_HoaDonDTO ct : ct_hdBUS)
+        {
+            if(ct.getId_SP()==(maSP))
+            {
+                s.add(ct.getId_HD());
+            }
+        }
+        return s;
+    }
 
     public void add(ct_HoaDonDTO cthdDTO) {
         ct_hdBUS.add(cthdDTO);

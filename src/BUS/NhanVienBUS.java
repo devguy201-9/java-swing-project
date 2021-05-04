@@ -119,9 +119,9 @@ public class NhanVienBUS {
 
     
     
-    public boolean check(int manv) {
+    public boolean check(String manv) {
         for (NhanVienDTO nv : nvBUS) {
-            if (nv.getId_NV() == manv) {
+            if (String.valueOf(nv.getId_NV()).equals(manv)) {
                 return true;
             }
         }

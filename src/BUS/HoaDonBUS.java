@@ -91,9 +91,9 @@ public class HoaDonBUS {
         return s + (max + 1);
     }
 
-    public boolean check(int maHD) {
+    public boolean check(String maHD) {
         for (HoaDonDTO hd : hdBUS) {
-            if (hd.getId() == maHD) {
+            if (String.valueOf(hd.getId()).equals(maHD)) {
                 return true;
             }
         }
@@ -128,5 +128,57 @@ public class HoaDonBUS {
         return list;
     }
     
-    
+    public ArrayList<HoaDonDTO> search( int mm, int yyy,double max, double min,ArrayList<String> mahd)
+    {
+        int mm1 = 0, mm2 = 12;
+        int yyy1 = 0, yyy2 = Calendar.getInstance().get(Calendar.YEAR);
+        
+        if(mm != -1)
+        {
+            mm1 = mm;
+            mm2 = mm;
+        }
+        if(yyy != 0)
+        {
+            yyy1 = yyy;
+            yyy2 = yyy;
+        }
+        
+        ArrayList<HoaDonDTO> ds = getListWidthArray(mahd);
+        ArrayList<HoaDonDTO> search = new ArrayList<>();
+        for(HoaDonDTO hd : ds)
+        {
+            Timestamp time = hd.getCreate_day();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(time.getTime());;
+            
+            int month = calendar.get(Calendar.MONTH);
+            int year = calendar.get(Calendar.YEAR);
+            
+            if( hd.getTotal_money()>= min && hd.getTotal_money()<= max 
+                && (month >= mm1 && month <= mm2)
+                && (year >= yyy1 && year <= yyy2))
+            {
+                search.add(hd);
+            }
+        }
+        return search;
+    }
+    public ArrayList<HoaDonDTO> getListWidthArray(ArrayList<String> s)
+    {
+        ArrayList<HoaDonDTO> ds = new ArrayList<>();
+        if(s == null) return (ArrayList<HoaDonDTO>) hdBUS;
+        for(HoaDonDTO hd : hdBUS)
+        {
+            String mahd = String.valueOf(hd.getId());
+            for(String a: s)
+            {
+                if(mahd.equals(a))
+                {
+                    ds.add(hd);
+                }
+            }
+        }
+        return ds;
+    }
 }

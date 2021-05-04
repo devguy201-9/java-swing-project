@@ -154,7 +154,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         lbLoai.setFont(font1);
         cmbLoai = new JComboBox<>(loaiModel1);
         cmbLoai.setFont(font0);
-        cmbLoai.setBounds(new Rectangle(100, 200, 100, 30));
+        cmbLoai.setBounds(new Rectangle(100, 200, 110, 30));
 
         img = new JLabel("Thêm hình");
         img.setBorder(createLineBorder(Color.BLACK));
