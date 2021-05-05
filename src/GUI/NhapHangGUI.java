@@ -6,13 +6,10 @@
 package GUI;
 
 
-import BUS.HoaDonBUS;
 import BUS.PhieuNhapHangBUS;
-import BUS.ct_HDBUS;
 import BUS.ct_PhieuNhapHangBUS;
 import DTO.HoaDonDTO;
 import DTO.PhieuNhapHangDTO;
-import DTO.ct_HoaDonDTO;
 import DTO.ct_PhieuNhapHangDTO;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Choice;
@@ -57,8 +54,8 @@ public class NhapHangGUI extends JPanel{
     private ct_PhieuNhapHangBUS ctBUS = new ct_PhieuNhapHangBUS();
     private int DEFAULT_WIDTH;
     
-    private JLabel lbMaHD,lbMaKH,lbMaNV,lbNgayHD,lbTongTien;
-    private JTextField txtMaHD,txtMaKH,txtMaNV,txtNgayHD,txtTongTien;
+    private JLabel lbMaPNH,lbMaNCC,lbMaNV,lbNgayHD,lbTongTien;
+    private JTextField txtMaPNH,txtMaNCC,txtMaNV,txtNgayHD,txtTongTien;
     private JDateChooser dateChoice;
     
     private JLabel btnEdit,btnDelete,btnView,btnBill,btnConfirm,btnBack;
@@ -88,23 +85,23 @@ public class NhapHangGUI extends JPanel{
         itemView.setBackground(null);
         itemView.setBounds(new Rectangle(30,40,this.DEFAULT_WIDTH - 200,120));
         
-        lbMaHD = new JLabel("Mã HD");
-        lbMaHD.setFont(font1);
-        lbMaHD.setBounds(0,0,55,30);
-        txtMaHD = new JTextField();
-        txtMaHD.setFont(font0);
-        txtMaHD.setBounds(new Rectangle(55,0,80,30));
-        itemView.add(lbMaHD);
-        itemView.add(txtMaHD);
+        lbMaPNH = new JLabel("Mã PN");
+        lbMaPNH.setFont(font1);
+        lbMaPNH.setBounds(0,0,55,30);
+        txtMaPNH = new JTextField();
+        txtMaPNH.setFont(font0);
+        txtMaPNH.setBounds(new Rectangle(55,0,80,30));
+        itemView.add(lbMaPNH);
+        itemView.add(txtMaPNH);
                        
-        lbMaKH = new JLabel("Mã KH");
-        lbMaKH.setFont(font0);
-        lbMaKH.setBounds(155,0,60,30);
-        txtMaKH = new JTextField();
-        txtMaKH.setFont(font0);
-        txtMaKH.setBounds(new Rectangle(215,0,80,30));
-        itemView.add(lbMaKH);
-        itemView.add(txtMaKH);
+        lbMaNCC = new JLabel("Mã NCC");
+        lbMaNCC.setFont(font0);
+        lbMaNCC.setBounds(155,0,60,30);
+        txtMaNCC = new JTextField();
+        txtMaNCC.setFont(font0);
+        txtMaNCC.setBounds(new Rectangle(215,0,80,30));
+        itemView.add(lbMaNCC);
+        itemView.add(txtMaNCC);
 
         lbMaNV = new JLabel("Mã NV");
         lbMaNV.setFont(font0);
@@ -115,9 +112,9 @@ public class NhapHangGUI extends JPanel{
         itemView.add(lbMaNV);
         itemView.add(txtMaNV);
 
-        lbNgayHD = new JLabel("Ngày HD");
+        lbNgayHD = new JLabel("Ngày Nhập");
         lbNgayHD.setFont(font0);
-        lbNgayHD.setBounds(0,40,60,30);
+        lbNgayHD.setBounds(0,40,70,30);
         txtNgayHD = new JTextField();
         txtNgayHD.setFont(font0);        
         txtNgayHD.setBounds(new Rectangle(80,40,375,30));
@@ -138,13 +135,14 @@ public class NhapHangGUI extends JPanel{
         itemView.add(lbTongTien);
         itemView.add(txtTongTien);
         
+        
+        JSeparator sepHD = new JSeparator(0);
+        sepHD.setBounds(new Rectangle(0, 180, this.DEFAULT_WIDTH - 350, 3));
+        add(sepHD);
+        
         add(itemView);
 
 /**************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL ********************/
-
-//        btnEdit = new JLabel(new ImageIcon("./src/image/btnEdit.png"));
-//        btnEdit.setBounds(new Rectangle(500,0,200,50));
-//        btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
        
         
         btnDelete = new JLabel(new ImageIcon(("./src/image/btnDelete.png")));
@@ -182,8 +180,8 @@ public class NhapHangGUI extends JPanel{
             public void mouseCliced(MouseEvent e){
                 int mess = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Thông báo", JOptionPane.YES_NO_OPTION);
                 if(mess == 0){ //yes
-                    pnhBUS.delete(txtMaHD.getText());
-                    ctBUS.delete(txtMaHD.getText());
+                    pnhBUS.delete(txtMaPNH.getText());
+                    ctBUS.delete(txtMaPNH.getText());
                     cleanView();
                     tbl.clearSelection();
                     outModel(model, (ArrayList<PhieuNhapHangDTO>) pnhBUS.getPnhBUS());
@@ -197,15 +195,15 @@ public class NhapHangGUI extends JPanel{
         btnView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                CT_HoaDonGUI chitiet = new CT_HoaDonGUI(txtMaHD.getText());
+                CT_NhapHangGUI chitiet = new CT_NhapHangGUI(txtMaPNH.getText());
             }
         });
         
         // In Bill
         btnBill.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e){
-                int maHD = Integer.parseInt(txtMaHD.getText());
-                int maKH = Integer.parseInt(txtMaKH.getText());
+                int maHD = Integer.parseInt(txtMaPNH.getText());
+                int maKH = Integer.parseInt(txtMaNCC.getText());
                 int maNv = Integer.parseInt(txtMaNV.getText());
                 Timestamp ngayLap = Timestamp.valueOf(txtNgayHD.getText());
                 float tongTien = Float.parseFloat(txtTongTien.getText());
@@ -247,10 +245,10 @@ public class NhapHangGUI extends JPanel{
         
  /****************** TẠO MODEL VÀ HEADER *********************************************/
         Vector header = new Vector();
-        header.add("Mă Hóa Đơn");
-        header.add("Mă Khách hàng");
+        header.add("Mă Phiếu Nhập");
+        header.add("Mă Nhà cung cấp");
         header.add("Mã Nhân Viên");
-        header.add("Ngày Lập HD");
+        header.add("Ngày Nhập");
         header.add("Tổng Tiền");
         model = new DefaultTableModel(header,5)
         {
@@ -313,14 +311,14 @@ public class NhapHangGUI extends JPanel{
                 {
                     i = tbl.getRowSorter().convertRowIndexToModel(i);
                 }
-                txtMaHD.setText(tbl.getModel().getValueAt(i, 0).toString());
+                txtMaPNH.setText(tbl.getModel().getValueAt(i, 0).toString());
                 try
                 {
-                    txtMaKH.setText(tbl.getModel().getValueAt(i, 1).toString());
+                    txtMaNCC.setText(tbl.getModel().getValueAt(i, 1).toString());
                 }
                 catch(NullPointerException ex)
                 {
-                    txtMaKH.setText("");
+                    txtMaNCC.setText("");
                 }
                 txtMaNV.setText(tbl.getModel().getValueAt(i, 2).toString()); 
                 txtNgayHD.setText(tbl.getModel().getValueAt(i, 3).toString());
@@ -334,10 +332,10 @@ public class NhapHangGUI extends JPanel{
         sort.setBackground(null);
         sort.setBounds(30,170,this.DEFAULT_WIDTH - 400,140);
         
-        JLabel sortTitle = new JLabel("------------------------------------------------------------------------------------ BỘ LỌC ------------------------------------------------------------------------------------",JLabel.CENTER); // Mỗi bên 84 dấu ( - )
-        sortTitle.setFont(font1);
-        sortTitle.setBounds(new Rectangle(0,0,this.DEFAULT_WIDTH - 400,30));
-        sort.add(sortTitle);
+//        JLabel sortTitle = new JLabel("------------------------------------------------------------------------------------ BỘ LỌC ------------------------------------------------------------------------------------",JLabel.CENTER); // Mỗi bên 84 dấu ( - )
+//        sortTitle.setFont(font1);
+//        sortTitle.setBounds(new Rectangle(0,0,this.DEFAULT_WIDTH - 400,30));
+//        sort.add(sortTitle);
         
         /******** SORT THỜI GIAN **************/
         JLabel sortTime = new JLabel("Thời gian :");
@@ -443,8 +441,8 @@ public class NhapHangGUI extends JPanel{
     }
     
     public void cleanView()  {
-      txtMaHD.setText("");
-      txtMaKH.setText("");
+      txtMaPNH.setText("");
+      txtMaNCC.setText("");
       txtMaNV.setText("");
       txtNgayHD.setText("");
       txtTongTien.setText("");

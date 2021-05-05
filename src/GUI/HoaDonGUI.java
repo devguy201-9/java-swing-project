@@ -127,6 +127,10 @@ public class HoaDonGUI extends JPanel{
         itemView.add(lbTongTien);
         itemView.add(txtTongTien);
         
+        JSeparator sepHD = new JSeparator(0);
+        sepHD.setBounds(new Rectangle(0, 180, this.DEFAULT_WIDTH - 350, 3));
+        add(sepHD);
+        
         add(itemView);
 
 /**************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL ********************/
@@ -352,11 +356,7 @@ public class HoaDonGUI extends JPanel{
         JPanel sort = new JPanel(null);
         sort.setBackground(null);
         sort.setBounds(30,170,this.DEFAULT_WIDTH - 400,140);
-        
-        JLabel sortTitle = new JLabel("------------------------------------------------------------------------------------ BỘ LỌC ------------------------------------------------------------------------------------",JLabel.CENTER); // Mỗi bên 84 dấu ( - )
-        sortTitle.setFont(font1);
-        sortTitle.setBounds(new Rectangle(0,0,this.DEFAULT_WIDTH - 400,30));
-        sort.add(sortTitle);
+               
         
         /******** SORT THỜI GIAN **************/
         JLabel sortTime = new JLabel("Thời gian :");

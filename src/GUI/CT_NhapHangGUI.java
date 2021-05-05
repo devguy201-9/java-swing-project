@@ -5,12 +5,9 @@
  */
 package GUI;
 
-
-import BUS.HoaDonBUS;
-import BUS.ct_HDBUS;
-import DTO.HoaDonDTO;
-import DTO.PhieuNhapHangDTO;
-import DTO.ct_HoaDonDTO;
+import BUS.PhieuNhapHangBUS;
+import BUS.ct_PhieuNhapHangBUS;
+import DTO.ct_PhieuNhapHangDTO;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -34,10 +31,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ACER
  */
-public class CT_HoaDonGUI extends JFrame{
+class CT_NhapHangGUI extends JFrame{
 
-    private ct_HDBUS ctBUS = new ct_HDBUS();
-    private HoaDonBUS hdBUS = new HoaDonBUS();
+    private ct_PhieuNhapHangBUS ctBUS = new ct_PhieuNhapHangBUS();
+    private PhieuNhapHangBUS pnhBUS = new PhieuNhapHangBUS();
     private String mahd;
     private JTextField txtMaSP,txtSL,txtDonGia;
     private DefaultTableModel model;
@@ -45,14 +42,14 @@ public class CT_HoaDonGUI extends JFrame{
     private int DWIDTH = 840;
     private JTextField txtTenSP;
     
-    public CT_HoaDonGUI(String mahd)
+    public CT_NhapHangGUI(String mahd)
     {
         this.mahd = mahd;
         init();
     }
     
     public void init(){
-        setTitle("Chi tiết hóa đơn");
+        setTitle("Chi tiết phiếu nhập");
         setSize(DWIDTH,450);
         getContentPane().setBackground(new Color(25, 25, 34));
         setLayout(null);
@@ -63,7 +60,7 @@ public class CT_HoaDonGUI extends JFrame{
         Font font1 = new Font("Segoe UI",Font.BOLD,13);
         
         //HEADER
-        JLabel title = new JLabel("CHI TIẾT HÓA ĐƠN : "+mahd,JLabel.CENTER);
+        JLabel title = new JLabel("CHI TIẾT PHIẾU NHẬP : "+mahd,JLabel.CENTER);
         title.setFont(ftitle);
         title.setForeground(Color.WHITE);
         title.setBounds(0, 0, DWIDTH, 60);
@@ -73,23 +70,23 @@ public class CT_HoaDonGUI extends JFrame{
         itemView.setBounds(new Rectangle(0, 60,this.getSize().width, this.getSize().height - 150));
         itemView.setBackground(new Color(223, 230, 233));
         
-        JLabel lbMaSP = new JLabel("Mã sản phẩm ");
+        JLabel lbMaSP = new JLabel("Mã nguyên liệu ");
         lbMaSP.setFont(font0);
         lbMaSP.setBounds(20,20,100,30);
         txtMaSP = new JTextField();
         txtMaSP.setBounds(new Rectangle(120,20,210,30));
         itemView.add(lbMaSP);
         itemView.add(txtMaSP);
-        txtMaSP.setEditable(false);
         
-        JLabel lbTenSP = new JLabel("Tên sản phẩm ");
+        
+        JLabel lbTenSP = new JLabel("Tên guyên liệu ");
         lbTenSP.setFont(font0);
         lbTenSP.setBounds(20,60,100,30);
         txtTenSP = new JTextField();
         txtTenSP.setBounds(new Rectangle(120,60,210,30));
         itemView.add(lbTenSP);
         itemView.add(txtTenSP);
-        txtTenSP.setEditable(false);
+        
         
         JLabel lbSL = new JLabel("Số lượng ");
         lbSL.setFont(font0);
@@ -98,7 +95,7 @@ public class CT_HoaDonGUI extends JFrame{
         txtSL.setBounds(new Rectangle(120,100,210,30));
         itemView.add(lbSL);
         itemView.add(txtSL);
-        txtSL.setEditable(false);
+        
         
         JLabel lbDonGia = new JLabel("Đơn giá ");
         lbDonGia.setFont(font0);
@@ -107,15 +104,18 @@ public class CT_HoaDonGUI extends JFrame{
         txtDonGia.setBounds(new Rectangle(120,140,210,30));
         itemView.add(lbDonGia);
         itemView.add(txtDonGia);
-        txtDonGia.setEditable(false);
+        
 /**************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL ********************/
 
+        JLabel btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd_150px.png"));
+        btnAdd.setBounds(new Rectangle(20,180,150,50));
+        btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete_150px.png"));
-        btnDelete.setBounds(new Rectangle(80,180,150,50));
+        btnDelete.setBounds(new Rectangle(180,180,150,50));
         btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));    
         
-
+        itemView.add(btnAdd);
         itemView.add(btnDelete);
         
         // MouseClick btnDelete
@@ -123,11 +123,11 @@ public class CT_HoaDonGUI extends JFrame{
             public void mouseCliced(MouseEvent e){
                 int mess = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Thông báo", JOptionPane.YES_NO_OPTION);
                 if(mess == 0){ //yes
-                    hdBUS.delete(txtMaSP.getText());
+                    pnhBUS.delete(txtMaSP.getText());
                     ctBUS.delete(txtMaSP.getText());
                     cleanView();
                     tbl.clearSelection();
-                    outModel(model, (ArrayList<ct_HoaDonDTO>) ctBUS.getCt_hdBUS());
+                    outModel(model, (ArrayList<ct_PhieuNhapHangDTO>) ctBUS.getCt_pnhBUS());
                     
                 }
                 
@@ -203,35 +203,18 @@ public class CT_HoaDonGUI extends JFrame{
       txtDonGia.setText("");     
     }
     
-    public void outModel(DefaultTableModel model, ArrayList<ct_HoaDonDTO> hd){     //xuat tu arraylist len table
+    public void outModel(DefaultTableModel model, ArrayList<ct_PhieuNhapHangDTO> hd){     //xuat tu arraylist len table
         Vector data;
         model.setRowCount(0);
-        for(ct_HoaDonDTO h : hd){
+        for(ct_PhieuNhapHangDTO h : hd){
             data = new Vector();
-            data.add(h.getId_SP());
-            data.add(h.getName());
+            data.add(h.getId_PNH());
+            data.add(h.getId_NL());
             data.add(h.getAmount());
             data.add(h.getPrice());
-            data.add(h.getId_HD());
+            data.add(h.getName());
             model.addRow(data);
         }
         tbl.setModel(model);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
