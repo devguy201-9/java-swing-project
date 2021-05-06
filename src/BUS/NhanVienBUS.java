@@ -27,35 +27,35 @@ import java.util.List;
  * @author Asus
  */
 public class NhanVienBUS {
-
+    
     private List<NhanVienDTO> nvBUS;
-
+    
     public NhanVienBUS() {
         nvBUS = null;
     }
-
+    
     public List<NhanVienDTO> getNvBUS() {
         return nvBUS;
     }
-
+    
     public void list() {
         NhanVienDAO nvDAO = new NhanVienDAO();
         nvBUS = new ArrayList<>();
         nvBUS = nvDAO.findAll();
     }
-
+    
     public NhanVienDTO getEmployeeByPhone(String phone) {
         NhanVienDAO nvDAO = new NhanVienDAO();
         NhanVienDTO nv = nvDAO.getOneByPhone(phone);
         return nv;
     }
-
+    
     public NhanVienDTO getEmployeeByGender(Gender phai) {
         NhanVienDAO nvDAO = new NhanVienDAO();
         nvBUS.add(nvDAO.getOneByGender(phai));
         return nvBUS.get(nvBUS.size());
     }
-
+    
     public NhanVienDTO getEmployeeById(String MaNV) //Như thêm á?? hên xui :>>
     {
         for (NhanVienDTO nv : nvBUS) {
@@ -65,17 +65,17 @@ public class NhanVienBUS {
         }
         return null;
     }
-
+    
     public void add(NhanVienDTO nvDTO) {
         NhanVienDAO nvDAO = new NhanVienDAO();
         try {
-            nvDAO.save(nvDTO);
-            nvBUS.add(nvDAO.getOneByPhone(nvDTO.getPhone()));
+            int id = nvDAO.save(nvDTO);
+            nvBUS.add(nvDAO.findOneByCode(id));
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
-
+    
     public void delete(String id) {
         int idNV = Integer.parseInt(id);
         for (NhanVienDTO nvDTO : nvBUS) {
@@ -91,7 +91,7 @@ public class NhanVienBUS {
             }
         }
     }
-
+    
     public void set(NhanVienDTO nvDTO) {
         for (int i = 0; i < nvBUS.size(); i++) {
             if (nvBUS.get(i).getId_NV() == nvDTO.getId_NV()) {
@@ -109,7 +109,7 @@ public class NhanVienBUS {
             }
         }
     }
-
+    
     public boolean check(String manv) {
         for (NhanVienDTO nv : nvBUS) {
             if (String.valueOf(nv.getId_NV()).equals(manv)) {
@@ -118,7 +118,7 @@ public class NhanVienBUS {
         }
         return false;
     }
-
+    
     public ArrayList<NhanVienDTO> search(int manv, String name, String phone, String phai) {
         ArrayList<NhanVienDTO> search = new ArrayList<>();
         name = name.toLowerCase();

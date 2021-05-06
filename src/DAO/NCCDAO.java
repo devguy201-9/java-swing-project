@@ -37,10 +37,5 @@ public class NCCDAO extends AbstractDAO<NhaCungCapDTO>{
         sql.append(" phone = ? WHERE id_NCC = ?");
         update(sql.toString(), ncc.getName_NCC(),ncc.getAddress(),ncc.getPhone(),ncc.getId_NCC());
     }
-    
-    public NhaCungCapDTO getOneByPhone(String phone) {
-        String sql = "SELECT * FROM nhacungcap WHERE phone = ?";
-        List<NhaCungCapDTO> ncc = query(sql, new NCCMapper(), phone);
-        return ncc.isEmpty() ? null : ncc.get(0);
-    }
+ 
 }
