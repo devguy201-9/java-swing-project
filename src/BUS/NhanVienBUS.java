@@ -6,17 +6,9 @@
 package BUS;
 
 import DAO.NhanVienDAO;
-import DAO.SanPhamDAO;
 import DTO.Gender;
 import DTO.NhanVienDTO;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
-import static java.lang.String.valueOf;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 //import java.util.Date;
 import java.util.List;
@@ -57,30 +49,28 @@ public class NhanVienBUS {
         NhanVienDTO nv = nvDAO.getOneByPhone(phone);
         return nv;
     }
-    
-    public NhanVienDTO getEmployeeByGender(Gender phai){
+
+    public NhanVienDTO getEmployeeByGender(Gender phai) {
         NhanVienDAO nvDAO = new NhanVienDAO();
         nvBUS.add(nvDAO.getOneByGender(phai));
-        return nvBUS.get(nvBUS.size());        
+        return nvBUS.get(nvBUS.size());
     }
 
-    public NhanVienDTO getEmployeeById(String MaNV)        //Như thêm á?? hên xui :>>
+    public NhanVienDTO getEmployeeById(String MaNV) //Như thêm á?? hên xui :>>
     {
-        for(NhanVienDTO nv : nvBUS )
-        {
-            if(nv.getId_NV()==Integer.parseInt(MaNV))
-            {
+        for (NhanVienDTO nv : nvBUS) {
+            if (nv.getId_NV() == Integer.parseInt(MaNV)) {
                 return nv;
             }
         }
         return null;
     }
-    
+
     public void add(NhanVienDTO nvDTO) {
-        nvBUS.add(nvDTO);
         NhanVienDAO nvDAO = new NhanVienDAO();
         try {
             nvDAO.save(nvDTO);
+            nvBUS.add(nvDAO.getOneByPhone(nvDTO.getPhone()));
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -105,10 +95,13 @@ public class NhanVienBUS {
     public void set(NhanVienDTO nvDTO) {
         for (int i = 0; i < nvBUS.size(); i++) {
             if (nvBUS.get(i).getId_NV() == nvDTO.getId_NV()) {
-                nvBUS.set(i, nvDTO);
+                if (nvDTO.getImg().equals("null")) {
+                    nvDTO.setImg(nvBUS.get(i).getImg());
+                }
                 NhanVienDAO nvDAO = new NhanVienDAO();
                 try {
                     nvDAO.update(nvDTO);
+                    nvBUS.set(i, nvDAO.findOneByCode(nvBUS.get(i).getId_NV()));
                 } catch (FileNotFoundException e) {
                     System.out.println(e.getMessage());
                 }
@@ -117,8 +110,6 @@ public class NhanVienBUS {
         }
     }
 
-    
-    
     public boolean check(String manv) {
         for (NhanVienDTO nv : nvBUS) {
             if (String.valueOf(nv.getId_NV()).equals(manv)) {
@@ -140,15 +131,14 @@ public class NhanVienBUS {
             }
         }
         for (NhanVienDTO nv : nvBUS) {
-            if ((nv.getId_NV() == manv) && nv.getName().toLowerCase().contains(name) && nv.getPhone().contains(phone) && ( nv.getGender().toString().equals(gender.toString()) || phai.equals(""))) {
+            if ((nv.getId_NV() == manv) && nv.getName().toLowerCase().contains(name) && nv.getPhone().contains(phone) && (nv.getGender().toString().equals(gender.toString()) || phai.equals(""))) {
                 search.add(nv);
-            } else if ((manv == 0) && nv.getName().toLowerCase().contains(name) && nv.getPhone().contains(phone) && ( nv.getGender().toString().equals(gender.toString()) || phai.equals(""))) {
+            } else if ((manv == 0) && nv.getName().toLowerCase().contains(name) && nv.getPhone().contains(phone) && (nv.getGender().toString().equals(gender.toString()) || phai.equals(""))) {
                 search.add(nv);
             }
         }
         return search;
     }
-
 
 //    public void export(String excelFilePath){
 //    
