@@ -16,17 +16,17 @@ import java.util.List;
  * @author Asus
  */
 public class KhachHangBUS {
-    
+
     private List<KhachHangDTO> khBUS;
-    
+
     public KhachHangBUS() {
         khBUS = null;
     }
-    
+
     public List<KhachHangDTO> getKhBUS() {
         return khBUS;
     }
-    
+
     public KhachHangDTO getCustomerById(String MaKH) {
         for (KhachHangDTO kh : khBUS) {
             if (kh.getId_KH() == Integer.parseInt(MaKH)) {
@@ -35,23 +35,23 @@ public class KhachHangBUS {
         }
         return null;
     }
-    
+
     public void list() {
         KhachHangDAO hdDAO = new KhachHangDAO();
         khBUS = new ArrayList<>();
         khBUS = hdDAO.findAll();
     }
-    
+
     public void add(KhachHangDTO khDTO) {
         KhachHangDAO khDAO = new KhachHangDAO();
         try {
-            khDAO.save(khDTO);
-            khBUS.add(khDAO.getOneByPhone(khDTO.getPhone()));
+            khDTO.setId_KH(khDAO.save(khDTO));
+            khBUS.add(khDTO);
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public void delete(String id) {
         int idKhachHang = Integer.parseInt(id);
         for (KhachHangDTO khachHangDTO : khBUS) {
@@ -67,7 +67,7 @@ public class KhachHangBUS {
             }
         }
     }
-    
+
     public void set(KhachHangDTO khachHangDTO) {
         for (int i = 0; i < khBUS.size(); i++) {
             if (khBUS.get(i).getId_KH() == khachHangDTO.getId_KH()) {
@@ -82,7 +82,7 @@ public class KhachHangBUS {
             }
         }
     }
-    
+
     public boolean check(String makh) {
         for (KhachHangDTO kh : khBUS) {
             if (String.valueOf(kh.getId_KH()).equals(makh)) {
