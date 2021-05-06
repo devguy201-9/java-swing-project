@@ -34,10 +34,10 @@ public class NCCBUS {
     }
 
     public void add(NhaCungCapDTO nccDTO) {
-        nccBUS.add(nccDTO);
         NCCDAO nccDAO = new NCCDAO();
         try {
             nccDAO.save(nccDTO);
+            nccBUS.add(nccDAO.getOneByPhone(nccDTO.getPhone()));
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }

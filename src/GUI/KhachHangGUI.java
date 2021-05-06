@@ -247,7 +247,6 @@ public class KhachHangGUI extends JPanel {
                         khBUS.add(kh);
 
                         outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());
-                        tableSelectionActive = true;
                         cleanView();
                     }
                 } else // Edit Sản phẩm
@@ -271,7 +270,6 @@ public class KhachHangGUI extends JPanel {
                         kh.setId_KH(maKH);
                         khBUS.set(kh);
                         outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());// Load lại table                        
-                        tableSelectionActive = true;
                         JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
 
                     }

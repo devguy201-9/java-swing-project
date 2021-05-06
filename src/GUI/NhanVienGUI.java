@@ -351,7 +351,6 @@ public class NhanVienGUI extends JPanel {
                             outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());// Load lại table
 
                             saveIMG();// Lưu hình ảnh 
-                            tableSelectionActive = true;
                             JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
                             //popup lên view nhập username and password và selectbox chọn quyền
                             cleanView();
@@ -385,7 +384,6 @@ public class NhanVienGUI extends JPanel {
                         nvBUS.set(NV);
                         outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());
                         saveIMG();
-                        tableSelectionActive = true;
                         JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
 
                     }

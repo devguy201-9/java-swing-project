@@ -411,7 +411,6 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
                         saveIMG();// Lưu hình ảnh 
                          JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                         tableSelectionActive=true;
                         cleanView();
                     }
                 } else // Edit Sản phẩm
@@ -440,7 +439,6 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
                         saveIMG();// Lưu hình ảnh 
                         JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                        tableSelectionActive=true;
                     }
                 }
             }
