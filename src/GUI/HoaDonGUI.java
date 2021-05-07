@@ -50,13 +50,13 @@ public class HoaDonGUI extends JPanel{
     private JTextField txtMaHD,txtMaKH,txtMaNV,txtNgayHD,txtTongTien;
     private JDateChooser dateChoice;
     
-    private JLabel btnEdit,btnDelete,btnView,btnBill,btnConfirm,btnBack;
+    private JLabel btnDelete,btnView,btnBill,btnBack;
     
     private JTable tbl;
     private DefaultTableModel model;
     
     private Choice monthChoice,yearChoice;
-    private JTextField txtMinPrice,txtMaxPrice,txtMaSP;
+    private JTextField txtMinPrice,txtMaxPrice,txtMaHDSearch;
     
     
     public HoaDonGUI(int width){
@@ -83,6 +83,7 @@ public class HoaDonGUI extends JPanel{
         txtMaHD = new JTextField();
         txtMaHD.setFont(font0);
         txtMaHD.setBounds(new Rectangle(55,0,80,30));
+        txtMaHD.setEditable(false);
         itemView.add(lbMaHD);
         itemView.add(txtMaHD);
                        
@@ -92,6 +93,7 @@ public class HoaDonGUI extends JPanel{
         txtMaKH = new JTextField();
         txtMaKH.setFont(font0);
         txtMaKH.setBounds(new Rectangle(215,0,80,30));
+        txtMaKH.setEditable(false);
         itemView.add(lbMaKH);
         itemView.add(txtMaKH);
 
@@ -101,6 +103,7 @@ public class HoaDonGUI extends JPanel{
         txtMaNV = new JTextField();
         txtMaNV.setFont(font0);
         txtMaNV.setBounds(new Rectangle(375,0,80,30));
+        txtMaNV.setEditable(false);
         itemView.add(lbMaNV);
         itemView.add(txtMaNV);
 
@@ -110,6 +113,7 @@ public class HoaDonGUI extends JPanel{
         txtNgayHD = new JTextField();
         txtNgayHD.setFont(font0);        
         txtNgayHD.setBounds(new Rectangle(80,40,375,30));
+        txtNgayHD.setEditable(false);
         itemView.add(lbNgayHD);
         itemView.add(txtNgayHD);
         
@@ -124,6 +128,7 @@ public class HoaDonGUI extends JPanel{
         txtTongTien = new JTextField();
         txtTongTien.setFont(font0);
         txtTongTien.setBounds(new Rectangle(80,80,375,30));
+        txtTongTien.setEditable(false);
         itemView.add(lbTongTien);
         itemView.add(txtTongTien);
         
@@ -152,11 +157,6 @@ public class HoaDonGUI extends JPanel{
         btnBill.setBounds(new Rectangle(730,60,200,50));
         btnBill.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        btnConfirm= new JLabel(new ImageIcon("./src/image/btnConfirm.png"));
-        btnConfirm.setVisible(false);
-        btnConfirm.setBounds(new Rectangle(500,0,200,50));
-        btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
         btnBack = new JLabel(new ImageIcon("./src/image/btnBack.png"));
         btnBack.setVisible(false);
         btnBack.setBounds(new Rectangle(500,60,200,50));
@@ -167,22 +167,23 @@ public class HoaDonGUI extends JPanel{
         itemView.add(btnView);
         itemView.add(btnBill);
         
-        itemView.add(btnConfirm);
         itemView.add(btnBack);
         
         // MouseClick btnDelete
         btnDelete.addMouseListener(new MouseAdapter() {
-            public void mouseCliced(MouseEvent e){
-                int mess = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Thông báo", JOptionPane.YES_NO_OPTION);
-                if(mess == 0){ //yes
+            public void mouseClicked(MouseEvent e) {
+                if (txtMaHD.getText().equals("")) {
+                     JOptionPane.showMessageDialog(null, "Vui lòng chọn hóa đơn cần xóa !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            return;
+                }
+                int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
                     hdBUS.delete(txtMaHD.getText());
-                    ctBUS.delete(txtMaHD.getText());
+//                    ctBUS.delete(txtMaHD.getText());
                     cleanView();
                     tbl.clearSelection();
                     outModel(model, (ArrayList<HoaDonDTO>) hdBUS.getHdBUS());
-                    
                 }
-                
             }
         });
         
@@ -190,6 +191,10 @@ public class HoaDonGUI extends JPanel{
         btnView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
+                if (txtMaHD.getText().equals("")) {
+                     JOptionPane.showMessageDialog(null, "Vui lòng chọn hóa đơn cần xem !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            return;
+                }
                 CT_HoaDonGUI chitiet = new CT_HoaDonGUI(txtMaHD.getText());
             }
         });
@@ -207,40 +212,6 @@ public class HoaDonGUI extends JPanel{
 //                printBill bill = new printBill(hd, cthd);
 //                bill.print();
             }
-        });
-        
-        //Button Confirm
-        
-        btnConfirm.addMouseListener(new MouseAdapter(){
-//            @Override
-//            public void mouseClicked(MouseEvent e)
-//            {
-//                String maHD = txtMaHD.getText();
-//                String maKH = txtMaKH.getText();
-//                String maNV = txtMaNV.getText();
-//                String ngayHD = txtNgayHD.getText();
-//                double tongTien = Double.parseDouble(txtTongTien.getText());
-//
-//                if(dateChoice.getCalendar() != null)
-//                {
-//                    Date time = Timestamp.valueOf(txtNgayHD.getText());
-//                    Calendar calendar = Calendar.getInstance();
-//                    calendar.setTimeInMillis(time.getTime());
-//                    int dd = dateChoice.getCalendar().get(Calendar.DATE);
-//                    int mm = dateChoice.getCalendar().get(Calendar.MONTH);
-//                    int yyy = dateChoice.getCalendar().get(Calendar.YEAR);
-//                    calendar.set(yyy,mm, dd);
-//                    Timestamp newTime = new Timestamp(calendar.getTime().getTime());
-//                    
-//                    ngayHD = newTime.toString();
-//                }        
-//                
-//                HoaDonDTO hd = new HoaDonDTO(maHD, maKH, maNV, ngayHD, tongTien);
-//                int i = hdBUS.set(hd);
-//                outModel(model, hdBUS.getList());
-//                tbl.setRowSelectionInterval(i, i);
-//                isEdit(false);
-//            }   
         });
         
         //Button Back
@@ -275,18 +246,18 @@ public class HoaDonGUI extends JPanel{
         header.add("Mã Nhân Viên");
         header.add("Ngày Lập HD");
         header.add("Tổng Tiền");
-        model = new DefaultTableModel(header,5)
-        {
-            public Class getColumnClass(int column)
-            {
-                switch(column){
-                    case 4:
-                        return Integer.class;
-                    default:
-                        return String.class;
-                }
-            }              
-        };
+        model = new MyTable(header,5);
+//        {
+//            public Class getColumnClass(int column)
+//            {
+//                switch(column){
+//                    case 4:
+//                        return Integer.class;
+//                    default:
+//                        return String.class;
+//                }
+//            }              
+//        };
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
@@ -411,15 +382,15 @@ public class HoaDonGUI extends JPanel{
           
         /******************************************/
         /************ SORT MÃ SP ***************/
-        JLabel sortSP = new JLabel("Mã SP :");
-        sortSP.setFont(font0);
-        sortSP.setBounds(650,40,60,30);
-        sort.add(sortSP);
+        JLabel sortHD = new JLabel("Mã hd:");
+        sortHD.setFont(font0);
+        sortHD.setBounds(650,40,60,30);
+        sort.add(sortHD);
 
-        txtMaSP = new JTextField();
-        txtMaSP.setFont(font0);
-        txtMaSP.setBounds(new Rectangle(700,42,100,26));  
-        sort.add(txtMaSP);
+        txtMaHDSearch = new JTextField();
+        txtMaHDSearch.setFont(font0);
+        txtMaHDSearch.setBounds(new Rectangle(700,42,100,26));  
+        sort.add(txtMaHDSearch);
 //        /******************************************/
         JLabel btnSearch = new JLabel(new ImageIcon("./src/image/btnSearch_45px.png"));
         btnSearch.setBounds(new Rectangle(840,20,63,63));
@@ -445,20 +416,19 @@ public class HoaDonGUI extends JPanel{
     
     public void search()
     {
-        
-        
+        int maHD = txtMaHDSearch.getText().equals("") ? 0 : Integer.parseInt(txtMaHDSearch.getText());
         int mm = monthChoice.getSelectedIndex()-1;
-        int yyy ;
+        int yyyy ;
         try{
-            yyy = Integer.parseInt(yearChoice.getSelectedItem());
+            yyyy = Integer.parseInt(yearChoice.getSelectedItem());
         }catch(NumberFormatException ex)
         {
-            yyy = 0;
+            yyyy = 0;
         }
         double max = txtMaxPrice.getText().equals("") ? 99999999 : Double.parseDouble(txtMaxPrice.getText());
         double min = txtMinPrice.getText().equals("") ? 0      : Double.parseDouble(txtMinPrice.getText());
 
-//        outModel(model,hdBUS.search(mm, yyy, max, min,ctBUS.getHDBySP(Integer.parseInt(txtMaSP.getText()))));
+        outModel(model,hdBUS.search(mm, yyyy, max, min,maHD));
     }
     
     public void cleanView()  {

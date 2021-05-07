@@ -16,37 +16,30 @@ import java.util.List;
  * @author Asus
  */
 public class ct_HDBUS {
-
+    
     private List<ct_HoaDonDTO> ct_hdBUS;
-
+    
     public ct_HDBUS() {
         ct_hdBUS = null;
     }
-
+    
     public List<ct_HoaDonDTO> getCt_hdBUS() {
         return ct_hdBUS;
     }
-
+    
     public void list() {
         ct_HDDAO cthdDAO = new ct_HDDAO();
         ct_hdBUS = new ArrayList<>();
         ct_hdBUS = cthdDAO.findAll();
     }
     
-    public ArrayList<Integer> getHDBySP(int maSP)
-    {
-        ArrayList<Integer> s = new ArrayList<>();
-//        if(maSP.isEmpty()) return null;
-        for(ct_HoaDonDTO ct : ct_hdBUS)
-        {
-            if(ct.getId_SP()==(maSP))
-            {
-                s.add(ct.getId_HD());
-            }
-        }
-        return s;
+    public void listMaHD(String maHD) {
+        int idHD = Integer.parseInt(maHD);
+        ct_HDDAO cthdDAO = new ct_HDDAO();
+        ct_hdBUS = new ArrayList<>();
+        ct_hdBUS = cthdDAO.findByCode(idHD);
     }
-
+    
     public void add(ct_HoaDonDTO cthdDTO) {
         ct_hdBUS.add(cthdDTO);
         ct_HDDAO cthdDAO = new ct_HDDAO();
@@ -56,15 +49,15 @@ public class ct_HDBUS {
             System.out.println(e.getMessage());
         }
     }
-
+    
     public void delete(String id) {
-        int idCTHD = Integer.parseInt(id);
+        int idHD = Integer.parseInt(id);
         for (ct_HoaDonDTO cthdDTO : ct_hdBUS) {
-            if (cthdDTO.getId_HD() == idCTHD) {
+            if (cthdDTO.getId_HD() == idHD) {
                 ct_hdBUS.remove(cthdDTO);
                 ct_HDDAO cthdDAO = new ct_HDDAO();
                 try {
-                    cthdDAO.delete(idCTHD);
+                    cthdDAO.delete(idHD);
                 } catch (FileNotFoundException e) {
                     System.out.println(e.getMessage());
                 }
@@ -72,7 +65,23 @@ public class ct_HDBUS {
             }
         }
     }
-
+    
+    public void deleteMaSP(String id) {
+        int idSP = Integer.parseInt(id);
+        for (ct_HoaDonDTO cthdDTO : ct_hdBUS) {
+            if (cthdDTO.getId_SP() == idSP) {
+                ct_hdBUS.remove(cthdDTO);
+                ct_HDDAO cthdDAO = new ct_HDDAO();
+                try {
+                    cthdDAO.deleteByCodeProduct(idSP);
+                } catch (FileNotFoundException e) {
+                    System.out.println(e.getMessage());
+                }
+                return;
+            }
+        }
+    }
+    
     public void set(ct_HoaDonDTO cthdDTO) {
         for (int i = 0; i < ct_hdBUS.size(); i++) {
             if (ct_hdBUS.get(i).getId_HD() == cthdDTO.getId_HD()) {
@@ -87,5 +96,5 @@ public class ct_HDBUS {
             }
         }
     }
-
+    
 }
