@@ -6,17 +6,23 @@
 package GUI;
 
 import BUS.TaiKhoanBUS;
+import DTO.Gender;
+import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,6 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -33,16 +40,18 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Shadow
  */
-public class TaiKhoanGUI extends JPanel{
+public class TaiKhoanGUI extends JPanel implements ActionListener{
     private TaiKhoanBUS tkBUS = new TaiKhoanBUS();
-    private JTextField txtMaNV,txtUser,txtPass;
-    private JLabel btnConfirm,btnEdit,btnDelete,btnBack;
-    private JLabel lbMaNV,lbUser,lbPass,lbPhai;
+    private JTextField txtMaTK,txtMaNV,txtUser,txtPass;
+    private JLabel btnConfirm,btnEdit,btnDelete,btnBack,btnAdd;
+    private JLabel lbMaTK,lbMaNV,lbUser,lbPass,lbPhai;
     private DefaultTableModel model;
     private JTable tbl;
     private int DEFAUTL_WIDTH; 
     private JComboBox cmbRole;
+    private JButton btnMaNV;
         
+    private boolean EditOrAdd = true;//Cờ cho button Cofirm True:ADD || False:Edit
     
     public TaiKhoanGUI(int width)
     {
@@ -63,68 +72,102 @@ public class TaiKhoanGUI extends JPanel{
         itemView.setBounds(new Rectangle(0, 0,this.DEFAUTL_WIDTH, 700));
         itemView.setBackground(Color.WHITE);
         
+        lbMaTK = new JLabel("Mã tài khoản ");
+        lbMaTK.setFont(font0);
+        lbMaTK.setBounds(20,20,100,30);
+        txtMaTK = new JTextField();
+        txtMaTK.setBounds(new Rectangle(120,20,250,30));
+        txtMaTK.setEditable(false);
+        itemView.add(lbMaTK);
+        itemView.add(txtMaTK);
+        
         lbMaNV = new JLabel("Mã nhân viên ");
         lbMaNV.setFont(font0);
-        lbMaNV.setBounds(20,20,100,30);
+        lbMaNV.setBounds(20,70,100,30);
         txtMaNV = new JTextField();
-        txtMaNV.setBounds(new Rectangle(120,20,250,30));
-        txtMaNV.setEditable(false);
+        txtMaNV.setBounds(new Rectangle(120,70,220,30));        
         itemView.add(lbMaNV);
         itemView.add(txtMaNV);
+        btnMaNV = new JButton("...");
+        btnMaNV.setBounds(new Rectangle(340,70,30,30));
+        btnMaNV.addActionListener(this);
+        itemView.add(btnMaNV);
         
         lbUser = new JLabel("Tên đăng nhập");
         lbUser.setFont(font0);
-        lbUser.setBounds(20,70,100,30);
+        lbUser.setBounds(20,120,100,30);
         txtUser = new JTextField();
-        txtUser.setBounds(new Rectangle(120,70,250,30));
+        txtUser.setBounds(new Rectangle(120,120,250,30));
         itemView.add(lbUser);
         itemView.add(txtUser);
         
         lbPass = new JLabel("Mật khẩu");
         lbPass.setFont(font0);
-        lbPass.setBounds(20,120,100,30);
+        lbPass.setBounds(20,170,100,30);
         txtPass = new JTextField("");
-        txtPass.setBounds(new Rectangle(120,120,250,30));
+        txtPass.setBounds(new Rectangle(120,170,250,30));
         itemView.add(lbPass);
         itemView.add(txtPass);
         
         lbPhai = new JLabel("Quyền ");
         lbPhai.setFont(font0);
-        lbPhai.setBounds(20,170,100,30);
+        lbPhai.setBounds(20,220,100,30);
         String[] role = {"Nhân Viên","Admin"}; 
         cmbRole = new JComboBox(role);
-        cmbRole.setBounds(new Rectangle(120,170,250,30));
+        cmbRole.setBounds(new Rectangle(120,220,250,30));
         itemView.add(lbPhai);
         itemView.add(cmbRole);
         
 /**************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL ********************/
+        btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd_150px.png"));
+        btnAdd.setBounds(new Rectangle(20,300,150,50));
+        btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         btnEdit = new JLabel(new ImageIcon("./src/image/btnEdit_150px.png"));
-        btnEdit.setBounds(new Rectangle(20,260,150,50));
+        btnEdit.setBounds(new Rectangle(180,300,150,50));
         btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete_150px.png"));
-        btnDelete.setBounds(new Rectangle(180,260,150,50));
+        btnDelete.setBounds(new Rectangle(100,360,150,50));
         btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));    
         
         btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm_150px.png"));
-        btnConfirm.setBounds(new Rectangle(20,260,150,50));
+        btnConfirm.setBounds(new Rectangle(20,300,150,50));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));    
         
         btnBack = new JLabel(new ImageIcon("./src/image/btnBack_150px.png"));
-        btnBack.setBounds(new Rectangle(180,260,150,50));
+        btnBack.setBounds(new Rectangle(180,300,150,50));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+        
+        btnAdd.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e)
+            {
+                EditOrAdd = true;
+                txtMaTK.setEditable(false);
+                cleanView();
+                btnAdd.setVisible(false);
+                btnEdit.setVisible(false);
+                btnDelete.setVisible(false);                
+                btnConfirm.setVisible(true);
+                btnBack.setVisible(true);
+                
+                tbl.setEnabled(false);
+            }
+        });
         
         btnEdit.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e)
             {
-                if(txtMaNV.getText().equals(""))
+                if(txtMaTK.getText().equals(""))
                 {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần sửa !!!");
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn tài khoản cần sửa !!!");
                     return;
                 }
                 
-                txtMaNV.setEditable(false);
+                EditOrAdd = false;
+                txtMaTK.setEditable(false);
                 
+                btnAdd.setVisible(false);
                 btnEdit.setVisible(false);
                 btnDelete.setVisible(false);                
                 btnConfirm.setVisible(true);
@@ -139,7 +182,7 @@ public class TaiKhoanGUI extends JPanel{
             {
                 int del = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Thông báo", JOptionPane.YES_NO_OPTION);
                 if(del == 0){
-                    tkBUS.delete(txtMaNV.getText());
+                    tkBUS.delete(txtMaTK.getText());
                     cleanView();
                     tbl.clearSelection();
                     outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());
@@ -147,31 +190,82 @@ public class TaiKhoanGUI extends JPanel{
             }
         });
         
-        btnConfirm.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e)
-            {
-                int i = JOptionPane.showConfirmDialog(null, "Xác nhận sửa sản phẩm","",JOptionPane.YES_NO_OPTION);
+        
+        //MouseClick btnConfirm
+        btnConfirm.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int i;
+                if (EditOrAdd) //Thêm Nhân Viên
+                {
+                    String passwd = txtPass.getText();
+                    for (int j = 0; j < tkBUS.getTkBUS().size(); j++) {
+                        if (tkBUS.getTkBUS().get(j).getPass().equals(passwd)) {
+                            JOptionPane.showMessageDialog(null, "Mật khẩu đã tồn tại, vui lòng nhập giá trị khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            return;
+                        }
+                    }
+                    i = JOptionPane.showConfirmDialog(null, "Xác nhận thêm tài khoản", "", JOptionPane.YES_NO_OPTION);
+                    if (i == 0) {//yes
+                        try {
+                            int manv = Integer.parseInt(txtMaNV.getText());
+                            String user = txtUser.getText();
+                            String pass = txtPass.getText();                            
+                            int quyen = cmbRole.getSelectedItem().toString().equals("Nhân Viên") ? 0 : 1;
+                            
+                            if (user.equals("null") && pass.equals("null")) {
+                                JOptionPane.showMessageDialog(null, "Bạn chưa nhập tên hoặc mật khẩu!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                                return;
+                            }                           
+
+                            TaiKhoanDTO nv = new TaiKhoanDTO(manv, quyen, user, pass);
+                            tkBUS.add(nv);
+//                        TaiKhoanBUS usBUS = new TaiKhoanBUS();
+//                        TaiKhoanDTO user = new TaiKhoanDTO(maNV, removeAccent(sdt.concat(maNV)).toLowerCase(), "123456", "Nhân Viên", "1");
+//                        usBUS.add(user, 1);
+                            outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
+
+                             
+                            JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                            //popup lên view nhập username and password và selectbox chọn quyền
+                            cleanView();
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(null, "Loi");
+                        }
+                    }
+                } else // Edit Tài khoản
+                {
+                    int manv = Integer.parseInt(txtMaNV.getText());
+                    String passwd = txtPass.getText();
+                    for (int j = 0; j < tkBUS.getTkBUS().size(); j++) {
+                        if (tkBUS.getTkBUS().get(j).getPass().equals(passwd) && tkBUS.getTkBUS().get(j).getId_NV() != manv) {
+                            JOptionPane.showMessageDialog(null, "Tên và mật khẩu đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            return;
+                        }
+                    }
+                    
+                    i = JOptionPane.showConfirmDialog(null, "Xác nhận sửa tài khoản","",JOptionPane.YES_NO_OPTION);
                     if(i == 0)
                     {
                         //Lấy dữ liệu từ TextField
-                        int maNV = Integer.parseInt(txtMaNV.getText());
+                        int maNV = Integer.parseInt(txtMaTK.getText());
                         String user = txtUser.getText();
                         String pass = txtPass.getText();
 //                        String role = String.valueOf(cmbRole.getSelectedItem());
                         int role = Integer.parseInt(String.valueOf(cmbRole.getSelectedItem()));
 //                        String enable = "1";
 
-                        //Upload sản phẩm lên DAO và BUS
+                        //Upload tài khoản lên DAO và BUS
                         TaiKhoanDTO us = new TaiKhoanDTO(maNV, role, user, pass);
                         tkBUS.set(us);
                         
                         outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
                         
-//                        saveIMG();// Lưu hình ảnh 
                         
                         JOptionPane.showMessageDialog(null, "Sửa thành công","Thành công",JOptionPane.INFORMATION_MESSAGE);
                         
                     }
+                }
+
             }
         });
         
@@ -180,17 +274,18 @@ public class TaiKhoanGUI extends JPanel{
             {
                 cleanView();
                 
+                btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
                 btnDelete.setVisible(true);
                 
                 btnConfirm.setVisible(false);
                 btnBack.setVisible(false);
-//                btnFile.setVisible(false);
                 
                 tbl.setEnabled(true);
             }
         });
         
+        itemView.add(btnAdd);
         itemView.add(btnEdit);
         itemView.add(btnDelete);
         itemView.add(btnConfirm);
@@ -200,7 +295,8 @@ public class TaiKhoanGUI extends JPanel{
 
     /************** TẠO MODEL VÀ HEADER *********************************/
         Vector header = new Vector();
-        header.add("Mă NV");
+        header.add("Mã TK");
+        header.add("Mã NV");
         header.add("Username");
         header.add("Pass");
         header.add("Role");
@@ -216,10 +312,18 @@ public class TaiKhoanGUI extends JPanel{
     /******** CUSTOM TABLE ****************/
     
         // Chỉnh width các cột 
-        tbl.getColumnModel().getColumn(0).setPreferredWidth(40);
-        tbl.getColumnModel().getColumn(1).setPreferredWidth(100);
-        tbl.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tbl.getColumnModel().getColumn(3).setPreferredWidth(50);
+        tbl.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tbl.getColumnModel().getColumn(1).setPreferredWidth(30);
+        tbl.getColumnModel().getColumn(2).setPreferredWidth(30);
+        tbl.getColumnModel().getColumn(3).setPreferredWidth(30);
+        tbl.getColumnModel().getColumn(4).setPreferredWidth(30);
+        
+        DefaultTableCellRenderer centerAlign = new DefaultTableCellRenderer();
+        centerAlign.setHorizontalAlignment(JLabel.CENTER);
+        tbl.getColumnModel().getColumn(0).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(2).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(3).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(4).setCellRenderer(centerAlign);
 
         // Custom table
         tbl.setFocusable(false);
@@ -251,10 +355,11 @@ public class TaiKhoanGUI extends JPanel{
                 {
                     i = tbl.getRowSorter().convertRowIndexToModel(i);
                 }
-                txtMaNV.setText(tbl.getModel().getValueAt(i, 0).toString());
-                txtUser.setText(tbl.getModel().getValueAt(i, 1).toString());
-                txtPass.setText(tbl.getModel().getValueAt(i, 2).toString()); 
-                cmbRole.setSelectedItem(tbl.getModel().getValueAt(i, 3).toString());
+                txtMaTK.setText(tbl.getModel().getValueAt(i, 0).toString());
+                txtMaNV.setText(tbl.getModel().getValueAt(i, 1).toString());
+                txtUser.setText(tbl.getModel().getValueAt(i, 2).toString());
+                txtPass.setText(tbl.getModel().getValueAt(i, 3).toString()); 
+                cmbRole.setSelectedItem(tbl.getModel().getValueAt(i, 4).toString());
              }
         });
 /*********************************************************************/
@@ -266,6 +371,7 @@ public class TaiKhoanGUI extends JPanel{
         for(TaiKhoanDTO us : user)
         {
             data = new Vector();
+            data.add(us.getId_TK());
             data.add(us.getId_NV());
             data.add(us.getUser_name());
             data.add(us.getPass());
@@ -284,11 +390,23 @@ public class TaiKhoanGUI extends JPanel{
     
     public void cleanView() //Xóa trắng các TextField
     {
-        txtMaNV.setEditable(false);
+        txtMaTK.setEditable(false);
 
+        txtMaTK.setText("");
         txtMaNV.setText("");
         txtUser.setText("");
         txtPass.setText("");
  
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnMaNV) // Suggest Nhan Vien
+        {
+            SuggestNhanVien rm = new SuggestNhanVien();
+            String s = rm.getTextFieldContent();
+            txtMaNV.setText(s);
+        }
+        
     }
 }

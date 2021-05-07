@@ -130,7 +130,7 @@ public class NhanVienGUI extends JPanel {
         txtDiaChi = new JTextField("");
         txtDiaChi.setBounds(new Rectangle(350, 160, 220, 30));
 
-        JLabel lbNamSinh = new JLabel("Tuổi");
+        JLabel lbNamSinh = new JLabel("Năm sinh");
         lbNamSinh.setBounds(new Rectangle(440, 200, 80, 30));
         lbNamSinh.setFont(font0);
         txtNamSinh = new JTextField("");
