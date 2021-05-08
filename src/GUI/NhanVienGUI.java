@@ -367,7 +367,7 @@ public class NhanVienGUI extends JPanel {
                             return;
                         }
                     }
-                    i = JOptionPane.showConfirmDialog(null, "Xác nhận sửa sản phẩm", "", JOptionPane.YES_NO_OPTION);
+                    i = JOptionPane.showConfirmDialog(null, "Xác nhận sửa nhân viên", "", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {
                         //Lấy dữ liệu từ TextField
                         int maNV = Integer.parseInt(txtMaNV.getText());

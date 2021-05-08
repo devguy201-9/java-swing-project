@@ -428,7 +428,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         int maLoai = loai.getId_Loai();
 
                         String IMG = imgName;
-                         if (tenSP.equals("") || sl ==0 || gia == 0 || mota.equals("") ||IMG.equals("") || maLoai == 0) {
+                         if (tenSP.equals("") || sl ==0 || gia == 0 ||IMG.equals("") || maLoai == 0) { 
                             JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin để thêm sản phẩm", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
                             return;
                         }

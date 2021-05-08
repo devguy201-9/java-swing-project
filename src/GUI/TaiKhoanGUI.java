@@ -207,7 +207,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
                     i = JOptionPane.showConfirmDialog(null, "Xác nhận thêm tài khoản", "", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {//yes
                         try {
-                            int manv = Integer.parseInt(txtMaNV.getText());
+                            int manv = Integer.parseInt(txtMaNV.getText().trim());
                             String user = txtUser.getText();
                             String pass = txtPass.getText();                            
                             int quyen = cmbRole.getSelectedItem().toString().equals("Nhân Viên") ? 0 : 1;
@@ -234,7 +234,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
                     }
                 } else // Edit Tài khoản
                 {
-                    int manv = Integer.parseInt(txtMaNV.getText());
+                    int manv = Integer.parseInt(txtMaNV.getText().trim());
                     String passwd = txtPass.getText();
                     for (int j = 0; j < tkBUS.getTkBUS().size(); j++) {
                         if (tkBUS.getTkBUS().get(j).getPass().equals(passwd) && tkBUS.getTkBUS().get(j).getId_NV() != manv) {
@@ -247,15 +247,16 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
                     if(i == 0)
                     {
                         //Lấy dữ liệu từ TextField
-                        int maNV = Integer.parseInt(txtMaTK.getText());
+                        int maTK = Integer.parseInt(txtMaTK.getText().trim());
+                        int maNV = Integer.parseInt(txtMaNV.getText().trim());
                         String user = txtUser.getText();
                         String pass = txtPass.getText();
-//                        String role = String.valueOf(cmbRole.getSelectedItem());
                         int role = Integer.parseInt(String.valueOf(cmbRole.getSelectedItem()));
 //                        String enable = "1";
 
                         //Upload tài khoản lên DAO và BUS
                         TaiKhoanDTO us = new TaiKhoanDTO(maNV, role, user, pass);
+                        us.setId_TK(maTK);
                         tkBUS.set(us);
                         
                         outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
@@ -321,6 +322,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
         DefaultTableCellRenderer centerAlign = new DefaultTableCellRenderer();
         centerAlign.setHorizontalAlignment(JLabel.CENTER);
         tbl.getColumnModel().getColumn(0).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(1).setCellRenderer(centerAlign);
         tbl.getColumnModel().getColumn(2).setCellRenderer(centerAlign);
         tbl.getColumnModel().getColumn(3).setCellRenderer(centerAlign);
         tbl.getColumnModel().getColumn(4).setCellRenderer(centerAlign);
