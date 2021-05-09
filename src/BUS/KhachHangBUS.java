@@ -26,13 +26,10 @@ public class KhachHangBUS {
     public List<KhachHangDTO> getKhBUS() {
         return khBUS;
     }
-    
-    public KhachHangDTO getCustomerById(String MaKH)
-    {
-        for(KhachHangDTO kh : khBUS )
-        {
-            if(kh.getId_KH()== Integer.parseInt(MaKH))
-            {
+
+    public KhachHangDTO getCustomerById(String MaKH) {
+        for (KhachHangDTO kh : khBUS) {
+            if (kh.getId_KH() == Integer.parseInt(MaKH)) {
                 return kh;
             }
         }
@@ -46,10 +43,10 @@ public class KhachHangBUS {
     }
 
     public void add(KhachHangDTO khDTO) {
-        khBUS.add(khDTO);
         KhachHangDAO khDAO = new KhachHangDAO();
         try {
-            khDAO.save(khDTO);
+            khDTO.setId_KH(khDAO.save(khDTO));
+            khBUS.add(khDTO);
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -86,9 +83,9 @@ public class KhachHangBUS {
         }
     }
 
-    public boolean check(int makh) {
+    public boolean check(String makh) {
         for (KhachHangDTO kh : khBUS) {
-            if (kh.getId_KH() == makh) {
+            if (String.valueOf(kh.getId_KH()).equals(makh)) {
                 return true;
             }
         }

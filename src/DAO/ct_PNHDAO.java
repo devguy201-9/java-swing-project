@@ -18,9 +18,9 @@ public class ct_PNHDAO extends AbstractDAO<ct_PhieuNhapHangDTO> {
 
     public Integer save(ct_PhieuNhapHangDTO ctpnh) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO ct_phieunhaphang(id_PNH,id_NL,amount,");
-        sql.append("price,total_money)");
+        sql.append("price,name)");
         sql.append(" VALUES(?, ?, ?, ?, ?)");
-        return insert(sql.toString(), ctpnh.getId_PNH(), ctpnh.getId_NL(), ctpnh.getAmount(), ctpnh.getPrice(), ctpnh.getTotal_money());
+        return insert(sql.toString(), ctpnh.getId_PNH(), ctpnh.getId_NL(), ctpnh.getAmount(), ctpnh.getPrice(), ctpnh.getName());
     }
 
     public List<ct_PhieuNhapHangDTO> findAll() {
@@ -35,7 +35,7 @@ public class ct_PNHDAO extends AbstractDAO<ct_PhieuNhapHangDTO> {
 
     public void update(ct_PhieuNhapHangDTO ctpnh) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("UPDATE ct_phieunhaphang SET id_NL = ? , amount = ? ,");
-        sql.append(" price = ?, total_money = ? WHERE id_PNH = ?");
-        update(sql.toString(), ctpnh.getId_NL(), ctpnh.getAmount(), ctpnh.getPrice(), ctpnh.getTotal_money(), ctpnh.getId_PNH());
+        sql.append(" price = ?, name = ? WHERE id_PNH = ?");
+        update(sql.toString(), ctpnh.getId_NL(), ctpnh.getAmount(), ctpnh.getPrice(), ctpnh.getName(), ctpnh.getId_PNH());
     }
 }

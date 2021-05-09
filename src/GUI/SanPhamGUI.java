@@ -154,7 +154,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         lbLoai.setFont(font1);
         cmbLoai = new JComboBox<>(loaiModel1);
         cmbLoai.setFont(font0);
-        cmbLoai.setBounds(new Rectangle(100, 200, 100, 30));
+        cmbLoai.setBounds(new Rectangle(100, 200, 110, 30));
 
         img = new JLabel("Thêm hình");
         img.setBorder(createLineBorder(Color.BLACK));
@@ -411,7 +411,6 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
                         saveIMG();// Lưu hình ảnh 
                          JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                         tableSelectionActive=true;
                         cleanView();
                     }
                 } else // Edit Sản phẩm
@@ -429,7 +428,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         int maLoai = loai.getId_Loai();
 
                         String IMG = imgName;
-                         if (tenSP.equals("") || sl ==0 || gia == 0 || mota.equals("") ||IMG.equals("") || maLoai == 0) {
+                         if (tenSP.equals("") || sl ==0 || gia == 0 ||IMG.equals("") || maLoai == 0) { 
                             JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin để thêm sản phẩm", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
                             return;
                         }
@@ -440,7 +439,6 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
                         saveIMG();// Lưu hình ảnh 
                         JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                        tableSelectionActive=true;
                     }
                 }
             }

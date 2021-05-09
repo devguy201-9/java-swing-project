@@ -39,4 +39,10 @@ public class KhachHangDAO extends AbstractDAO<KhachHangDTO> {
         update(sql.toString(), kh.getFirst_name(), kh.getLast_name(), kh.getPhone(), kh.getId_KH());
     }
 
+    public KhachHangDTO getOneByPhone(String phone) {
+        String sql = "SELECT * FROM khachhang WHERE phone = ?";
+        List<KhachHangDTO> kh = query(sql, new KhachHangMapper(), phone);
+        return kh.isEmpty() ? null : kh.get(0);
+    }
+    
 }

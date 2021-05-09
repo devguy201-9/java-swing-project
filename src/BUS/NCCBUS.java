@@ -34,10 +34,10 @@ public class NCCBUS {
     }
 
     public void add(NhaCungCapDTO nccDTO) {
-        nccBUS.add(nccDTO);
         NCCDAO nccDAO = new NCCDAO();
         try {
-            nccDAO.save(nccDTO);
+            nccDTO.setId_NCC(nccDAO.save(nccDTO));
+            nccBUS.add(nccDTO);
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -73,17 +73,14 @@ public class NCCBUS {
             }
         }
     }
-    
-    public boolean checkIdNCC(int idNCC){
-        for(NhaCungCapDTO ncc : nccBUS){
-            if(ncc.getId_NCC() == idNCC)
-                return true;            
+
+    public boolean checkIdNCC(int idNCC) {
+        for (NhaCungCapDTO ncc : nccBUS) {
+            if (ncc.getId_NCC() == idNCC) {
+                return true;
+            }
         }
         return false;
     }
-    
-    
-    
-    
-    
+
 }

@@ -91,9 +91,9 @@ public class HoaDonBUS {
         return s + (max + 1);
     }
 
-    public boolean check(int maHD) {
+    public boolean check(String maHD) {
         for (HoaDonDTO hd : hdBUS) {
-            if (hd.getId() == maHD) {
+            if (String.valueOf(hd.getId()).equals(maHD)) {
                 return true;
             }
         }
@@ -101,32 +101,82 @@ public class HoaDonBUS {
     }
 
     //phần thống kê
-    public boolean checkTime(Calendar from,Calendar to,Calendar time)
-    {
+    public boolean checkTime(Calendar from, Calendar to, Calendar time) {
 //        System.err.print(from.getTime()+" ");
 //        System.err.print(to.getTime()+" ");
 //        System.err.println(time.getTime());
-        if(time.after(from) && time.before(to))
-        {
+        if (time.after(from) && time.before(to)) {
             return true;
         }
         return false;
     }
-    public ArrayList<HoaDonDTO> ListTime(Calendar from,Calendar to)
-    {
+
+    public ArrayList<HoaDonDTO> ListTime(Calendar from, Calendar to) {
         ArrayList<HoaDonDTO> list = new ArrayList<>();
-        for(HoaDonDTO hd : hdBUS)
-        {
+        for (HoaDonDTO hd : hdBUS) {
             Timestamp date = hd.getCreate_day();
             Calendar time = Calendar.getInstance();
             time.setTimeInMillis(date.getTime());
-            if(checkTime(from, to, time))
-            {
+            if (checkTime(from, to, time)) {
                 list.add(hd);
             }
         }
         return list;
     }
-    
-    
+
+    public ArrayList<HoaDonDTO> search(int mm, int yyyy, double max, double min, int mahd) {
+        int mm1 = 0, mm2 = 12;
+        int yyy1 = 0, yyy2 = Calendar.getInstance().get(Calendar.YEAR);
+
+        if (mm != -1) {
+            mm1 = mm;
+            mm2 = mm;
+        }
+        if (yyyy != 0) {
+            yyy1 = yyyy;
+            yyy2 = yyyy;
+        }
+
+        ArrayList<HoaDonDTO> search = new ArrayList<>();
+        for (HoaDonDTO hd : hdBUS) {
+            Timestamp time = hd.getCreate_day();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(time.getTime());;
+
+            int month = calendar.get(Calendar.MONTH);
+            int year = calendar.get(Calendar.YEAR);
+
+            if (hd.getTotal_money() >= min && hd.getTotal_money() <= max
+                    && (month >= mm1 && month <= mm2)
+                    && (year >= yyy1 && year <= yyy2)) {
+                if (mahd != 0 && hd.getId() == mahd) {
+                    search.clear();
+                    search.add(hd);
+                    break;
+                }
+                if (mahd != 0 && hd.getId() != mahd) {
+                    search.clear();
+                    break;
+                }
+                search.add(hd);
+            }
+        }
+        return search;
+    }
+
+    public ArrayList<HoaDonDTO> getListWidthArray(ArrayList<String> s) {
+        ArrayList<HoaDonDTO> ds = new ArrayList<>();
+        if (s == null) {
+            return (ArrayList<HoaDonDTO>) hdBUS;
+        }
+        for (HoaDonDTO hd : hdBUS) {
+            String mahd = String.valueOf(hd.getId());
+            for (String a : s) {
+                if (mahd.equals(a)) {
+                    ds.add(hd);
+                }
+            }
+        }
+        return ds;
+    }
 }

@@ -19,7 +19,7 @@ import java.util.List;
 public class NhanVienDAO extends AbstractDAO<NhanVienDAO> {
 
     public NhanVienDTO findOneByCode(int id) {
-        String sql = "SELECT * FROM nhanvien WHERE id = ?";
+        String sql = "SELECT * FROM nhanvien WHERE id_NV = ?";
         List<NhanVienDTO> nhanviens = query(sql, new NhanVienMapper(), id);
         return nhanviens.isEmpty() ? null : nhanviens.get(0);
     }
@@ -56,7 +56,7 @@ public class NhanVienDAO extends AbstractDAO<NhanVienDAO> {
 
     public void update(NhanVienDTO nv) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("UPDATE nhanvien SET name = ? , age = ? ,");
-        sql.append(" gender = ?, address = ?, phone = ?, start_day = ?  WHERE id_NV = ?");
+        sql.append(" gender = ?, address = ?, phone = ?, start_day = ?, img = ?  WHERE id_NV = ?");
         update(sql.toString(), nv.getName(), nv.getAge(), nv.getGender().toString(), nv.getAddress(),
                 nv.getPhone(), new SimpleDateFormat("yyyy/MM/dd").format(nv.getStart_day()), nv.getImg(), nv.getId_NV());
     }

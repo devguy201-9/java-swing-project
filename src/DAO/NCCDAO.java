@@ -18,7 +18,7 @@ public class NCCDAO extends AbstractDAO<NhaCungCapDTO>{
     public Integer save(NhaCungCapDTO ncc) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO nhacungcap(name_NCC,");
         sql.append("address,phone)");
-        sql.append(" VALUES(?, ?, ?,)");
+        sql.append(" VALUES(?, ?, ?)");
         return insert(sql.toString(), ncc.getName_NCC(),ncc.getAddress(),ncc.getPhone());
     }
 
@@ -37,4 +37,5 @@ public class NCCDAO extends AbstractDAO<NhaCungCapDTO>{
         sql.append(" phone = ? WHERE id_NCC = ?");
         update(sql.toString(), ncc.getName_NCC(),ncc.getAddress(),ncc.getPhone(),ncc.getId_NCC());
     }
+ 
 }

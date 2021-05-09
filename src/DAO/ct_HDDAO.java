@@ -27,10 +27,20 @@ public class ct_HDDAO extends AbstractDAO<ct_HoaDonDTO> {
         String sql = "SELECT * FROM ct_hoadon";
         return query(sql, new ct_HDMapper());
     }
+    
+    public List<ct_HoaDonDTO> findByCode(int maHD) {
+        String sql = "SELECT * FROM ct_hoadon WHERE id_HD = ? ";
+        return query(sql, new ct_HDMapper(),maHD);
+    }
 
     public void delete(int idCTHD) throws FileNotFoundException {
         String sql = "DELETE FROM ct_hoadon WHERE id = ? ";
         update(sql, idCTHD);
+    }
+    
+    public void deleteByCodeProduct(int MaSP) throws FileNotFoundException {
+        String sql = "DELETE FROM ct_hoadon WHERE id_SP = ? ";
+        update(sql, MaSP);
     }
 
     public void update(ct_HoaDonDTO cthd) throws FileNotFoundException {

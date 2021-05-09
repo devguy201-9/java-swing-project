@@ -6,7 +6,7 @@
 package GUI;
 
 import BUS.NhanVienBUS;
-import BUS.TaiKhoanBUS;
+import BUS.RandomCode;
 import DTO.Gender;
 import DTO.NhanVienDTO;
 import java.awt.Choice;
@@ -24,11 +24,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,6 +69,8 @@ public class NhanVienGUI extends JPanel {
     private Choice sortPhai;
     private JComboBox cmbPhai;
 
+    private boolean tableSelectionActive = true;
+
     public NhanVienGUI(int width) {
         DEFALUT_WIDTH = width;
         try {
@@ -88,7 +87,8 @@ public class NhanVienGUI extends JPanel {
         Font font0 = new Font("Segoe UI", Font.PLAIN, 14);
         Font font1 = new Font("Segoe UI", Font.BOLD, 13);
         /**
-         * **************************** PHẦN HIỂN THỊ THÔNG TIN *****************************************
+         * **************************** PHẦN HIỂN THỊ THÔNG TIN
+         * *****************************************
          */
 
         JPanel ItemView = new JPanel(null);
@@ -122,6 +122,7 @@ public class NhanVienGUI extends JPanel {
         lbNgay.setFont(font0);
         txtNgay = new JTextField("");
         txtNgay.setBounds(new Rectangle(350, 120, 220, 30));
+        txtNgay.setEditable(false);
 
         JLabel lbDiaChi = new JLabel("Địa chỉ");
         lbDiaChi.setBounds(new Rectangle(250, 160, 200, 30));
@@ -129,11 +130,12 @@ public class NhanVienGUI extends JPanel {
         txtDiaChi = new JTextField("");
         txtDiaChi.setBounds(new Rectangle(350, 160, 220, 30));
 
-        JLabel lbNamSinh = new JLabel("Tuổi");
+        JLabel lbNamSinh = new JLabel("Năm sinh");
         lbNamSinh.setBounds(new Rectangle(440, 200, 80, 30));
         lbNamSinh.setFont(font0);
         txtNamSinh = new JTextField("");
         txtNamSinh.setBounds(new Rectangle(490, 200, 80, 30));
+        txtNamSinh.setInputVerifier(new MyInputVerifier());
 
         JLabel lbPhai = new JLabel("Phái");
         lbPhai.setBounds(new Rectangle(250, 200, 30, 30));
@@ -211,6 +213,7 @@ public class NhanVienGUI extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 EditOrAdd = true;
                 txtHoNV.requestFocus();
+                tableSelectionActive = false;
                 cleanView();
 
                 btnAdd.setVisible(false);
@@ -229,10 +232,14 @@ public class NhanVienGUI extends JPanel {
         // MouseClick btnDelete
         btnDelete.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+                if (txtMaNV.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần xóa !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
                 int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
-                    TaiKhoanBUS usBUS = new TaiKhoanBUS();
-                    usBUS.delete(txtMaNV.getText());
+//                    TaiKhoanBUS usBUS = new TaiKhoanBUS();
+//                    usBUS.delete(txtMaNV.getText());
                     nvBUS.delete(txtMaNV.getText());
                     cleanView();
                     tbl.clearSelection();
@@ -244,12 +251,11 @@ public class NhanVienGUI extends JPanel {
         // MouseClick btnEdit
         btnEdit.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-
                 if (txtMaNV.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần sửa !!!");
                     return;
                 }
-
+                tableSelectionActive = false;
                 EditOrAdd = false;
 
                 txtMaNV.setEditable(false);
@@ -276,7 +282,8 @@ public class NhanVienGUI extends JPanel {
                     try {
                         File file = fc.getSelectedFile(); //Lấy URL hình
                         i = ImageIO.read(file); // Lấy hình
-                        imgName = txtMaNV.getText().concat(".jpg"); //Tên hình
+                        String name = RandomCode.randomAlphaNumeric(8);
+                        imgName = name.concat(".jpg"); //Tên hình
 
                         // Thay đổi hình hiển thị
                         img.setText("");
@@ -295,7 +302,7 @@ public class NhanVienGUI extends JPanel {
         btnBack.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 cleanView();
-
+                tableSelectionActive = true;
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
                 btnDelete.setVisible(true);
@@ -312,28 +319,31 @@ public class NhanVienGUI extends JPanel {
         btnConfirm.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int i;
-
                 if (EditOrAdd) //Thêm Nhân Viên
                 {
-                    i = JOptionPane.showConfirmDialog(null, "Xác nhận thêm sản phẩm", "", JOptionPane.YES_NO_OPTION);
+                    String soDT = txtSDT.getText();
+                    for (int j = 0; j < nvBUS.getNvBUS().size(); j++) {
+                        if (nvBUS.getNvBUS().get(j).getPhone().equals(soDT)) {
+                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            return;
+                        }
+                    }
+                    i = JOptionPane.showConfirmDialog(null, "Xác nhận thêm nhân viên", "", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {
                         try {
-                            //Lấy dữ liệu từ TextField
-                            int maNV = Integer.parseInt(txtMaNV.getText());
                             String hoTen = txtHoNV.getText();
                             String sdt = txtSDT.getText();
                             int namSinh = Integer.parseInt(txtNamSinh.getText());
                             String phai = cmbPhai.getSelectedItem().toString();
-                            Date ngayBD = new SimpleDateFormat("dd/MM/yyyy").parse(txtNgay.getText());
                             String diaChi = txtDiaChi.getText();
                             String IMG = imgName;
-
-                            if (nvBUS.check(maNV)) {
-                                JOptionPane.showMessageDialog(null, "Mã nhân viên đă tồn tại !!!");
+                            if (IMG.equals("null")) {
+                                JOptionPane.showMessageDialog(null, "Bạn chưa chọn ảnh cho nhân viên, vui lòng chọn ảnh !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
                                 return;
                             }
-                            //Upload nhân viên lên DAO và BUS
-                            NhanVienDTO nv = new NhanVienDTO(maNV, IMG, diaChi, phai, Gender.male, ngayBD, IMG);
+                            Gender gd = phai.equals("Nam") ? Gender.male : Gender.female;
+
+                            NhanVienDTO nv = new NhanVienDTO(namSinh, hoTen, diaChi, sdt, gd, LocalDate.now(), IMG);
                             nvBUS.add(nv);
 //                        TaiKhoanBUS usBUS = new TaiKhoanBUS();
 //                        TaiKhoanDTO user = new TaiKhoanDTO(maNV, removeAccent(sdt.concat(maNV)).toLowerCase(), "123456", "Nhân Viên", "1");
@@ -341,41 +351,40 @@ public class NhanVienGUI extends JPanel {
                             outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());// Load lại table
 
                             saveIMG();// Lưu hình ảnh 
-
+                            JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                            //popup lên view nhập username and password và selectbox chọn quyền
                             cleanView();
                         } catch (NumberFormatException ex) {
                             JOptionPane.showMessageDialog(null, "Loi");
-                        } catch (ParseException ex) {
-                            Logger.getLogger(NhanVienGUI.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 } else // Edit Sản phẩm
                 {
-                    i = JOptionPane.showConfirmDialog(null, "Xác nhận sửa sản phẩm", "", JOptionPane.YES_NO_OPTION);
-                    if (i == 0) {
-                        try {
-                            //Lấy dữ liệu từ TextField
-                            int maNV = Integer.parseInt(txtMaNV.getText());
-                            String hoTen = txtHoNV.getText();
-                            String sdt = txtSDT.getText();
-                            int namSinh = Integer.parseInt(txtNamSinh.getText());
-                            String phai = cmbPhai.getSelectedItem().toString();
-                            Date ngayBD = new SimpleDateFormat("dd/MM/yyyy").parse(txtNgay.getText());
-                            String diaChi = txtDiaChi.getText();
-                            String IMG = imgName;
-
-                            //Upload nhân viên lên DAO và BUS
-                            NhanVienDTO NV = new NhanVienDTO(maNV, IMG, diaChi, phai, Gender.male, ngayBD, IMG);
-                            nvBUS.set(NV);
-
-                            outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());// Load lại table
-
-                            saveIMG();// Lưu hình ảnh
-
-                            JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(NhanVienGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    String soDT = txtSDT.getText();
+                    for (int j = 0; j < nvBUS.getNvBUS().size(); j++) {
+                        if (nvBUS.getNvBUS().get(j).getPhone().equals(soDT) && nvBUS.getNvBUS().get(j).getId_NV() != Integer.parseInt(txtMaNV.getText())) {
+                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            return;
                         }
+                    }
+                    i = JOptionPane.showConfirmDialog(null, "Xác nhận sửa nhân viên", "", JOptionPane.YES_NO_OPTION);
+                    if (i == 0) {
+                        //Lấy dữ liệu từ TextField
+                        int maNV = Integer.parseInt(txtMaNV.getText());
+                        String hoTen = txtHoNV.getText();
+                        String sdt = txtSDT.getText();
+                        String ngayNV = txtNgay.getText();
+                        int namSinh = Integer.parseInt(txtNamSinh.getText());
+                        String phai = cmbPhai.getSelectedItem().toString();
+                        String diaChi = txtDiaChi.getText();
+                        Gender gd = phai.equals("Nam") ? Gender.male : Gender.female;
+                        String IMG = imgName;
+                        NhanVienDTO NV = new NhanVienDTO(namSinh, hoTen, diaChi, sdt, gd, LocalDate.parse(ngayNV), IMG);
+                        NV.setId_NV(maNV);
+                        nvBUS.set(NV);
+                        outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());
+                        saveIMG();
+                        JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
 
                     }
                 }
@@ -423,7 +432,8 @@ public class NhanVienGUI extends JPanel {
          * ******************************************************
          */
         /**
-         * ************** TẠO TABLE ***********************************************************
+         * ************** TẠO TABLE
+         * ***********************************************************
          */
         // Chỉnh width các cột 
         tbl.getColumnModel().getColumn(0).setPreferredWidth(30);
@@ -468,28 +478,31 @@ public class NhanVienGUI extends JPanel {
 
         tbl.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                int i = tbl.getSelectedRow();
-                imgName = tbl.getModel().getValueAt(i, 7).toString();
-                Image newImage;
-                try {
-                    newImage = new ImageIcon("./src/image/NhanVien/" + imgName).getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
-                } catch (NullPointerException E) {
-                    newImage = new ImageIcon("./src/image/NhanVien/NoImage.jpg").getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
-                }
-                txtMaNV.setText(tbl.getModel().getValueAt(i, 0).toString());
-                txtHoNV.setText(tbl.getModel().getValueAt(i, 1).toString());
-                txtSDT.setText(tbl.getModel().getValueAt(i, 2).toString());
-                txtNamSinh.setText(tbl.getModel().getValueAt(i, 3).toString());
-                cmbPhai.setSelectedItem(tbl.getModel().getValueAt(i, 4).toString());
-                txtNgay.setText(tbl.getModel().getValueAt(i, 5).toString());
-                txtDiaChi.setText(tbl.getModel().getValueAt(i, 6).toString());
-                img.setText("");
-                img.setIcon(new ImageIcon(newImage));
+                if (tableSelectionActive) {
+                    int i = tbl.getSelectedRow();
+                    imgName = tbl.getModel().getValueAt(i, 7).toString();
+                    Image newImage;
+                    try {
+                        newImage = new ImageIcon("./src/image/NhanVien/" + imgName).getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
+                    } catch (NullPointerException E) {
+                        newImage = new ImageIcon("./src/image/NhanVien/NoImage.jpg").getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
+                    }
+                    txtMaNV.setText(tbl.getModel().getValueAt(i, 0).toString());
+                    txtHoNV.setText(tbl.getModel().getValueAt(i, 1).toString());
+                    txtSDT.setText(tbl.getModel().getValueAt(i, 2).toString());
+                    txtNamSinh.setText(tbl.getModel().getValueAt(i, 3).toString());
+                    cmbPhai.setSelectedItem(tbl.getModel().getValueAt(i, 4).toString());
+                    txtNgay.setText(tbl.getModel().getValueAt(i, 5).toString());
+                    txtDiaChi.setText(tbl.getModel().getValueAt(i, 6).toString());
+                    img.setText("");
+                    img.setIcon(new ImageIcon(newImage));
 
+                }
             }
         });
         /**
-         * ******************* THANH SEARCH **********************************************
+         * ******************* THANH SEARCH
+         * **********************************************
          */
 
 //         Tạo Search Box
@@ -630,8 +643,7 @@ public class NhanVienGUI extends JPanel {
 
         sortPhai = new Choice();
         sortPhai.addItem("Tất cả");
-              
-        
+
         sortPhai.addItem("Nam");
         sortPhai.addItem("Nữ");
         sortPhai.setFont(font0);
@@ -649,7 +661,7 @@ public class NhanVienGUI extends JPanel {
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSearch.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                int manv =sortMaNV.getText().equals("") ? 0 : Integer.parseInt(sortMaNV.getText());
+                int manv = sortMaNV.getText().equals("") ? 0 : Integer.parseInt(sortMaNV.getText());
                 String hoten = sortHoNV.getText();
                 String sdt = sortSDT.getText();
                 String phai = sortPhai.getSelectedIndex() != 0 ? sortPhai.getSelectedItem() : "";

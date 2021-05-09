@@ -170,10 +170,11 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         hdView.add(lbTongTien);
         hdView.add(txtTongTien);
 
-        JLabel lbNgayHD = new JLabel("Ngày HD");
+        JLabel lbNgayHD = new JLabel("Ngày Lập HD");
         lbNgayHD.setFont(font0);
         lbNgayHD.setBounds(0, 50, 60, 30);
         txtNgayHD = new JTextField();
+        txtNgayHD.setEditable(false);
         txtNgayHD.setHorizontalAlignment(JTextField.CENTER);
         txtNgayHD.setFont(font0);
         txtNgayHD.setBounds(new Rectangle(80, 50, 350, 30));
@@ -489,7 +490,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 System.out.println(sp.getId_SP() + " " + txtMaSP.getText());
                 if (txtMaSP.getText().equals(sp.getId_SP())) {
                     int old = sp.getAmount();
-                    if (!spBUS.checkSL(Integer.parseInt(txtMaSP.getText()), sl + old)) {
+                    if (!spBUS.checkSL(txtMaSP.getText(), sl + old)) {
                         return;
                     }
                     sp.setAmount(sl + old);
@@ -498,7 +499,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 }
             }
             if (flag) {
-                if (!spBUS.checkSL(Integer.parseInt(txtMaSP.getText()), sl)) {
+                if (!spBUS.checkSL(txtMaSP.getText(), sl)) {
                     return;
                 }
                 dsct.add(new ct_HoaDonDTO(Integer.parseInt(txtMaHD.getText()), Integer.parseInt(txtMaSP.getText()), txtCTTenSP.getText(), gia, sl));
@@ -514,7 +515,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập mã hóa đơn");
                 txtMaHD.requestFocus();
                 return;
-            } else if (hdBUS.check(Integer.parseInt(txtMaHD.getText()))) {
+            } else if (hdBUS.check(txtMaHD.getText())) {
                 JOptionPane.showMessageDialog(null, "Mã hóa đơn đă tồn tại");
                 txtMaHD.requestFocus();
                 txtMaHD.setText(hdBUS.remindMaHD());
@@ -522,7 +523,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             }
             System.out.println(txtMaNV.getText());
             System.out.println(nvBUS.getNvBUS().size());
-            if (!txtMaKH.getText().isEmpty() && !khBUS.check(Integer.parseInt(txtMaKH.getText()))) {
+            if (!txtMaKH.getText().isEmpty() && !khBUS.check(txtMaKH.getText())) {
                 JOptionPane.showMessageDialog(null, "Mã khách hàng không tồn tại");
                 txtMaKH.requestFocus();
                 return;
@@ -532,7 +533,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập mã nhân viên");
                 txtMaNV.requestFocus();
                 return;
-            } else if (!nvBUS.check(Integer.parseInt(txtMaNV.getText()))) {
+            } else if (!nvBUS.check(txtMaNV.getText())) {
                 JOptionPane.showMessageDialog(null, "Mã nhân viên không tồn tại");
                 txtMaNV.requestFocus();
                 return;
@@ -576,7 +577,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 }
                 String masp = tbl.getModel().getValueAt(i, 0).toString();
                 int sl = Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập số lượng sản phẩm :"));
-                while (!spBUS.checkSL(Integer.parseInt(masp), sl)) {
+                while (!spBUS.checkSL(masp, sl)) {
                     sl = Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập số lượng sản phẩm :"));
                 }
                 for (ct_HoaDonDTO ct : dsct) {

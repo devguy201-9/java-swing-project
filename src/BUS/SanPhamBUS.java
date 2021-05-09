@@ -53,19 +53,19 @@ public class SanPhamBUS {
     }
 
     public void add(SanPhamDTO spDTO) {
-        spBUS.add(spDTO);
         SanPhamDAO spDAO = new SanPhamDAO();
         try {
-            spDAO.save(spDTO);
+            spDTO.setId_SP(spDAO.save(spDTO));
+            spBUS.add(spDTO);
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
-    
-    public SanPhamDTO findOneByName (String name ){
+
+    public SanPhamDTO findOneByName(String name) {
         SanPhamDAO spDAO = new SanPhamDAO();
         SanPhamDTO sp = spDAO.getOneByName(name);
-        
+
         return sp;
     }
     
@@ -112,9 +112,9 @@ public class SanPhamBUS {
         }
     }
 
-    public boolean checkSL(int masp, int sl) {
+    public boolean checkSL(String masp, int sl) {
         for (SanPhamDTO sp : spBUS) {
-            if (sp.getId_SP() == masp) {
+            if (String.valueOf(sp.getId_SP()).equals(masp)) {
                 if (sl > sp.getAmount()) {
                     JOptionPane.showMessageDialog(null, "Không đủ hàng");
                     return false;
@@ -147,7 +147,7 @@ public class SanPhamBUS {
 
         for (SanPhamDTO sp : spBUS) {
             SanPhamDTO spTemp = null;
-            if(masp == 0 && maloai == 0 ) {
+            if (masp == 0 && maloai == 0) {
                 spTemp = sp;
             } else if (masp == 0) {
                 if (sp.getId_Loai() == maloai) {
@@ -158,11 +158,11 @@ public class SanPhamBUS {
                     spTemp = sp;
                 }
             }
-            
+
             if (spTemp != null && spTemp.getPrice() >= min && spTemp.getPrice() <= max) {
                 search.add(spTemp);
             }
-            
+
         }
         return search;
     }
