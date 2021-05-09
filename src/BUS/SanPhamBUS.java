@@ -68,6 +68,18 @@ public class SanPhamBUS {
         
         return sp;
     }
+    
+    public List<SanPhamDTO> findAllByMaLoai (int id){
+        SanPhamDAO spDAO = new SanPhamDAO();
+        List<SanPhamDTO> sps = spDAO.findAllByMaLoai(id);
+        return sps;
+    }
+    
+    public SanPhamDTO getOneByName (String name){
+        SanPhamDAO spDAO = new SanPhamDAO();
+        SanPhamDTO sp = spDAO.getOneByFullName(name);
+        return sp;
+    }
 
     public void delete(String id) {
         int idSP = Integer.parseInt(id);

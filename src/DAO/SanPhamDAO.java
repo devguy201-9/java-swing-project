@@ -29,6 +29,17 @@ public class SanPhamDAO extends AbstractDAO<SanPhamDTO> {
         return query(sql, new SanPhamMapper());
     }
     
+    public List<SanPhamDTO> findAllByMaLoai(int id){
+        String sql = "select * from sanpham where id_Loai = ?";
+        return query(sql.toString(), new SanPhamMapper(),id);
+    }
+    
+    public SanPhamDTO getOneByFullName(String name){
+        String sql = "select * from sanpham where name = ?";
+        List<SanPhamDTO> sp = query(sql.toString(), new SanPhamMapper(),name);
+        return sp.isEmpty() ? null : sp.get(0);
+    }
+    
     public SanPhamDTO getOneByName (String name){
         String sql = "SELECT * FROM sanpham WHERE phone LIKE ?";
         List<SanPhamDTO> sp = query(sql, new SanPhamMapper(), name);

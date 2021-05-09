@@ -21,6 +21,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
@@ -163,7 +165,7 @@ public class QLCoffee extends JFrame implements MouseListener {
         revalidate();
     }
 
-    public void changeMainInfo(int i) //Đổi Phần hiển thị khi bấm btn trên menu
+    public void changeMainInfo(int i) throws FileNotFoundException //Đổi Phần hiển thị khi bấm btn trên menu
     {
         if (flag && i > 4 && i < 8) // Thay đổi nếu Thông kế đang dropdown
         {
@@ -172,7 +174,7 @@ public class QLCoffee extends JFrame implements MouseListener {
         switch (i) {
             case 0: //  BÁN HÀNG 
                 main.removeAll();
-                main.add(new BanHangGUI(DEFALUT_WIDTH, userId));
+                main.add(new testing(DEFALUT_WIDTH));
                 main.repaint();
                 main.revalidate();
                 break;
@@ -253,7 +255,11 @@ public class QLCoffee extends JFrame implements MouseListener {
             navItem item = navObj.get(i); // lấy vị trí item trong menu
             if (e.getSource() == item) {
                 item.doActive(); // Active NavItem đc chọn 
-                changeMainInfo(i); // Hiển thị ra phần main
+                try {
+                    changeMainInfo(i); // Hiển thị ra phần main
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(QLCoffee.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
                 item.noActive();
             }
