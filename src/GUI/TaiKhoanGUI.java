@@ -43,7 +43,7 @@ import javax.swing.table.TableRowSorter;
 public class TaiKhoanGUI extends JPanel implements ActionListener{
     private TaiKhoanBUS tkBUS = new TaiKhoanBUS();
     private JTextField txtMaTK,txtMaNV,txtUser,txtPass;
-    private JLabel btnConfirm,btnEdit,btnDelete,btnBack,btnAdd;
+    private JLabel btnConfirm,btnEdit,btnBack,btnAdd;    
     private JLabel lbMaTK,lbMaNV,lbUser,lbPass,lbPhai;
     private DefaultTableModel model;
     private JTable tbl;
@@ -70,7 +70,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
 /***************** PHẦN HIỂN THỊ THÔNG TIN ***************************/
         JPanel itemView = new JPanel(null);
         itemView.setBounds(new Rectangle(0, 0,this.DEFAUTL_WIDTH, 700));
-        itemView.setBackground(Color.WHITE);
+        itemView.setBackground(new Color(201, 211, 203));
         
         lbMaTK = new JLabel("Mã tài khoản ");
         lbMaTK.setFont(font0);
@@ -127,9 +127,6 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
         btnEdit.setBounds(new Rectangle(180,300,150,50));
         btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete_150px.png"));
-        btnDelete.setBounds(new Rectangle(100,360,150,50));
-        btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));    
         
         btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm_150px.png"));
         btnConfirm.setBounds(new Rectangle(20,300,150,50));
@@ -146,8 +143,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
                 txtMaTK.setEditable(false);
                 cleanView();
                 btnAdd.setVisible(false);
-                btnEdit.setVisible(false);
-                btnDelete.setVisible(false);                
+                btnEdit.setVisible(false);                               
                 btnConfirm.setVisible(true);
                 btnBack.setVisible(true);
                 
@@ -168,8 +164,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
                 txtMaTK.setEditable(false);
                 
                 btnAdd.setVisible(false);
-                btnEdit.setVisible(false);
-                btnDelete.setVisible(false);                
+                btnEdit.setVisible(false);               
                 btnConfirm.setVisible(true);
                 btnBack.setVisible(true);
                 
@@ -177,18 +172,6 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
             }
         });
               
-        btnDelete.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e)
-            {
-                int del = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Thông báo", JOptionPane.YES_NO_OPTION);
-                if(del == 0){
-                    tkBUS.delete(txtMaTK.getText());
-                    cleanView();
-                    tbl.clearSelection();
-                    outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());
-                }
-            }
-        });
         
         
         //MouseClick btnConfirm
@@ -210,7 +193,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
                             int manv = Integer.parseInt(txtMaNV.getText().trim());
                             String user = txtUser.getText();
                             String pass = txtPass.getText();                            
-                            int quyen = cmbRole.getSelectedItem().toString().equals("Nhân Viên") ? 0 : 1;
+                            int quyen = cmbRole.getSelectedItem().toString().equals("Nhân Viên") ? 1 : 2;
                             
                             if (user.equals("null") && pass.equals("null")) {
                                 JOptionPane.showMessageDialog(null, "Bạn chưa nhập tên hoặc mật khẩu!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
@@ -251,7 +234,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
                         int maNV = Integer.parseInt(txtMaNV.getText().trim());
                         String user = txtUser.getText();
                         String pass = txtPass.getText();
-                        int role = Integer.parseInt(String.valueOf(cmbRole.getSelectedItem()));
+                        int role = cmbRole.getSelectedItem().toString().equals("Nhân Viên") ? 1:2;
 //                        String enable = "1";
 
                         //Upload tài khoản lên DAO và BUS
@@ -263,8 +246,9 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
                         
                         
                         JOptionPane.showMessageDialog(null, "Sửa thành công","Thành công",JOptionPane.INFORMATION_MESSAGE);
-                        
+                                                
                     }
+                    
                 }
 
             }
@@ -276,8 +260,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
                 cleanView();
                 
                 btnAdd.setVisible(true);
-                btnEdit.setVisible(true);
-                btnDelete.setVisible(true);
+                btnEdit.setVisible(true);                
                 
                 btnConfirm.setVisible(false);
                 btnBack.setVisible(false);
@@ -287,8 +270,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener{
         });
         
         itemView.add(btnAdd);
-        itemView.add(btnEdit);
-        itemView.add(btnDelete);
+        itemView.add(btnEdit);        
         itemView.add(btnConfirm);
         itemView.add(btnBack);
 /*************************************************************************/
