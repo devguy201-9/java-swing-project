@@ -23,6 +23,11 @@ public class ct_HDBUS {
         ct_hdBUS = null;
     }
     
+    public ct_HDBUS(int i1)
+    {
+        list();
+    }
+    
     public List<ct_HoaDonDTO> getCt_hdBUS() {
         return ct_hdBUS;
     }

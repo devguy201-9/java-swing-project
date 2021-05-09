@@ -22,6 +22,11 @@ public class KhachHangBUS {
     public KhachHangBUS() {
         khBUS = null;
     }
+    
+    public KhachHangBUS(int i1)
+    {
+        list();
+    }
 
     public List<KhachHangDTO> getKhBUS() {
         return khBUS;

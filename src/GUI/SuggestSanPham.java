@@ -362,4 +362,6 @@ class SuggestSanPham extends JDialog {
         txtSL.setText(tbl.getModel().getValueAt(i, 4).toString());
         img = tbl.getModel().getValueAt(i, 5).toString();
     }
+    
+    
 }

@@ -34,6 +34,11 @@ public class NhanVienBUS {
         nvBUS = null;
     }
     
+    public NhanVienBUS(int i1)
+    {
+        list();
+    }
+    
     public List<NhanVienDTO> getNvBUS() {
         return nvBUS;
     }

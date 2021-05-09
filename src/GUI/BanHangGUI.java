@@ -57,9 +57,9 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
     //variable BUS
     private HoaDonBUS hdBUS = new HoaDonBUS();
     private SanPhamBUS spBUS = new SanPhamBUS();
-    private NhanVienBUS nvBUS = new NhanVienBUS();
-    private KhachHangBUS khBUS = new KhachHangBUS();
-    private ct_HDBUS ctBUS = new ct_HDBUS();
+    private NhanVienBUS nvBUS = new NhanVienBUS(1);
+    private KhachHangBUS khBUS = new KhachHangBUS(1);
+    private ct_HDBUS ctBUS = new ct_HDBUS(1);
     private ArrayList<ct_HoaDonDTO> dsct = new ArrayList<>();
 
     //variable of JPanel
@@ -139,6 +139,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         hdView.add(lbMaKH);
         hdView.add(txtMaKH);
         btnMaKH = new JButton("...");
+        btnMaKH.setBackground(new Color(131, 149, 167));
         btnMaKH.setBounds(new Rectangle(355, 0, 30, 30));
         btnMaKH.addActionListener(this);
         hdView.add(btnMaKH);
@@ -155,6 +156,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         hdView.add(lbMaNV);
         hdView.add(txtMaNV);
         btnMaNV = new JButton("...");
+        btnMaNV.setBackground(new Color(131, 149, 167));
         btnMaNV.setBounds(new Rectangle(575, 0, 30, 30));
         btnMaNV.addActionListener(this);
         hdView.add(btnMaNV);
@@ -172,7 +174,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
 
         JLabel lbNgayHD = new JLabel("Ngày Lập HD");
         lbNgayHD.setFont(font0);
-        lbNgayHD.setBounds(0, 50, 60, 30);
+        lbNgayHD.setBounds(0, 50, 100, 30);
         txtNgayHD = new JTextField();
         txtNgayHD.setEditable(false);
         txtNgayHD.setHorizontalAlignment(JTextField.CENTER);
@@ -183,6 +185,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
 
         btnNewHD = new JButton("Tạo hóa đơn");
         btnNewHD.setFont(font0);
+        btnNewHD.setBackground(new Color(131, 149, 167));
         btnNewHD.setBounds(new Rectangle(500, 50, 200, 30));
         btnNewHD.addActionListener(this);
         hdView.add(btnNewHD);
@@ -191,12 +194,14 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         btnConfirm.setFont(font0);
         btnConfirm.addActionListener(this);
         btnConfirm.setVisible(false);
+        btnConfirm.setBackground(new Color(131, 149, 167));
         btnConfirm.setBounds(new Rectangle(500, 50, 150, 30));
         hdView.add(btnConfirm);
 
         btnDeleteHD = new JButton("Xóa");
         btnDeleteHD.setFont(font0);
         btnDeleteHD.setBounds(new Rectangle(700, 50, 150, 30));
+        btnDeleteHD.setBackground(new Color(131, 149, 167));
         btnDeleteHD.addActionListener(this);
         btnDeleteHD.setVisible(false);
         hdView.add(btnDeleteHD);
@@ -240,6 +245,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         chiTietView.add(txtMaSP);
         btnMaSP = new JButton("...");
         btnMaSP.setBounds(new Rectangle(130, 240, 30, 30));
+        btnMaSP.setBackground(new Color(131, 149, 167));
         btnMaSP.addActionListener(this);
         chiTietView.add(btnMaSP);
 
@@ -279,18 +285,21 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         btnAddCT = new JButton("Thêm");
         btnAddCT.setFont(font0);
         btnAddCT.addActionListener(this);
+        btnAddCT.setBackground(new Color(131, 149, 167));
         btnAddCT.setBounds(new Rectangle(0, 360, 80, 30));
         chiTietView.add(btnAddCT);
 
         btnEdit = new JButton("Sửa");
         btnEdit.setFont(font0);
         btnEdit.addActionListener(this);
+        btnEdit.setBackground(new Color(131, 149, 167));
         btnEdit.setBounds(new Rectangle(300, 420, 150, 40));
         chiTietView.add(btnEdit);
 
         btnRemove = new JButton("Xóa");
         btnRemove.setFont(font0);
         btnRemove.addActionListener(this);
+        btnRemove.setBackground(new Color(131, 149, 167));
         btnRemove.setBounds(new Rectangle(500, 420, 150, 40));
         chiTietView.add(btnRemove);
 
@@ -310,7 +319,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             public Class getColumnClass(int column) {
                 switch (column) {
                     case 2:
-                        return Integer.class;
+                        return Float.class;
                     case 3:
                         return Integer.class;
                     default:
@@ -378,7 +387,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         for (ct_HoaDonDTO sp : ds) {
             data = new Vector();
             data.add(sp.getId_SP());
-            data.add(sp.getId_HD());       //LUU Y: DAY LA TENSP(CHUA CO :<< )
+            data.add(sp.getName());       
             data.add(sp.getPrice());
             data.add(sp.getAmount());
             model.addRow(data);
@@ -473,15 +482,15 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         if (e.getSource().equals(btnAddCT)) // Thêm Sản Phẩm
         {
             int sl = 0;
-            try {
-                sl = Integer.parseInt(txtCTSL.getText());
+            try {                
+                sl = Integer.parseInt(txtCTSL.getText().trim());
             } catch (NumberFormatException E) {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập số lượng");
                 return;
             }
             // Kiểm tra số lượng
 
-            int gia = Integer.parseInt(txtCTGia.getText());
+            float gia = Float.parseFloat(txtCTGia.getText());
             System.out.println(sl);
 
             //Kiểm tra đã có trong giỏ chưa
@@ -502,7 +511,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 if (!spBUS.checkSL(txtMaSP.getText(), sl)) {
                     return;
                 }
-                dsct.add(new ct_HoaDonDTO(Integer.parseInt(txtMaHD.getText()), Integer.parseInt(txtMaSP.getText()), txtCTTenSP.getText(), gia, sl));
+                dsct.add(new ct_HoaDonDTO(Integer.parseInt(txtMaHD.getText()), Integer.parseInt(txtMaSP.getText()), txtCTTenSP.getText(), sl, gia));
             }
             outModel(model, dsct);
             txtTongTien.setText(String.valueOf(sumHD()));
@@ -523,7 +532,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             }
             System.out.println(txtMaNV.getText());
             System.out.println(nvBUS.getNvBUS().size());
-            if (!txtMaKH.getText().isEmpty() && !khBUS.check(txtMaKH.getText())) {
+            if (!txtMaKH.getText().isEmpty() && !khBUS.check(txtMaKH.getText().trim())) {
                 JOptionPane.showMessageDialog(null, "Mã khách hàng không tồn tại");
                 txtMaKH.requestFocus();
                 return;
@@ -533,7 +542,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập mã nhân viên");
                 txtMaNV.requestFocus();
                 return;
-            } else if (!nvBUS.check(txtMaNV.getText())) {
+            } else if (!nvBUS.check(txtMaNV.getText().trim())) {
                 JOptionPane.showMessageDialog(null, "Mã nhân viên không tồn tại");
                 txtMaNV.requestFocus();
                 return;
