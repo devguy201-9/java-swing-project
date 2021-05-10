@@ -19,6 +19,10 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Timestamp;
@@ -42,8 +46,8 @@ import javax.swing.table.TableRowSorter;
  *
  * @author ACER
  */
-public class NhapHangGUI extends JPanel implements ActionListener {
 
+public class NhapHangGUI extends JPanel implements ActionListener, KeyListener{
     private PhieuNhapHangBUS pnhBUS = new PhieuNhapHangBUS();
     private ct_PhieuNhapHangBUS ctBUS = new ct_PhieuNhapHangBUS();
     private int DEFAULT_WIDTH;
@@ -52,14 +56,16 @@ public class NhapHangGUI extends JPanel implements ActionListener {
     private JTextField txtMaPNH, txtMaNCC, txtMaNV, txtNgayHD, txtTongTien;
     private JDateChooser dateChoice;
 
-    private JLabel btnView, btnBill;
-
+    private JLabel btnView, btnAdd;
+    
+    
+    private JButton btnMaNCC,btnMaNV;
+        
     private JTable tbl;
     private DefaultTableModel model;
 
     private Choice monthChoice, yearChoice;
     private JTextField txtMinPrice, txtMaxPrice, txtMaPN;
-    private JButton btnMaNV, btnMaNCC;
 
     public NhapHangGUI(int width) {
         this.DEFAULT_WIDTH = width;
@@ -92,11 +98,15 @@ public class NhapHangGUI extends JPanel implements ActionListener {
 
         lbMaNCC = new JLabel("Mã NCC");
         lbMaNCC.setFont(font0);
-        lbMaNCC.setBounds(145, 0, 60, 30);
+        lbMaNCC.setBounds(155,0,30,30);
         txtMaNCC = new JTextField();
         txtMaNCC.setFont(font0);
-        txtMaNCC.setBounds(new Rectangle(200, 0, 60, 30));
-        txtMaNCC.setEditable(false);
+        txtMaNCC.setBounds(new Rectangle(215,0,50,30));
+        btnMaNCC = new JButton("...");
+        btnMaNCC.setBackground(new Color(131, 149, 167));
+        btnMaNCC.setBounds(new Rectangle(265, 0, 30, 30));
+        btnMaNCC.addActionListener(this);
+        itemView.add(btnMaNCC);
         itemView.add(lbMaNCC);
         itemView.add(txtMaNCC);
         btnMaNCC = new JButton("...");
@@ -109,8 +119,12 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         lbMaNV.setBounds(305, 0, 60, 30);
         txtMaNV = new JTextField();
         txtMaNV.setFont(font0);
-        txtMaNV.setBounds(new Rectangle(355, 0, 60, 30));
-        txtMaNV.setEditable(false);
+        txtMaNV.setBounds(new Rectangle(375,0,50,30));
+        btnMaNV = new JButton("...");
+        btnMaNV.setBackground(new Color(131, 149, 167));
+        btnMaNV.setBounds(new Rectangle(425, 0, 30, 30));
+        btnMaNV.addActionListener(this);
+        itemView.add(btnMaNV);
         itemView.add(lbMaNV);
         itemView.add(txtMaNV);
         btnMaNV = new JButton("...");
@@ -149,21 +163,30 @@ public class NhapHangGUI extends JPanel implements ActionListener {
 
         add(itemView);
 
-        /**
-         * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL *******************
-         */
+/**************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL ********************/
+       
+        
+        btnAdd = new JLabel(new ImageIcon(("./src/image/btnAdd.png")));
+        btnAdd.setBounds(new Rectangle(500,60,200,50));
+        btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
         btnView = new JLabel(new ImageIcon(("./src/image/btnView.png")));
         btnView.setBounds(new Rectangle(580, 0, 200, 50));
         btnView.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnBill = new JLabel(new ImageIcon(("./src/image/btnBill.png")));
-        btnBill.setBounds(new Rectangle(580, 60, 200, 50));
-        btnBill.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
 //        itemView.add(btnEdit);
+        itemView.add(btnAdd);
         itemView.add(btnView);
-        itemView.add(btnBill);
-
+        
+        
+        // MouseClick btnAdd
+        btnAdd.addMouseListener(new MouseAdapter() {
+            public void mouseCliced(MouseEvent e){
+                
+                
+            }
+        });
+        
         // Xem Chi Tiết HD              
         btnView.addMouseListener(new MouseAdapter() {
             @Override
@@ -172,22 +195,6 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             }
         });
 
-        // In Bill
-        btnBill.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int maHD = Integer.parseInt(txtMaPNH.getText());
-                int maKH = Integer.parseInt(txtMaNCC.getText());
-                int maNv = Integer.parseInt(txtMaNV.getText());
-                Timestamp ngayLap = Timestamp.valueOf(txtNgayHD.getText());
-                float tongTien = Float.parseFloat(txtTongTien.getText());
-                HoaDonDTO hd = new HoaDonDTO(maHD, maKH, maNv, tongTien, ngayLap);
-                ArrayList<ct_PhieuNhapHangDTO> cthd = (ArrayList<ct_PhieuNhapHangDTO>) ctBUS.getCt_pnhBUS();
-//                printBill bill = new printBill(hd, cthd);
-//                bill.print();
-            }
-        });
-
-        //Button Confirm
         /**
          * **************** TẠO MODEL VÀ HEADER ********************************************
          */
@@ -416,6 +423,28 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             String s = rm.getTextFieldContent();
             txtMaNV.setText(s);
         }
+        
+        if (e.getSource() == btnMaNCC) // Suggest Nha cung cap
+        {
+            SuggestNhaCungCap rm = new SuggestNhaCungCap();
+            String s = rm.getTextFieldContent();
+            txtMaNCC.setText(s);
+        }
     }
 
+    @Override
+    public void keyTyped(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

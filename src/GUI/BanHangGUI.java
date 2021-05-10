@@ -10,7 +10,6 @@ import BUS.ct_HDBUS;
 import BUS.KhachHangBUS;
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
-//import BUS.printBill;
 import DTO.HoaDonDTO;
 import DTO.SanPhamDTO;
 import DTO.ct_HoaDonDTO;
@@ -221,6 +220,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         page = new Page404(WIDTH, "Tạo hóa đơn");
         page.setBounds(new Rectangle(50, 0, DEFALUT_WIDTH - 60, 500));
         add(page);
+        
 
         chiTietView = new JPanel(null);
         chiTietView.setVisible(false);
@@ -483,7 +483,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         {
             int sl = 0;
             try {                
-                sl = Integer.parseInt(txtCTSL.getText().trim());
+                sl = Integer.parseInt(txtCTSL.getText());
             } catch (NumberFormatException E) {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập số lượng");
                 return;
@@ -563,11 +563,11 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập sản phẩm");
                 return;
             }
-            int maHD = Integer.parseInt(txtMaHD.getText());
-            int maKH = Integer.parseInt(txtMaKH.getText());
-            int maNV = Integer.parseInt(txtMaNV.getText());
+            int maHD = Integer.parseInt(txtMaHD.getText().trim());
+            int maKH = Integer.parseInt(txtMaKH.getText().trim());
+            int maNV = Integer.parseInt(txtMaNV.getText().trim());
             Timestamp ngayHD = Timestamp.valueOf(txtNgayHD.getText());
-            int tongTien = Integer.parseInt(txtTongTien.getText());
+            float tongTien = Float.parseFloat(txtTongTien.getText());
             HoaDonDTO hd = new HoaDonDTO(maHD, maKH, maNV, tongTien, ngayHD);
             hdBUS.add(hd);
             for (ct_HoaDonDTO ct : dsct) {
@@ -598,6 +598,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             } catch (IndexOutOfBoundsException ex) {
                 JOptionPane.showMessageDialog(null, "Chưa chọn SP cần sửa");
             }
+            txtTongTien.setText(String.valueOf(sumHD()));
         }
         if (e.getSource().equals(btnRemove)) // Xóa SP trong CT SP
         {
@@ -647,6 +648,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 }
