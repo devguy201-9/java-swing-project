@@ -59,9 +59,26 @@ public class NguyenLieuBUS {
         }
     }
 
-    public void set(NguyenLieuDTO nlDTO) {
+    public void addAmount(NguyenLieuDTO nlDTO, int soLuong) {
         for (int i = 0; i < nlBUS.size(); i++) {
             if (nlBUS.get(i).getId_NL() == nlDTO.getId_NL()) {
+                nlDTO.addAmount(soLuong);
+                nlBUS.set(i, nlDTO);
+                NguyenLieuDAO nlDAO = new NguyenLieuDAO();
+                try {
+                    nlDAO.update(nlDTO);
+                } catch (FileNotFoundException e) {
+                    System.out.println(e.getMessage());
+                }
+                return;
+            }
+        }
+    }
+    
+    public void subtractAmount(NguyenLieuDTO nlDTO, int soLuong) {
+        for (int i = 0; i < nlBUS.size(); i++) {
+            if (nlBUS.get(i).getId_NL() == nlDTO.getId_NL()) {
+                nlDTO.subtractAmount(soLuong);
                 nlBUS.set(i, nlDTO);
                 NguyenLieuDAO nlDAO = new NguyenLieuDAO();
                 try {

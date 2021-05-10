@@ -18,6 +18,7 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -172,7 +173,9 @@ class CT_NhapHangGUI extends JFrame {
                 }
                 int mess = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Thông báo", JOptionPane.YES_NO_OPTION);
                 if (mess == 0) { //yes
+                    int soLuong = Math.abs(Integer.parseInt(txtSL.getText()));
                     ctBUS.deleteByCode(maPhieuPhapHang, maNL);
+                    nlBUS.subtractAmount(nl, soLuong);
                     cleanView();
                     tbl.clearSelection();
                     outModel(model, (ArrayList<ct_PhieuNhapHangDTO>) ctBUS.getCt_pnhBUS());
@@ -202,10 +205,11 @@ class CT_NhapHangGUI extends JFrame {
                     JOptionPane.showMessageDialog(null, "Không tìm thấy mã nguyên liệu, vui lòng nhập lại !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
-                int soLong = Integer.parseInt(txtSL.getText());
+                int soLong = Math.abs(Integer.parseInt(txtSL.getText()));
                 float tongGia = (float) (soLong * 1.0 * nl.getPrice());
                 ct_PhieuNhapHangDTO ctNhapHangDTO = new ct_PhieuNhapHangDTO(maPhieuPhapHang, maNL, soLong, tongGia, nl.getPrice());
                 ctBUS.add(ctNhapHangDTO);
+                nlBUS.addAmount(nl, soLong);
                 cleanView();
                 tbl.clearSelection();
                 outModel(model, (ArrayList<ct_PhieuNhapHangDTO>) ctBUS.getCt_pnhBUS());
@@ -271,7 +275,7 @@ class CT_NhapHangGUI extends JFrame {
         scroll.setBackground(null);
 
         itemView.add(scroll);
-        if (ctBUS != null && !ctBUS.getCt_pnhBUS().isEmpty()) {
+        if (ctBUS.getCt_pnhBUS() != null && !ctBUS.getCt_pnhBUS().isEmpty()) {
             outModel(model, (ArrayList<ct_PhieuNhapHangDTO>) ctBUS.getCt_pnhBUS());
         }
         add(itemView);
@@ -291,8 +295,8 @@ class CT_NhapHangGUI extends JFrame {
                     }
                 }
                 txtTenNL.setText(nameString);
-                txtGiaBan.setText(tbl.getModel().getValueAt(i, 1).toString());
-                txtSL.setText(tbl.getModel().getValueAt(i, 2).toString());
+                txtSL.setText(tbl.getModel().getValueAt(i, 1).toString());
+                txtGiaBan.setText(tbl.getModel().getValueAt(i, 2).toString());
             }
         });
         /**

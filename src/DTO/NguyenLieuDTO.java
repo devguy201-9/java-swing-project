@@ -43,6 +43,14 @@ public class NguyenLieuDTO {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+    
+    public void addAmount(int amount) {
+        this.amount += amount;
+    }
+    
+    public void subtractAmount(int amount) {
+        this.amount -= amount;
+    }
 
     public String getName() {
         return name;

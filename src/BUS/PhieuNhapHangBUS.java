@@ -19,23 +19,23 @@ import java.util.List;
  * @author Asus
  */
 public class PhieuNhapHangBUS {
-
+    
     private List<PhieuNhapHangDTO> pnhBUS;
-
+    
     public PhieuNhapHangBUS() {
         pnhBUS = null;
     }
-
+    
     public List<PhieuNhapHangDTO> getPnhBUS() {
         return pnhBUS;
     }
-
+    
     public void list() {
         PhieuNhapHangDAO pnhDAO = new PhieuNhapHangDAO();
         pnhBUS = new ArrayList<>();
         pnhBUS = pnhDAO.findAll();
     }
-
+    
     public void add(PhieuNhapHangDTO pnhDTO) {
         PhieuNhapHangDAO pnhDAO = new PhieuNhapHangDAO();
         if (pnhBUS == null) {
@@ -50,9 +50,10 @@ public class PhieuNhapHangBUS {
     }
     
     public void addDTO(PhieuNhapHangDTO pnhDTO) {
-            pnhBUS.add(pnhDTO);
+        PhieuNhapHangDAO pnhDAO = new PhieuNhapHangDAO();
+        pnhBUS.add(pnhDAO.findByCode(pnhDTO.getId_PNH()));
     }
-
+    
     public void delete(String id) {
         int idPNH = Integer.parseInt(id);
         for (PhieuNhapHangDTO pnhDTO : pnhBUS) {
@@ -68,7 +69,7 @@ public class PhieuNhapHangBUS {
             }
         }
     }
-
+    
     public void set(PhieuNhapHangDTO pnhDTO) {
         for (int i = 0; i < pnhBUS.size(); i++) {
             if (pnhBUS.get(i).getId_PNH() == pnhDTO.getId_PNH()) {
@@ -94,7 +95,7 @@ public class PhieuNhapHangBUS {
         }
         return false;
     }
-
+    
     public ArrayList<PhieuNhapHangDTO> ListTime(Calendar from, Calendar to) {
         ArrayList<PhieuNhapHangDTO> list = new ArrayList<>();
         for (PhieuNhapHangDTO nh : pnhBUS) {
@@ -107,11 +108,11 @@ public class PhieuNhapHangBUS {
         }
         return list;
     }
-
+    
     public ArrayList<PhieuNhapHangDTO> search(int mm, int yyyy, double max, double min, int maPNH) {
         int mm1 = 0, mm2 = 12;
         int yyy1 = 0, yyy2 = Calendar.getInstance().get(Calendar.YEAR);
-
+        
         if (mm != -1) {
             mm1 = mm;
             mm2 = mm;
@@ -120,7 +121,7 @@ public class PhieuNhapHangBUS {
             yyy1 = yyyy;
             yyy2 = yyyy;
         }
-
+        
         ArrayList<PhieuNhapHangDTO> search = new ArrayList<>();
         LocalDate localDate = null;
         for (PhieuNhapHangDTO pnh : pnhBUS) {
@@ -144,5 +145,5 @@ public class PhieuNhapHangBUS {
         }
         return search;
     }
-
+    
 }

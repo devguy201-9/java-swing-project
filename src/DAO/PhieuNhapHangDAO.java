@@ -28,6 +28,12 @@ public class PhieuNhapHangDAO extends AbstractDAO<PhieuNhapHangDTO> {
         String sql = "SELECT * FROM phieunhaphang";
         return query(sql, new PNHMapper());
     }
+    
+    public PhieuNhapHangDTO findByCode(int idPNH) {
+        String sql = "SELECT * FROM phieunhaphang WHERE id_PNH =  ?";
+        List<PhieuNhapHangDTO> pnh = query(sql, new PNHMapper(), idPNH);
+        return pnh.isEmpty() ? null : pnh.get(0);
+    }
 
     public void delete(int idPNH) throws FileNotFoundException {
         String sql = "DELETE FROM phieunhaphang WHERE id_PNH = ? ";
