@@ -9,6 +9,7 @@ import DAO.PhieuNhapHangDAO;
 import DTO.PhieuNhapHangDTO;
 import java.io.FileNotFoundException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -75,36 +76,66 @@ public class PhieuNhapHangBUS {
             }
         }
     }
-    
+
     //phần thống kê
-    public boolean checkTime(Calendar from,Calendar to,Calendar time)
-    {
+    public boolean checkTime(Calendar from, Calendar to, Calendar time) {
 //        System.err.print(from.getTime()+" ");
 //        System.err.print(to.getTime()+" ");
 //        System.err.println(time.getTime());
-        if(time.after(from) && time.before(to))
-        {
+        if (time.after(from) && time.before(to)) {
             return true;
         }
         return false;
     }
-    public ArrayList<PhieuNhapHangDTO> ListTime(Calendar from,Calendar to)
-    {
+
+    public ArrayList<PhieuNhapHangDTO> ListTime(Calendar from, Calendar to) {
         ArrayList<PhieuNhapHangDTO> list = new ArrayList<>();
-        for(PhieuNhapHangDTO nh : pnhBUS)
-        {
+        for (PhieuNhapHangDTO nh : pnhBUS) {
             Timestamp date = (Timestamp) nh.getDate_add();
             Calendar time = Calendar.getInstance();
             time.setTimeInMillis(date.getTime());
-            if(checkTime(from, to, time))
-            {
+            if (checkTime(from, to, time)) {
                 list.add(nh);
             }
         }
         return list;
     }
-    
-    
-    
+
+    public ArrayList<PhieuNhapHangDTO> search(int mm, int yyyy, double max, double min, int maPNH) {
+        int mm1 = 0, mm2 = 12;
+        int yyy1 = 0, yyy2 = Calendar.getInstance().get(Calendar.YEAR);
+
+        if (mm != -1) {
+            mm1 = mm;
+            mm2 = mm;
+        }
+        if (yyyy != 0) {
+            yyy1 = yyyy;
+            yyy2 = yyyy;
+        }
+
+        ArrayList<PhieuNhapHangDTO> search = new ArrayList<>();
+        LocalDate localDate = null;
+        for (PhieuNhapHangDTO pnh : pnhBUS) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(pnh.getDate_add());
+            int month = calendar.get(Calendar.MONTH);
+            int year = calendar.get(Calendar.YEAR);
+            if (pnh.getTotal_money() >= min && pnh.getTotal_money() <= max
+                    && (month >= mm1 && month <= mm2)
+                    && (year >= yyy1 && year <= yyy2)) {
+                if (maPNH != 0 && pnh.getId_PNH() == maPNH) {
+                    search.clear();
+                    search.add(pnh);
+                    break;
+                }
+                if (maPNH != 0 && pnh.getId_PNH() != maPNH) {
+                    search.clear();
+                }
+                search.add(pnh);
+            }
+        }
+        return search;
+    }
 
 }

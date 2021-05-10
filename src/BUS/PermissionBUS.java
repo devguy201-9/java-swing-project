@@ -72,4 +72,13 @@ public class PermissionBUS {
             }
         }
     }
+
+    public PermissionDTO searchID(int id) {
+        for (PermissionDTO permissionDTO : permissionList) {
+            if (permissionDTO.getId_Permission() == id) {
+                return permissionDTO;
+            }
+        }
+        return null;
+    }
 }
