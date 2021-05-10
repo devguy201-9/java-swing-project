@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -48,6 +49,7 @@ public class SuggestNhaCungCap extends JDialog {
     private int DWIDTH = 1200;    
     private JTextField txtSearch;
     private JComboBox cmbChoice;
+    private JButton btnConfirm,btnBack;
 
     public SuggestNhaCungCap() {
         setModal(true);
@@ -110,8 +112,14 @@ public class SuggestNhaCungCap extends JDialog {
          * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL
          * *******************
          */
-        JLabel btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm_150px.png"));
-        btnConfirm.setBounds(new Rectangle(20, 260, 150, 50));
+        Font font2 = new Font("Sogoe UI", Font.PLAIN, 18);
+        
+        btnConfirm = new JButton("XÁC NHẬN");
+        btnConfirm.setFont(font2);
+        btnConfirm.setForeground(Color.WHITE);
+        btnConfirm.setBackground(new Color(250, 130, 49));
+        
+        btnConfirm.setBounds(new Rectangle(20, 260, 150, 40));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnConfirm.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -119,8 +127,12 @@ public class SuggestNhaCungCap extends JDialog {
             }
         });
 
-        JLabel btnBack = new JLabel(new ImageIcon("./src/image/btnBack_150px.png"));
-        btnBack.setBounds(new Rectangle(180, 260, 150, 50));
+        btnBack = new JButton("QUAY LẠI");
+        btnBack.setFont(font2);
+        btnBack.setForeground(Color.WHITE);
+        btnBack.setBackground(new Color(181, 52, 113));
+        
+        btnBack.setBounds(new Rectangle(180, 260, 150, 40));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBack.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {

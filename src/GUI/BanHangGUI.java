@@ -138,7 +138,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtMaKH.addKeyListener(this);
         hdView.add(lbMaKH);
         hdView.add(txtMaKH);
-        btnMaKH = new JButton("...");
+        btnMaKH = new JButton("+");
         btnMaKH.setBackground(new Color(131, 149, 167));
         btnMaKH.setBounds(new Rectangle(355, 0, 30, 30));
         btnMaKH.addActionListener(this);
@@ -154,11 +154,11 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtMaNV.setBounds(new Rectangle(475, 0, 100, 30));
         txtMaNV.addKeyListener(this);
         hdView.add(lbMaNV);
-        hdView.add(txtMaNV);
-        btnMaNV = new JButton("...");
+        hdView.add(txtMaNV);        
+        btnMaNV = new JButton("+");   
         btnMaNV.setBackground(new Color(131, 149, 167));
         btnMaNV.setBounds(new Rectangle(575, 0, 30, 30));
-        btnMaNV.addActionListener(this);
+        btnMaNV.addActionListener(this);        
         hdView.add(btnMaNV);
 
         JLabel lbTongTien = new JLabel("Tổng Tiền (VNĐ)");
@@ -244,7 +244,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtMaSP.addKeyListener(this);
         chiTietView.add(lbMaSP);
         chiTietView.add(txtMaSP);
-        btnMaSP = new JButton("...");
+        btnMaSP = new JButton("+");
         btnMaSP.setBounds(new Rectangle(130, 240, 30, 30));
         btnMaSP.setBackground(new Color(131, 149, 167));
         btnMaSP.addActionListener(this);

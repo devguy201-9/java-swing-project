@@ -61,7 +61,8 @@ public class NhapHangGUI extends JPanel implements ActionListener, KeyListener{
     private JButton btnMaNCC,btnMaNV;
     private JDateChooser dateChoice;
     
-    private JLabel btnEdit,btnAdd,btnView,btnBill,btnConfirm,btnBack;
+    private JLabel btnEdit,btnBill,btnConfirm,btnBack;
+    private JButton btnView,btnAdd;
     
     private JTable tbl;
     private DefaultTableModel model;
@@ -156,19 +157,29 @@ public class NhapHangGUI extends JPanel implements ActionListener, KeyListener{
         add(itemView);
 
 /**************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL ********************/
-       
+        Font font2 = new Font("Sogoe UI", Font.PLAIN, 18);
         
-        btnAdd = new JLabel(new ImageIcon(("./src/image/btnAdd.png")));
-        btnAdd.setBounds(new Rectangle(500,60,200,50));
+        btnAdd = new JButton("THÊM");
+        btnAdd.setFont(font2);
+        btnAdd.setForeground(Color.WHITE);
+        btnAdd.setBackground(new Color(85, 239, 196));
+
+        btnAdd.setBounds(new Rectangle(730,60,200,40));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+               
         
-        btnView = new JLabel(new ImageIcon(("./src/image/btnView.png")));
-        btnView.setBounds(new Rectangle(730,0,200,50));
+        btnView = new JButton("CHI TIẾT PN");
+        btnView.setFont(font2);
+        btnView.setForeground(Color.WHITE);
+        btnView.setBackground(new Color(250, 130, 49));
+        
+        
+        btnView.setBounds(new Rectangle(730,0,200,40));
         btnView.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        btnBill = new JLabel(new ImageIcon(("./src/image/btnBill.png")));
-        btnBill.setBounds(new Rectangle(730,60,200,50));
-        btnBill.setCursor(new Cursor(Cursor.HAND_CURSOR));
+//        btnBill = new JLabel(new ImageIcon(("./src/image/btnBill.png")));
+//        btnBill.setBounds(new Rectangle(730,60,200,50));
+//        btnBill.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         btnConfirm= new JLabel(new ImageIcon("./src/image/btnConfirm.png"));
         btnConfirm.setVisible(false);
@@ -183,7 +194,7 @@ public class NhapHangGUI extends JPanel implements ActionListener, KeyListener{
 //        itemView.add(btnEdit);
         itemView.add(btnAdd);
         itemView.add(btnView);
-        itemView.add(btnBill);
+//        itemView.add(btnBill);
         
         itemView.add(btnConfirm);
         itemView.add(btnBack);
@@ -205,19 +216,19 @@ public class NhapHangGUI extends JPanel implements ActionListener, KeyListener{
         });
         
         // In Bill
-        btnBill.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e){
-                int maHD = Integer.parseInt(txtMaPNH.getText());
-                int maKH = Integer.parseInt(txtMaNCC.getText());
-                int maNv = Integer.parseInt(txtMaNV.getText());
-                Timestamp ngayLap = Timestamp.valueOf(txtNgayHD.getText());
-                float tongTien = Float.parseFloat(txtTongTien.getText());
-                HoaDonDTO hd = new HoaDonDTO(maHD, maKH, maNv, tongTien, ngayLap);                
-                ArrayList<ct_PhieuNhapHangDTO> cthd = (ArrayList<ct_PhieuNhapHangDTO>) ctBUS.getCt_pnhBUS();
-//                printBill bill = new printBill(hd, cthd);
-//                bill.print();
-            }
-        });
+//        btnBill.addMouseListener(new MouseAdapter() {
+//            public void mouseClicked(MouseEvent e){
+//                int maHD = Integer.parseInt(txtMaPNH.getText());
+//                int maKH = Integer.parseInt(txtMaNCC.getText());
+//                int maNv = Integer.parseInt(txtMaNV.getText());
+//                Timestamp ngayLap = Timestamp.valueOf(txtNgayHD.getText());
+//                float tongTien = Float.parseFloat(txtTongTien.getText());
+//                HoaDonDTO hd = new HoaDonDTO(maHD, maKH, maNv, tongTien, ngayLap);                
+//                ArrayList<ct_PhieuNhapHangDTO> cthd = (ArrayList<ct_PhieuNhapHangDTO>) ctBUS.getCt_pnhBUS();
+////                printBill bill = new printBill(hd, cthd);
+////                bill.print();
+//            }
+//        });
         
         //Button Confirm
        
