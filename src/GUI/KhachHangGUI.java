@@ -116,6 +116,9 @@ public class KhachHangGUI extends JPanel {
         /**
          * ************** TẠO CÁC BTN THÊM ,XÓA, SỬA *******************
          */
+        
+        
+        
         JLabel btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd.png"));
         btnAdd.setBounds(new Rectangle(750, 0, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
