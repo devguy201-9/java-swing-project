@@ -221,6 +221,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         page = new Page404(WIDTH, "Tạo hóa đơn");
         page.setBounds(new Rectangle(50, 0, DEFALUT_WIDTH - 60, 500));
         add(page);
+        
 
         chiTietView = new JPanel(null);
         chiTietView.setVisible(false);

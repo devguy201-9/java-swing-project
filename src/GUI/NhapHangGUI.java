@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -49,16 +51,17 @@ import javax.swing.table.TableRowSorter;
  *
  * @author ACER
  */
-public class NhapHangGUI extends JPanel{
+public class NhapHangGUI extends JPanel implements ActionListener, KeyListener{
     private PhieuNhapHangBUS pnhBUS = new PhieuNhapHangBUS();
     private ct_PhieuNhapHangBUS ctBUS = new ct_PhieuNhapHangBUS();
     private int DEFAULT_WIDTH;
     
     private JLabel lbMaPNH,lbMaNCC,lbMaNV,lbNgayHD,lbTongTien;
     private JTextField txtMaPNH,txtMaNCC,txtMaNV,txtNgayHD,txtTongTien;
+    private JButton btnMaNCC,btnMaNV;
     private JDateChooser dateChoice;
     
-    private JLabel btnEdit,btnDelete,btnView,btnBill,btnConfirm,btnBack;
+    private JLabel btnEdit,btnAdd,btnView,btnBill,btnConfirm,btnBack;
     
     private JTable tbl;
     private DefaultTableModel model;
@@ -96,10 +99,15 @@ public class NhapHangGUI extends JPanel{
                        
         lbMaNCC = new JLabel("Mã NCC");
         lbMaNCC.setFont(font0);
-        lbMaNCC.setBounds(155,0,60,30);
+        lbMaNCC.setBounds(155,0,30,30);
         txtMaNCC = new JTextField();
         txtMaNCC.setFont(font0);
-        txtMaNCC.setBounds(new Rectangle(215,0,80,30));
+        txtMaNCC.setBounds(new Rectangle(215,0,50,30));
+        btnMaNCC = new JButton("...");
+        btnMaNCC.setBackground(new Color(131, 149, 167));
+        btnMaNCC.setBounds(new Rectangle(265, 0, 30, 30));
+        btnMaNCC.addActionListener(this);
+        itemView.add(btnMaNCC);
         itemView.add(lbMaNCC);
         itemView.add(txtMaNCC);
 
@@ -108,7 +116,12 @@ public class NhapHangGUI extends JPanel{
         lbMaNV.setBounds(315,0,60,30);
         txtMaNV = new JTextField();
         txtMaNV.setFont(font0);
-        txtMaNV.setBounds(new Rectangle(375,0,80,30));
+        txtMaNV.setBounds(new Rectangle(375,0,50,30));
+        btnMaNV = new JButton("...");
+        btnMaNV.setBackground(new Color(131, 149, 167));
+        btnMaNV.setBounds(new Rectangle(425, 0, 30, 30));
+        btnMaNV.addActionListener(this);
+        itemView.add(btnMaNV);
         itemView.add(lbMaNV);
         itemView.add(txtMaNV);
 
@@ -145,9 +158,9 @@ public class NhapHangGUI extends JPanel{
 /**************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL ********************/
        
         
-        btnDelete = new JLabel(new ImageIcon(("./src/image/btnDelete.png")));
-        btnDelete.setBounds(new Rectangle(500,60,200,50));
-        btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnAdd = new JLabel(new ImageIcon(("./src/image/btnAdd.png")));
+        btnAdd.setBounds(new Rectangle(500,60,200,50));
+        btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         btnView = new JLabel(new ImageIcon(("./src/image/btnView.png")));
         btnView.setBounds(new Rectangle(730,0,200,50));
@@ -168,25 +181,17 @@ public class NhapHangGUI extends JPanel{
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
 //        itemView.add(btnEdit);
-        itemView.add(btnDelete);
+        itemView.add(btnAdd);
         itemView.add(btnView);
         itemView.add(btnBill);
         
         itemView.add(btnConfirm);
         itemView.add(btnBack);
         
-        // MouseClick btnDelete
-        btnDelete.addMouseListener(new MouseAdapter() {
+        // MouseClick btnAdd
+        btnAdd.addMouseListener(new MouseAdapter() {
             public void mouseCliced(MouseEvent e){
-                int mess = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Thông báo", JOptionPane.YES_NO_OPTION);
-                if(mess == 0){ //yes
-                    pnhBUS.delete(txtMaPNH.getText());
-                    ctBUS.delete(txtMaPNH.getText());
-                    cleanView();
-                    tbl.clearSelection();
-                    outModel(model, (ArrayList<PhieuNhapHangDTO>) pnhBUS.getPnhBUS());
-                    
-                }
+                
                 
             }
         });
@@ -469,6 +474,37 @@ public class NhapHangGUI extends JPanel{
         ArrayList<PhieuNhapHangDTO> hd = (ArrayList<PhieuNhapHangDTO>) pnhBUS.getPnhBUS();
         model.setRowCount(0);
         outModel(model,hd);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnMaNV) // Suggest Nhan Vien
+        {
+            SuggestNhanVien rm = new SuggestNhanVien();
+            String s = rm.getTextFieldContent();
+            txtMaNV.setText(s);
+        }
+        if (e.getSource() == btnMaNCC) // Suggest Nha cung cap
+        {
+            SuggestNhaCungCap rm = new SuggestNhaCungCap();
+            String s = rm.getTextFieldContent();
+            txtMaNCC.setText(s);
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
