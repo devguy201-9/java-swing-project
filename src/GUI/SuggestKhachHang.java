@@ -90,6 +90,7 @@ public class SuggestKhachHang extends JDialog {
         lbHo.setBounds(20, 70, 100, 30);
         txtHo = new JTextField();
         txtHo.setBounds(new Rectangle(120, 70, 250, 30));
+        txtHo.setEditable(false);
         itemView.add(lbHo);
         itemView.add(txtHo);
 
@@ -98,6 +99,7 @@ public class SuggestKhachHang extends JDialog {
         lbTen.setBounds(20, 120, 100, 30);
         txtTen = new JTextField();
         txtTen.setBounds(new Rectangle(120, 120, 250, 30));
+        txtTen.setEditable(false);
         itemView.add(lbTen);
         itemView.add(txtTen);
 
@@ -106,6 +108,7 @@ public class SuggestKhachHang extends JDialog {
         lbPhone.setBounds(20, 170, 100, 30);
         txtPhone = new JTextField();
         txtPhone.setBounds(new Rectangle(120, 170, 250, 30));
+        txtPhone.setEditable(false);
         itemView.add(lbPhone);
         itemView.add(txtPhone);
 
@@ -146,7 +149,7 @@ public class SuggestKhachHang extends JDialog {
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBack.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                System.exit(0);
+                dispose();
             }
         });
 

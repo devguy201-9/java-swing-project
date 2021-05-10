@@ -90,6 +90,7 @@ public class SuggestNhanVien extends JDialog {
         lbTen.setBounds(20, 70, 100, 30);
         txtTen = new JTextField();
         txtTen.setBounds(new Rectangle(120, 70, 250, 30));
+        txtTen.setEditable(false);
         itemView.add(lbTen);
         itemView.add(txtTen);
 
@@ -98,6 +99,7 @@ public class SuggestNhanVien extends JDialog {
         lbTuoi.setBounds(20, 120, 100, 30);
         txtTuoi = new JTextField();
         txtTuoi.setBounds(new Rectangle(120, 120, 250, 30));
+        txtTuoi.setEditable(false);
         itemView.add(lbTuoi);
         itemView.add(txtTuoi);
 
@@ -106,6 +108,7 @@ public class SuggestNhanVien extends JDialog {
         lbPhai.setBounds(20, 170, 100, 30);
         txtPhai = new JTextField();
         txtPhai.setBounds(new Rectangle(120, 170, 250, 30));
+        txtPhai.setEditable(false);
         itemView.add(lbPhai);
         itemView.add(txtPhai);
 
@@ -114,6 +117,7 @@ public class SuggestNhanVien extends JDialog {
         lbAddress.setBounds(20, 220, 100, 30);
         txtDiaChi = new JTextField();
         txtDiaChi.setBounds(new Rectangle(120, 220, 250, 30));
+        txtDiaChi.setEditable(false);
         itemView.add(lbAddress);
         itemView.add(txtDiaChi);
 
@@ -122,6 +126,7 @@ public class SuggestNhanVien extends JDialog {
         lbPhone.setBounds(20, 270, 100, 30);
         txtPhone = new JTextField();
         txtPhone.setBounds(new Rectangle(120, 270, 250, 30));
+        txtPhone.setEditable(false);
         itemView.add(lbPhone);
         itemView.add(txtPhone);
 
@@ -159,7 +164,7 @@ public class SuggestNhanVien extends JDialog {
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBack.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                System.exit(0);
+                dispose();
             }
         });
 

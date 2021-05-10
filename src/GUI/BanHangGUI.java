@@ -139,6 +139,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtMaKH.setHorizontalAlignment(JTextField.CENTER);
         txtMaKH.setFont(font0);
         txtMaKH.setBounds(new Rectangle(255, 0, 100, 30));
+        txtMaKH.setEnabled(false);
         txtMaKH.addKeyListener(this);
         hdView.add(lbMaKH);
         hdView.add(txtMaKH);
@@ -156,6 +157,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtMaNV.setHorizontalAlignment(JTextField.CENTER);
         txtMaNV.setFont(font0);
         txtMaNV.setBounds(new Rectangle(475, 0, 100, 30));
+        txtMaNV.setEditable(false);
         txtMaNV.addKeyListener(this);
         hdView.add(lbMaNV);
         hdView.add(txtMaNV);        
@@ -183,7 +185,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtNgayHD.setEditable(false);
         txtNgayHD.setHorizontalAlignment(JTextField.CENTER);
         txtNgayHD.setFont(font0);
-        txtNgayHD.setBounds(new Rectangle(80, 50, 350, 30));
+        txtNgayHD.setBounds(new Rectangle(90, 50, 350, 30));
         hdView.add(lbNgayHD);
         hdView.add(txtNgayHD);
 
@@ -245,6 +247,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtMaSP.setHorizontalAlignment(JTextField.CENTER);
         txtMaSP.setFont(font0);
         txtMaSP.setBounds(new Rectangle(60, 240, 70, 30));
+        txtMaSP.setEditable(false);
         txtMaSP.addKeyListener(this);
         chiTietView.add(lbMaSP);
         chiTietView.add(txtMaSP);
@@ -262,6 +265,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtCTTenSP.setHorizontalAlignment(JTextField.CENTER);
         txtCTTenSP.setFont(font0);
         txtCTTenSP.setBounds(new Rectangle(60, 280, 220, 30));
+        txtCTTenSP.setEditable(false);
         chiTietView.add(lbCTTenSP);
         chiTietView.add(txtCTTenSP);
 
@@ -273,6 +277,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtCTGia.setHorizontalAlignment(JTextField.CENTER);
         txtCTGia.setFont(font0);
         txtCTGia.setBounds(new Rectangle(60, 320, 220, 30));
+        txtCTGia.setEditable(false);
         chiTietView.add(lbCTGia);
         chiTietView.add(txtCTGia);
 
@@ -321,7 +326,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         header.add("Đơn Giá");
         header.add("Số lượng");
         header.add("Thành Tiền");
-        model = new DefaultTableModel(header, 0) {
+        model = new MyTable(header, 0) {
             public Class getColumnClass(int column) {
                 switch (column) {
                     case 2:
@@ -548,8 +553,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 txtMaHD.setText(hdBUS.remindMaHD());
                 return;
             }
-            System.out.println(txtMaNV.getText());
-            System.out.println(nvBUS.getNvBUS().size());
             if (!txtMaKH.getText().isEmpty() && !khBUS.check(txtMaKH.getText().trim())) {
                 JOptionPane.showMessageDialog(null, "Mã khách hàng không tồn tại");
                 txtMaKH.requestFocus();

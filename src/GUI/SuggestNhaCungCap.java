@@ -89,6 +89,7 @@ public class SuggestNhaCungCap extends JDialog {
         lbHo.setBounds(20, 70, 100, 30);
         txtDiaChi = new JTextField();
         txtDiaChi.setBounds(new Rectangle(120, 70, 250, 30));
+        txtDiaChi.setEditable(false);
         itemView.add(lbHo);
         itemView.add(txtDiaChi);
 
@@ -97,6 +98,7 @@ public class SuggestNhaCungCap extends JDialog {
         lbTen.setBounds(20, 120, 100, 30);
         txtTen = new JTextField();
         txtTen.setBounds(new Rectangle(120, 120, 250, 30));
+        txtTen.setEditable(false);
         itemView.add(lbTen);
         itemView.add(txtTen);
 
@@ -105,6 +107,7 @@ public class SuggestNhaCungCap extends JDialog {
         lbPhone.setBounds(20, 170, 100, 30);
         txtPhone = new JTextField();
         txtPhone.setBounds(new Rectangle(120, 170, 250, 30));
+        txtPhone.setEditable(false);
         itemView.add(lbPhone);
         itemView.add(txtPhone);
 
@@ -136,7 +139,7 @@ public class SuggestNhaCungCap extends JDialog {
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBack.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                System.exit(0);
+                dispose();
             }
         });
 

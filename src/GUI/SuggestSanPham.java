@@ -87,6 +87,7 @@ class SuggestSanPham extends JDialog {
         lbMaSP.setBounds(20, 20, 100, 30);
         txtMaSP = new JTextField();
         txtMaSP.setBounds(new Rectangle(120, 20, 250, 30));
+        txtMaSP.setEditable(false);
         itemView.add(lbMaSP);
         itemView.add(txtMaSP);
 
@@ -95,6 +96,7 @@ class SuggestSanPham extends JDialog {
         lbTenSP.setBounds(20, 70, 100, 30);
         txtTenSP = new JTextField();
         txtTenSP.setBounds(new Rectangle(120, 70, 250, 30));
+        txtTenSP.setEditable(false);
         itemView.add(lbTenSP);
         itemView.add(txtTenSP);
 
@@ -103,6 +105,7 @@ class SuggestSanPham extends JDialog {
         lbGia.setBounds(20, 120, 100, 30);
         txtGia = new JTextField();
         txtGia.setBounds(new Rectangle(120, 120, 250, 30));
+        txtGia.setEditable(false);
         itemView.add(lbGia);
         itemView.add(txtGia);
 
@@ -111,6 +114,7 @@ class SuggestSanPham extends JDialog {
         lbDVT.setBounds(20, 170, 100, 30);
         txtDVT = new JTextField();
         txtDVT.setBounds(new Rectangle(120, 170, 250, 30));
+        txtDVT.setEditable(false);
         itemView.add(lbDVT);
         itemView.add(txtDVT);
 
@@ -119,6 +123,7 @@ class SuggestSanPham extends JDialog {
         lbSL.setBounds(20, 220, 100, 30);
         txtSL = new JTextField();
         txtSL.setBounds(new Rectangle(120, 220, 250, 30));
+        txtSL.setEditable(false);
         itemView.add(lbSL);
         itemView.add(txtSL);
 
@@ -174,7 +179,7 @@ class SuggestSanPham extends JDialog {
         header.add("ĐVT");
         header.add("SL tồn");
         header.add("IMG");
-        model = new DefaultTableModel(header, 5);
+        model = new MyTable(header, 5);
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
@@ -245,7 +250,7 @@ class SuggestSanPham extends JDialog {
 
         //PHẦN CHỌN SEARCH
         cmbChoice = new JComboBox();
-        cmbChoice.setEditable(true);
+        cmbChoice.setEditable(false);
         cmbChoice.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         cmbChoice.addItem("Mã SP");
         cmbChoice.addItem("Tên SP");
