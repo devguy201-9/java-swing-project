@@ -108,22 +108,22 @@ public class NhanVienGUI extends JPanel {
         txtMaNV.setEditable(false);
 
         JLabel lbHoNV = new JLabel("Họ và tên");
-        lbHoNV.setBounds(new Rectangle(250, 40, 200, 30));
+        lbHoNV.setBounds(new Rectangle(250, 80, 200, 30));
         lbHoNV.setFont(font0);
         txtHoNV = new JTextField("");
-        txtHoNV.setBounds(new Rectangle(350, 40, 220, 30));
+        txtHoNV.setBounds(new Rectangle(350, 80, 220, 30));
 
         JLabel lbSDT = new JLabel("Số điện thoại");
-        lbSDT.setBounds(new Rectangle(250, 80, 200, 30));
+        lbSDT.setBounds(new Rectangle(250, 120, 200, 30));
         lbSDT.setFont(font0);
         txtSDT = new JTextField("");
-        txtSDT.setBounds(new Rectangle(350, 80, 220, 30));
+        txtSDT.setBounds(new Rectangle(350, 120, 220, 30));
 
         JLabel lbNgay = new JLabel("Ngày bắt đầu");
-        lbNgay.setBounds(new Rectangle(250, 120, 200, 30));
+        lbNgay.setBounds(new Rectangle(250, 40, 200, 30));
         lbNgay.setFont(font0);
         txtNgay = new JTextField("");
-        txtNgay.setBounds(new Rectangle(350, 120, 220, 30));
+        txtNgay.setBounds(new Rectangle(350, 40, 220, 30));
         txtNgay.setEditable(false);
 
         JLabel lbDiaChi = new JLabel("Địa chỉ");
@@ -133,7 +133,7 @@ public class NhanVienGUI extends JPanel {
         txtDiaChi.setBounds(new Rectangle(350, 160, 220, 30));
 
         JLabel lbNamSinh = new JLabel("Năm sinh");
-        lbNamSinh.setBounds(new Rectangle(440, 200, 80, 30));
+        lbNamSinh.setBounds(new Rectangle(420, 200, 80, 30));
         lbNamSinh.setFont(font0);
         txtNamSinh = new JTextField("");
         txtNamSinh.setBounds(new Rectangle(490, 200, 80, 30));
@@ -271,7 +271,7 @@ public class NhanVienGUI extends JPanel {
                 txtHoNV.requestFocus();
                 tableSelectionActive = false;
                 cleanView();
-
+                setEdit(true);
                 btnAdd.setVisible(false);
                 btnEdit.setVisible(false);
                 btnDelete.setVisible(false);
@@ -313,7 +313,7 @@ public class NhanVienGUI extends JPanel {
                 }
                 tableSelectionActive = false;
                 EditOrAdd = false;
-
+                setEdit(true);
                 txtMaNV.setEditable(false);
 
                 btnAdd.setVisible(false);
@@ -362,7 +362,7 @@ public class NhanVienGUI extends JPanel {
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
                 btnDelete.setVisible(true);
-
+                setEdit(false);
                 btnConfirm.setVisible(false);
                 btnBack.setVisible(false);
                 btnFile.setVisible(false);
@@ -375,6 +375,7 @@ public class NhanVienGUI extends JPanel {
         btnConfirm.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int i;
+                txtHoNV.requestFocus();
                 if (EditOrAdd) //Thêm Nhân Viên
                 {
                     String soDT = txtSDT.getText();
@@ -653,6 +654,7 @@ public class NhanVienGUI extends JPanel {
         sortMaNV = new JTextField();
         sortMaNV.setFont(font0);
         sortMaNV.setBounds(new Rectangle(50, 42, 70, 30));
+        sortMaNV.setInputVerifier(new MyInputVerifier());
         sort.add(sortMaNV);
         /**
          * **********************************
@@ -717,6 +719,7 @@ public class NhanVienGUI extends JPanel {
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSearch.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+                txtSearch.requestFocus();
                 int manv = sortMaNV.getText().equals("") ? 0 : Integer.parseInt(sortMaNV.getText());
                 String hoten = sortHoNV.getText();
                 String sdt = sortSDT.getText();
@@ -728,6 +731,7 @@ public class NhanVienGUI extends JPanel {
         sort.add(btnSearch);
 
         add(sort);
+        setEdit(false);
         /**
          * ****************************************************************
          */
@@ -796,5 +800,10 @@ public class NhanVienGUI extends JPanel {
 //        model.setRowCount(0);
         outModel(model, nv);
     }
-
+   private void setEdit(boolean flag) {
+        txtHoNV.setEditable(flag);
+        txtSDT.setEditable(flag);
+        txtDiaChi.setEditable(flag);
+        txtNamSinh.setEditable(flag);
+    }
 }

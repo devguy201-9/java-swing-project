@@ -289,6 +289,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtCTSL.setFont(font0);
         txtCTSL.addKeyListener(this);
         txtCTSL.setBounds(new Rectangle(230, 240, 50, 30));
+        txtCTSL.setInputVerifier(new MyInputVerifier());
         chiTietView.add(lbCTSL);
         chiTietView.add(txtCTSL);
 
@@ -605,6 +606,13 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 int i = tbl.getSelectedRow();
                 if (tbl.getRowSorter() != null) {
                     i = tbl.getRowSorter().convertRowIndexToModel(i);
+                }
+                String masp = tbl.getModel().getValueAt(i, 0).toString();
+                int sl = Math.abs(Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập số lượng sản phẩm :")));
+                for (ct_HoaDonDTO ct : dsct) {
+                    if (ct.getId_SP() == Integer.parseInt(masp)) {
+                        ct.setAmount(sl);
+                    }
                 }
                 outModel(model, dsct);
             } catch (IndexOutOfBoundsException ex) {

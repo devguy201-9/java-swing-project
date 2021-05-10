@@ -377,6 +377,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         //MouseClick btnConfirm
         btnConfirm.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+                txtTenSP.requestFocus();
                 int i;
                 if (EditOrAdd) //Thêm Sản Phẩm
                 {
@@ -670,6 +671,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         sortMaSP = new JTextField("");
         sortMaSP.setFont(font0);
         sortMaSP.setBounds(new Rectangle(50, 42, 100, 30));
+        sortMaSP.setInputVerifier(new MyInputVerifier());
 //        sortMaSP.addKeyListener(this);
         sort.add(sortMaSP);
         /**
@@ -705,6 +707,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         txtMinPrice = new JTextField("");
         txtMinPrice.setFont(font0);
         txtMinPrice.setBounds(new Rectangle(580, 42, 100, 30));
+        txtMinPrice.setInputVerifier(new MyInputVerifier());
         txtMinPrice.addKeyListener(this);
         sort.add(txtMinPrice);
 
@@ -715,6 +718,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         txtMaxPrice = new JTextField("");
         txtMaxPrice.setFont(font0);
         txtMaxPrice.setBounds(new Rectangle(710, 42, 100, 30));
+        txtMaxPrice.setInputVerifier(new MyInputVerifier());
         txtMaxPrice.addKeyListener(this);
         sort.add(txtMaxPrice);
         /**
@@ -727,6 +731,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSearch.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+                txtTenSP.requestFocus();
                 search();
             }
         });

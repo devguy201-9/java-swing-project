@@ -158,7 +158,7 @@ public class NhaCungCapGUI extends JPanel {
                 EditOrAdd = true;
 
                 cleanView();
-
+                setEdit(true);
                 btnAdd.setVisible(!EditOrAdd);
                 btnEdit.setVisible(!EditOrAdd);
                 btnDelete.setVisible(!EditOrAdd);
@@ -179,7 +179,7 @@ public class NhaCungCapGUI extends JPanel {
                     return;
                 }
                 tableSelectionActive = false;
-
+                setEdit(true);
                 txtMaNCC.setEditable(false);
                 btnAdd.setVisible(!EditOrAdd);
                 btnEdit.setVisible(!EditOrAdd);
@@ -219,6 +219,7 @@ public class NhaCungCapGUI extends JPanel {
                 EditOrAdd = true;
                 btnAdd.setVisible(EditOrAdd);
                 btnEdit.setVisible(EditOrAdd);
+                setEdit(false);
                 btnDelete.setVisible(EditOrAdd);
                 btnConfirm.setVisible(!EditOrAdd);
                 btnBack.setVisible(!EditOrAdd);
@@ -420,7 +421,7 @@ public class NhaCungCapGUI extends JPanel {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-
+        setEdit(false);
     }
 
 //FUNCTION
@@ -456,4 +457,9 @@ public class NhaCungCapGUI extends JPanel {
         outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
     }
 
+       private void setEdit(boolean flag) {
+        txtTenNCC.setEditable(flag);
+        txtDiaChi.setEditable(flag);
+        txtDienThoai.setEditable(flag);
+    }
 }

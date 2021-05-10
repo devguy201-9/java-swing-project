@@ -159,7 +159,7 @@ public class KhachHangGUI extends JPanel {
                 btnAdd.setVisible(false);
                 btnEdit.setVisible(false);
                 btnDelete.setVisible(false);
-
+                setEdit(true);
                 btnConfirm.setVisible(true);
                 btnBack.setVisible(true);
 //                btnFile.setVisible(true);
@@ -196,7 +196,7 @@ public class KhachHangGUI extends JPanel {
                 }
                 tableSelectionActive = false;
                 EditOrAdd = false;
-
+                setEdit(true);
                 txtMaKH.setEditable(false);
 
                 btnAdd.setVisible(false);
@@ -218,7 +218,7 @@ public class KhachHangGUI extends JPanel {
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
                 btnDelete.setVisible(true);
-
+                setEdit(false);
                 btnConfirm.setVisible(false);
                 btnBack.setVisible(false);
 //                btnFile.setVisible(false);
@@ -431,6 +431,7 @@ public class KhachHangGUI extends JPanel {
             }
 
         });
+        setEdit(false);
         itemView.add(searchBox);
         /**
          * ***************************************************************
@@ -471,5 +472,11 @@ public class KhachHangGUI extends JPanel {
         ArrayList<KhachHangDTO> nv = (ArrayList<KhachHangDTO>) khBUS.getKhBUS();
 //        model.setRowCount(0);
         outModel(model, nv);
+    }
+    
+    private void setEdit(boolean flag) {
+        txtHoKH.setEditable(flag);
+        txtSDT.setEditable(flag);
+        txtTenKH.setEditable(flag);
     }
 }

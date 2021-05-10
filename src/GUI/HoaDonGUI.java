@@ -247,17 +247,6 @@ public class HoaDonGUI extends JPanel{
         header.add("Ngày Lập HD");
         header.add("Tổng Tiền");
         model = new MyTable(header,5);
-//        {
-//            public Class getColumnClass(int column)
-//            {
-//                switch(column){
-//                    case 4:
-//                        return Integer.class;
-//                    default:
-//                        return String.class;
-//                }
-//            }              
-//        };
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
@@ -369,6 +358,7 @@ public class HoaDonGUI extends JPanel{
         txtMinPrice = new JTextField();
         txtMinPrice.setFont(font0);
         txtMinPrice.setBounds(new Rectangle(380,42,100,26));
+        txtMinPrice.setInputVerifier(new MyInputVerifier());
         sort.add(txtMinPrice);
         
         JSeparator sepPrice = new JSeparator(JSeparator.HORIZONTAL);
@@ -378,6 +368,7 @@ public class HoaDonGUI extends JPanel{
         txtMaxPrice = new JTextField();
         txtMaxPrice.setFont(font0);
         txtMaxPrice.setBounds(new Rectangle(510,42,100,26));
+        txtMaxPrice.setInputVerifier(new MyInputVerifier());
         sort.add(txtMaxPrice);
           
         /******************************************/
@@ -389,7 +380,8 @@ public class HoaDonGUI extends JPanel{
 
         txtMaHDSearch = new JTextField();
         txtMaHDSearch.setFont(font0);
-        txtMaHDSearch.setBounds(new Rectangle(700,42,100,26));  
+        txtMaHDSearch.setBounds(new Rectangle(700,42,100,26));
+        txtMaHDSearch.setInputVerifier(new MyInputVerifier());
         sort.add(txtMaHDSearch);
 //        /******************************************/
         JLabel btnSearch = new JLabel(new ImageIcon("./src/image/btnSearch_45px.png"));
@@ -398,6 +390,7 @@ public class HoaDonGUI extends JPanel{
         btnSearch.addMouseListener(new MouseAdapter() {
            public void mouseClicked(MouseEvent e)
            {
+               txtTongTien.requestFocus();
                search();
            }
         });

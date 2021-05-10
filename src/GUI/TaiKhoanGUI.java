@@ -71,7 +71,6 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         /**
          * *************** PHẦN HIỂN THỊ THÔNG TIN **************************
          */
-        
         RoleModelCB roleModel = listRoles();
         JPanel itemView = new JPanel(null);
         itemView.setBounds(new Rectangle(0, 0, this.DEFAUTL_WIDTH, 700));
@@ -91,9 +90,11 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         lbMaNV.setBounds(20, 70, 100, 30);
         txtMaNV = new JTextField();
         txtMaNV.setBounds(new Rectangle(120, 70, 220, 30));
+        txtMaNV.setEditable(false);
         itemView.add(lbMaNV);
         itemView.add(txtMaNV);
         btnMaNV = new JButton("...");
+        btnMaNV.setBackground(new Color(131, 149, 167));
         btnMaNV.setBounds(new Rectangle(340, 70, 30, 30));
         btnMaNV.addActionListener(this);
         itemView.add(btnMaNV);
@@ -123,7 +124,8 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         itemView.add(cmbRole);
 
         /**
-         * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL *******************
+         * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL
+         * *******************
          */
         btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd_150px.png"));
         btnAdd.setBounds(new Rectangle(20, 300, 150, 50));
@@ -146,6 +148,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                 EditOrAdd = true;
                 txtMaTK.setEditable(false);
                 cleanView();
+                setEdit(true);
                 btnAdd.setVisible(false);
                 btnEdit.setVisible(false);
                 btnConfirm.setVisible(true);
@@ -161,7 +164,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn tài khoản cần sửa !!!");
                     return;
                 }
-
+                setEdit(true);
                 EditOrAdd = false;
                 txtMaTK.setEditable(false);
 
@@ -192,7 +195,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Bạn chưa nhập tên hoặc mật khẩu!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
                         return;
                     }
-                    
+
                     i = JOptionPane.showConfirmDialog(null, "Xác nhận thêm tài khoản", "", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {//yes
                         try {
@@ -200,7 +203,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                             String user = txtUser.getText();
                             String pass = String.valueOf(txtPass.getPassword());
                             PermissionDTO role = (PermissionDTO) cmbRole.getSelectedItem();
-                            TaiKhoanDTO nv = new TaiKhoanDTO(manv, role.getId_Permission(),user, pass);
+                            TaiKhoanDTO nv = new TaiKhoanDTO(manv, role.getId_Permission(), user, pass);
                             tkBUS.add(nv);
 //                        TaiKhoanBUS usBUS = new TaiKhoanBUS();
 //                        TaiKhoanDTO user = new TaiKhoanDTO(maNV, removeAccent(sdt.concat(maNV)).toLowerCase(), "123456", "Nhân Viên", "1");
@@ -247,7 +250,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
 
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
-
+                setEdit(false);
                 btnConfirm.setVisible(false);
                 btnBack.setVisible(false);
 
@@ -263,7 +266,8 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
          * **********************************************************************
          */
         /**
-         * ************** TẠO TABLE ***********************************************************
+         * ************** TẠO TABLE
+         * ***********************************************************
          */
 
         /**
@@ -341,6 +345,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                 cmbRole.setSelectedItem(roleBUS.searchID((int) tbl.getModel().getValueAt(i, 4)));
             }
         });
+        setEdit(false);
         /**
          * ******************************************************************
          */
@@ -371,9 +376,9 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
 //        model.setRowCount(0);
         outModel(model, nv);
     }
-    
+
     public RoleModelCB listRoles() {
-        if (roleBUS.getPermissionList()== null) {
+        if (roleBUS.getPermissionList() == null) {
             roleBUS.list();
         }
         PermissionDTO[] roles = new PermissionDTO[roleBUS.getPermissionList().size() + 1];
@@ -411,5 +416,10 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
             txtMaNV.setText(s);
         }
 
+    }
+
+    private void setEdit(boolean flag) {
+        txtPass.setEditable(flag);
+        txtUser.setEditable(flag);
     }
 }

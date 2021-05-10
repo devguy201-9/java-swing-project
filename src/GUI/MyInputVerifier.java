@@ -26,6 +26,7 @@ public class MyInputVerifier extends InputVerifier {
                 return (value.scale() <= Math.abs(4));
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập một số !!!");
+                ((JTextField) input).setText("");
                 return false;
             }
         } else {

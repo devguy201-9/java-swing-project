@@ -97,6 +97,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         txtMaNCC.setFont(font0);
         txtMaNCC.setBounds(new Rectangle(215, 0, 50, 30));
         txtMaNCC.setEditable(false);
+        
         btnMaNCC = new JButton("...");
         btnMaNCC.setBackground(new Color(131, 149, 167));
         btnMaNCC.setBounds(new Rectangle(265, 0, 30, 30));
@@ -112,6 +113,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         txtMaNV.setFont(font0);
         txtMaNV.setBounds(new Rectangle(375, 0, 50, 30));
         txtMaNV.setEditable(false);
+        
         btnMaNV = new JButton("...");
         btnMaNV.setBackground(new Color(131, 149, 167));
         btnMaNV.setBounds(new Rectangle(425, 0, 30, 30));
@@ -302,10 +304,6 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         sort.setBackground(null);
         sort.setBounds(30, 170, this.DEFAULT_WIDTH - 400, 140);
 
-//        JLabel sortTitle = new JLabel("------------------------------------------------------------------------------------ BỘ LỌC ------------------------------------------------------------------------------------",JLabel.CENTER); // Mỗi bên 84 dấu ( - )
-//        sortTitle.setFont(font1);
-//        sortTitle.setBounds(new Rectangle(0,0,this.DEFAULT_WIDTH - 400,30));
-//        sort.add(sortTitle);
         /**
          * ****** SORT THỜI GIAN *************
          */
@@ -350,6 +348,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         txtMinPrice = new JTextField();
         txtMinPrice.setFont(font0);
         txtMinPrice.setBounds(new Rectangle(380, 42, 100, 26));
+        txtMinPrice.setInputVerifier(new MyInputVerifier());
         sort.add(txtMinPrice);
 
         JSeparator sepPrice = new JSeparator(JSeparator.HORIZONTAL);
@@ -359,6 +358,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         txtMaxPrice = new JTextField();
         txtMaxPrice.setFont(font0);
         txtMaxPrice.setBounds(new Rectangle(510, 42, 100, 26));
+        txtMaxPrice.setInputVerifier(new MyInputVerifier());
         sort.add(txtMaxPrice);
 
         /**
@@ -375,6 +375,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         txtMaPN = new JTextField();
         txtMaPN.setFont(font0);
         txtMaPN.setBounds(new Rectangle(700, 42, 100, 26));
+        txtMaPN.setInputVerifier(new MyInputVerifier());
         sort.add(txtMaPN);
 //        /******************************************/
         JLabel btnSearch = new JLabel(new ImageIcon("./src/image/btnSearch_45px.png"));
@@ -382,6 +383,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSearch.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+                txtTongTien.requestFocus();
                 search();
             }
         });
