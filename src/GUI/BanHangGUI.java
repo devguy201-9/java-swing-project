@@ -483,7 +483,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         {
             int sl = 0;
             try {                
-                sl = Integer.parseInt(txtCTSL.getText().trim());
+                sl = Integer.parseInt(txtCTSL.getText());
             } catch (NumberFormatException E) {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập số lượng");
                 return;
@@ -567,7 +567,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             int maKH = Integer.parseInt(txtMaKH.getText());
             int maNV = Integer.parseInt(txtMaNV.getText());
             Timestamp ngayHD = Timestamp.valueOf(txtNgayHD.getText());
-            int tongTien = Integer.parseInt(txtTongTien.getText());
+            float tongTien = Float.parseFloat(txtTongTien.getText());
             HoaDonDTO hd = new HoaDonDTO(maHD, maKH, maNV, tongTien, ngayHD);
             hdBUS.add(hd);
             for (ct_HoaDonDTO ct : dsct) {
@@ -598,6 +598,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             } catch (IndexOutOfBoundsException ex) {
                 JOptionPane.showMessageDialog(null, "Chưa chọn SP cần sửa");
             }
+            txtTongTien.setText(String.valueOf(sumHD()));
         }
         if (e.getSource().equals(btnRemove)) // Xóa SP trong CT SP
         {
@@ -647,6 +648,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 }
