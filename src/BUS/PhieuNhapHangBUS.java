@@ -37,13 +37,20 @@ public class PhieuNhapHangBUS {
     }
 
     public void add(PhieuNhapHangDTO pnhDTO) {
-        pnhBUS.add(pnhDTO);
         PhieuNhapHangDAO pnhDAO = new PhieuNhapHangDAO();
+        if (pnhBUS == null) {
+            pnhBUS = new ArrayList<>();
+        }
         try {
-            pnhDAO.save(pnhDTO);
+            pnhDTO.setId_PNH(pnhDAO.save(pnhDTO));
+            pnhBUS.add(pnhDTO);
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
+    }
+    
+    public void addDTO(PhieuNhapHangDTO pnhDTO) {
+            pnhBUS.add(pnhDTO);
     }
 
     public void delete(String id) {

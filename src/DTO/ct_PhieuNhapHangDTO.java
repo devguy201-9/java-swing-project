@@ -12,14 +12,13 @@ package DTO;
 public class ct_PhieuNhapHangDTO {
 
     private int id_PNH, id_NL, amount;
-    private float price;
-    private String name;
+    private float price,total_money;
 
-    public ct_PhieuNhapHangDTO(int id_PNH, int id_NL, int amount, String name, float price) {
+    public ct_PhieuNhapHangDTO(int id_PNH, int id_NL, int amount, Float total_money, float price) {
         this.id_PNH = id_PNH;
         this.id_NL = id_NL;
         this.amount = amount;
-        this.name = name;
+        this.total_money = total_money;
         this.price = price;
     }
 
@@ -27,7 +26,7 @@ public class ct_PhieuNhapHangDTO {
         id_PNH = 0;
         id_NL = 0;
         amount = 0;
-        name = "";
+        total_money = 0.f;
         price = 0.f;
     }
 
@@ -55,13 +54,13 @@ public class ct_PhieuNhapHangDTO {
         this.amount = amount;
     }
 
-    public String getName() {
-        return name;
+    public float getTotal_money() {
+        return total_money;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    } 
+    public void setTotal_money(float total_money) {
+        this.total_money = total_money;
+    }
 
     public float getPrice() {
         return price;

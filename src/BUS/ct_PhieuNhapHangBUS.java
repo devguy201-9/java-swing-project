@@ -32,8 +32,17 @@ public class ct_PhieuNhapHangBUS {
         ct_pnhBUS = new ArrayList<>();
         ct_pnhBUS = ctpnhDAO.findAll();
     }
+    
+    public void listByCode(int maPNH) {
+        ct_PNHDAO ctpnhDAO = new ct_PNHDAO();
+        ct_pnhBUS = new ArrayList<>();
+        ct_pnhBUS = ctpnhDAO.findByCode(maPNH);
+    }
 
     public void add(ct_PhieuNhapHangDTO ctpnhDTO) {
+        if (ct_pnhBUS == null) {
+            ct_pnhBUS = new ArrayList<>();
+        }
         ct_pnhBUS.add(ctpnhDTO);
         ct_PNHDAO ctpnhDAO = new ct_PNHDAO();
         try {
@@ -51,6 +60,21 @@ public class ct_PhieuNhapHangBUS {
                 ct_PNHDAO ctpnhDAO = new ct_PNHDAO();
                 try {
                     ctpnhDAO.delete(idCTPNH);
+                } catch (FileNotFoundException e) {
+                    System.out.println(e.getMessage());
+                }
+                return;
+            }
+        }
+    }
+    
+    public void deleteByCode(int idPNH,int idNL) {
+        for (ct_PhieuNhapHangDTO ctpnhDTO : ct_pnhBUS) {
+            if (ctpnhDTO.getId_PNH() == idPNH && ctpnhDTO.getId_NL() == idNL) {
+                ct_pnhBUS.remove(ctpnhDTO);
+                ct_PNHDAO ctpnhDAO = new ct_PNHDAO();
+                try {
+                    ctpnhDAO.deleteByCodeBillAndProduct(idPNH, idNL);
                 } catch (FileNotFoundException e) {
                     System.out.println(e.getMessage());
                 }

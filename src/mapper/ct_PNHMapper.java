@@ -23,7 +23,7 @@ public class ct_PNHMapper implements RowMapper<ct_PhieuNhapHangDTO>{
             ctpnh.setId_NL(rs.getInt("id_NL"));
             ctpnh.setAmount(rs.getInt("amount"));
             ctpnh.setPrice(rs.getFloat("price"));
-            ctpnh.setName(rs.getString("name"));
+            ctpnh.setTotal_money(rs.getFloat("total_money"));
             return ctpnh;
         } catch (SQLException e) {
             return null;
