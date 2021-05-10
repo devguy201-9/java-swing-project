@@ -221,6 +221,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         page = new Page404(WIDTH, "Tạo hóa đơn");
         page.setBounds(new Rectangle(50, 0, DEFALUT_WIDTH - 60, 500));
         add(page);
+        
 
         chiTietView = new JPanel(null);
         chiTietView.setVisible(false);
@@ -395,8 +396,8 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         tbl.setModel(model);
     }
 
-    public int sumHD() {
-        int sum = 0;
+    public float sumHD() {
+        float sum = 0;
         for (ct_HoaDonDTO sp : dsct) {
             int sl = sp.getAmount();
             float gia = sp.getPrice();
@@ -483,7 +484,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         {
             int sl = 0;
             try {                
-                sl = Integer.parseInt(txtCTSL.getText().trim());
+                sl = Integer.parseInt(txtCTSL.getText());
             } catch (NumberFormatException E) {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập số lượng");
                 return;
@@ -567,7 +568,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             int maKH = Integer.parseInt(txtMaKH.getText().trim());
             int maNV = Integer.parseInt(txtMaNV.getText().trim());
             Timestamp ngayHD = Timestamp.valueOf(txtNgayHD.getText());
-            int tongTien = (int)Math.round(Integer.parseInt(txtTongTien.getText()) * 100.0 / 100);
+            float tongTien = Float.parseFloat(txtTongTien.getText());
             HoaDonDTO hd = new HoaDonDTO(maHD, maKH, maNV, tongTien, ngayHD);
             hdBUS.add(hd);
             for (ct_HoaDonDTO ct : dsct) {
@@ -598,6 +599,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             } catch (IndexOutOfBoundsException ex) {
                 JOptionPane.showMessageDialog(null, "Chưa chọn SP cần sửa");
             }
+            txtTongTien.setText(String.valueOf(sumHD()));
         }
         if (e.getSource().equals(btnRemove)) // Xóa SP trong CT SP
         {
@@ -647,5 +649,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        
     }
 }
