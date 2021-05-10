@@ -19,8 +19,8 @@ public class ct_HDDAO extends AbstractDAO<ct_HoaDonDTO> {
     public Integer save(ct_HoaDonDTO cthd) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO ct_hoadon(id_HD,id_SP,");
         sql.append("name,amount,price)");
-        sql.append(" VALUES(?, ?, ?, ?, ?, ?)");
-        return insert(sql.toString(), cthd.getId_HD(), cthd.getId_SP(), cthd.getAmount(), cthd.getPrice());
+        sql.append(" VALUES(?, ?, ?, ?, ?)");
+        return insert(sql.toString(), cthd.getId_HD(), cthd.getId_SP(), cthd.getName() , cthd.getAmount(), cthd.getPrice());
     }
 
     public List<ct_HoaDonDTO> findAll() {

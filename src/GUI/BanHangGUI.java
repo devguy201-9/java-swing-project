@@ -11,6 +11,7 @@ import BUS.KhachHangBUS;
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
 import BUS.printBill;
+import DAO.SanPhamDAO;
 import DTO.HoaDonDTO;
 import DTO.SanPhamDTO;
 import DTO.ct_HoaDonDTO;
@@ -25,11 +26,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileNotFoundException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -316,6 +320,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         header.add("Tên Sản Phẩm");
         header.add("Đơn Giá");
         header.add("Số lượng");
+        header.add("Thành Tiền");
         model = new DefaultTableModel(header, 0) {
             public Class getColumnClass(int column) {
                 switch (column) {
@@ -323,6 +328,8 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                         return Float.class;
                     case 3:
                         return Integer.class;
+                    case 4:
+                        return Float.class;
                     default:
                         return String.class;
                 }
@@ -343,13 +350,17 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         // Chỉnh width các cột 
         tbl.getColumnModel().getColumn(0).setPreferredWidth(40);
         tbl.getColumnModel().getColumn(1).setPreferredWidth(140);
-        tbl.getColumnModel().getColumn(2).setPreferredWidth(40);
-        tbl.getColumnModel().getColumn(3).setPreferredWidth(50);
+        tbl.getColumnModel().getColumn(2).setPreferredWidth(20);
+        tbl.getColumnModel().getColumn(3).setPreferredWidth(20);
+        tbl.getColumnModel().getColumn(4).setPreferredWidth(30);
 
-        DefaultTableCellRenderer leftAlign = new DefaultTableCellRenderer();
-        leftAlign.setHorizontalAlignment(JLabel.LEFT);
-        tbl.getColumnModel().getColumn(2).setCellRenderer(leftAlign);
-        tbl.getColumnModel().getColumn(3).setCellRenderer(leftAlign);
+        DefaultTableCellRenderer centerAlign = new DefaultTableCellRenderer();
+        centerAlign.setHorizontalAlignment(JLabel.CENTER);
+        tbl.getColumnModel().getColumn(0).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(1).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(2).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(3).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(4).setCellRenderer(centerAlign);
 
         // Custom table
         tbl.setFocusable(false);
@@ -391,6 +402,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             data.add(sp.getName());       
             data.add(sp.getPrice());
             data.add(sp.getAmount());
+            data.add(sp.getPrice() * sp.getAmount());
             model.addRow(data);
         }
         tbl.setModel(model);
@@ -492,7 +504,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             // Kiểm tra số lượng
 
             float gia = Float.parseFloat(txtCTGia.getText());
-            System.out.println(sl);
 
             //Kiểm tra đã có trong giỏ chưa
             boolean flag = true;
@@ -513,6 +524,12 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                     return;
                 }
                 dsct.add(new ct_HoaDonDTO(Integer.parseInt(txtMaHD.getText()), Integer.parseInt(txtMaSP.getText()), txtCTTenSP.getText(), sl, gia));
+                
+                txtMaSP.setText(null);
+                txtCTSL.setText(null);
+                txtCTTenSP.setText(null);
+                txtCTGia.setText(null);
+                imgSP.setIcon(null);
             }
             outModel(model, dsct);
             txtTongTien.setText(String.valueOf(sumHD()));
@@ -573,6 +590,16 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             hdBUS.add(hd);
             for (ct_HoaDonDTO ct : dsct) {
                 ctBUS.add(ct);
+                
+                SanPhamDTO sp = spBUS.getOneById(ct.getId_SP());
+                sp.setAmount(sp.getAmount() - ct.getAmount());
+                SanPhamDAO spDAO = new SanPhamDAO();
+                
+                try {
+                    spDAO.update(sp);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(BanHangGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             printBill bill = new printBill(hd, dsct);
             bill.print();

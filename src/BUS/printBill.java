@@ -43,7 +43,7 @@ public class printBill {
     }
 
     public void print() {
-        String uderline = "*";
+        String uderline = "-";
         try {
             bf = BaseFont.createFont("./font/times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             Document bill = new Document(PageSize.A4, 15, 15, 10, 10);
@@ -53,7 +53,7 @@ public class printBill {
             }
             PdfWriter.getInstance(bill, new FileOutputStream(file));
             bill.open();
-            Paragraph header = new Paragraph("Coffee", new Font(bf, 35));
+            Paragraph header = new Paragraph("Coffee Relax", new Font(bf, 35));
             header.setAlignment(1);
             bill.add(header);
             Paragraph info = new Paragraph("Hóa dơn : " + hd.getId() + "          Ngày : " + hd.getCreate_day(), new Font(bf, 15));
@@ -63,12 +63,12 @@ public class printBill {
             bill.add(l);
             
             //table
-            String[] cellHeader = {"Mã SP", "Tên SP", "SL", "Đơn Giá (VNĐ)"};
+            String[] cellHeader = {"Mã SP", "Tên SP", "SL", "Đơn Giá (VNĐ)","Thành tiền"};
 
             PdfPTable t = new PdfPTable(cellHeader.length);
             t.setSpacingAfter(10);
             t.setSpacingBefore(10);
-            int[] relativeWidths = {20, 80, 10, 40};
+            int[] relativeWidths = {20, 80, 20, 40, 30};
             t.setWidths(relativeWidths);
 
             for (String s : cellHeader) {
@@ -80,7 +80,7 @@ public class printBill {
                 t.addCell(createCell(String.valueOf(ct.getName())));
                 t.addCell(createCell(String.valueOf(ct.getPrice())));
                 t.addCell(createCell(String.valueOf(ct.getAmount())));
-//                t.addCell(createCell(String.valueOf(ct.getTotal_money())));
+                t.addCell(createCell(String.valueOf(ct.getPrice() * ct.getAmount())));
             }
             bill.add(t);
             bill.add(l);

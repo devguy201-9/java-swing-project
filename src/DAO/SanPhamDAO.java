@@ -34,9 +34,9 @@ public class SanPhamDAO extends AbstractDAO<SanPhamDTO> {
         return query(sql.toString(), new SanPhamMapper(),id);
     }
     
-    public SanPhamDTO getOneByFullName(String name){
-        String sql = "select * from sanpham where name = ?";
-        List<SanPhamDTO> sp = query(sql.toString(), new SanPhamMapper(),name);
+    public SanPhamDTO getOneById(int id){
+        String sql = "select * from sanpham where id_SP = ?";
+        List<SanPhamDTO> sp = query(sql.toString(), new SanPhamMapper(),id);
         return sp.isEmpty() ? null : sp.get(0);
     }
     

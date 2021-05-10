@@ -75,9 +75,9 @@ public class SanPhamBUS {
         return sps;
     }
     
-    public SanPhamDTO getOneByName (String name){
+    public SanPhamDTO getOneById (int id){
         SanPhamDAO spDAO = new SanPhamDAO();
-        SanPhamDTO sp = spDAO.getOneByFullName(name);
+        SanPhamDTO sp = spDAO.getOneById(id);
         return sp;
     }
 
