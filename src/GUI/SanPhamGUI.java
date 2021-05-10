@@ -245,11 +245,11 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnAdd.add(lbAdd);
 
         JLabel lbEdit = new JLabel(new ImageIcon("./src/image/icons8-gear-32.png"));
-        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));
+        lbEdit.setBounds(new Rectangle(0, 0, 50, 50));
         btnEdit.add(lbEdit);
 
         JLabel lbDelete = new JLabel(new ImageIcon("./src/image/icons8-delete-32.png"));
-        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));
+        lbDelete.setBounds(new Rectangle(0, 0, 50, 50));
         btnDelete.add(lbDelete);
 
 //        JLabel lbConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm.png"));       
