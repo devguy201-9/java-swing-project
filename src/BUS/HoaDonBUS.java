@@ -156,7 +156,6 @@ public class HoaDonBUS {
                 }
                 if (mahd != 0 && hd.getId() != mahd) {
                     search.clear();
-                    break;
                 }
                 search.add(hd);
             }

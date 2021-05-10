@@ -34,10 +34,10 @@ public class TaiKhoanBUS {
     }
 
     public void add(TaiKhoanDTO taiKhoan) {
-        tkBUS.add(taiKhoan);
         TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
         try {
-            taiKhoanDAO.save(taiKhoan);
+            taiKhoan.setId_NV(taiKhoanDAO.save(taiKhoan));
+            tkBUS.add(taiKhoan);
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
