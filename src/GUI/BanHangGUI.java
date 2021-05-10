@@ -10,8 +10,8 @@ import BUS.ct_HDBUS;
 import BUS.KhachHangBUS;
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
-import BUS.printBill;
 import DAO.SanPhamDAO;
+//import BUS.printBill;
 import DTO.HoaDonDTO;
 import DTO.SanPhamDTO;
 import DTO.ct_HoaDonDTO;
@@ -601,8 +601,8 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                     Logger.getLogger(BanHangGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            printBill bill = new printBill(hd, dsct);
-            bill.print();
+//            printBill bill = new printBill(hd, dsct);
+//            bill.print();
             reset(true);
         }
         if (e.getSource().equals(btnEdit)) //Sửa sl trong Chitiet sp
