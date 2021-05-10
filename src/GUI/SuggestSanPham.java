@@ -43,14 +43,14 @@ class SuggestSanPham extends JDialog {
 
     private String maSP;
     private SanPhamBUS spBUS = new SanPhamBUS();
-    private JTextField txtMaSP, txtTenSP, txtGia, txtSL, txtDVT;
+    private JTextField txtMaSP, txtTenSP, txtGia, txtDVT;
     private String img;
     private DefaultTableModel model;
     private JTable tbl;
     private int DWIDTH = 1200;
     private JTextField txtSearch;
     private JComboBox cmbChoice;
-    private JButton btnConfirm,btnBack;
+    private JButton btnConfirm, btnBack;
 
     public SuggestSanPham(String maSP) {
         this.maSP = maSP;
@@ -118,26 +118,17 @@ class SuggestSanPham extends JDialog {
         itemView.add(lbDVT);
         itemView.add(txtDVT);
 
-        JLabel lbSL = new JLabel("SL tồn");
-        lbSL.setFont(font0);
-        lbSL.setBounds(20, 220, 100, 30);
-        txtSL = new JTextField();
-        txtSL.setBounds(new Rectangle(120, 220, 250, 30));
-        txtSL.setEditable(false);
-        itemView.add(lbSL);
-        itemView.add(txtSL);
-
         /**
          * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL
          * *******************
          */
         Font font2 = new Font("Sogoe UI", Font.PLAIN, 18);
-        
+
         btnConfirm = new JButton("XÁC NHẬN");
         btnConfirm.setFont(font2);
         btnConfirm.setForeground(Color.WHITE);
         btnConfirm.setBackground(new Color(250, 130, 49));
-        
+
         btnConfirm.setBounds(new Rectangle(20, 320, 150, 40));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnConfirm.addMouseListener(new MouseAdapter() {
@@ -150,7 +141,7 @@ class SuggestSanPham extends JDialog {
         btnBack.setFont(font2);
         btnBack.setForeground(Color.WHITE);
         btnBack.setBackground(new Color(181, 52, 113));
-        
+
         btnBack.setBounds(new Rectangle(180, 320, 150, 40));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBack.addMouseListener(new MouseAdapter() {
@@ -177,7 +168,6 @@ class SuggestSanPham extends JDialog {
         header.add("Tên SP");
         header.add("Đơn giá");
         header.add("ĐVT");
-        header.add("SL tồn");
         header.add("IMG");
         model = new MyTable(header, 5);
         tbl = new JTable(model);
@@ -335,7 +325,6 @@ class SuggestSanPham extends JDialog {
             data.add(s.getName());
             data.add(s.getPrice());
             data.add(s.getId_Loai());
-            data.add(s.getAmount());
             data.add(s.getImg());
             model.addRow(data);
         }
@@ -376,9 +365,7 @@ class SuggestSanPham extends JDialog {
         txtTenSP.setText(tbl.getModel().getValueAt(i, 1).toString());
         txtGia.setText(tbl.getModel().getValueAt(i, 2).toString());
         txtDVT.setText(tbl.getModel().getValueAt(i, 3).toString());
-        txtSL.setText(tbl.getModel().getValueAt(i, 4).toString());
-        img = tbl.getModel().getValueAt(i, 5).toString();
+        img = tbl.getModel().getValueAt(i, 4).toString();
     }
-    
-    
+
 }

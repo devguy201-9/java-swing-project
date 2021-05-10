@@ -339,7 +339,7 @@ public class SPGUI extends JPanel implements KeyListener {
                             return;
                         }
                         //Upload sản phẩm lên DAO và BUS
-                        SanPhamDTO sp = new SanPhamDTO(maLoai, sl, tenSP, mota, gia, IMG);
+                        SanPhamDTO sp = new SanPhamDTO(maLoai, tenSP, mota, gia, IMG);
                         spBUS.add(sp);
 
                         outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
@@ -365,7 +365,7 @@ public class SPGUI extends JPanel implements KeyListener {
                         String IMG = imgName;
 
                         //Upload sản phẩm lên DAO và BUS
-                        SanPhamDTO sp = new SanPhamDTO(maLoai, sl, tenSP, mota, gia, IMG);
+                        SanPhamDTO sp = new SanPhamDTO(maLoai, tenSP, mota, gia, IMG);
                         spBUS.set(sp);
 
                         outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
@@ -730,7 +730,6 @@ public class SPGUI extends JPanel implements KeyListener {
             data = new Vector();
             data.add(s.getId_SP());
             data.add(s.getName());
-            data.add(s.getAmount());
             data.add(s.getPrice());
             data.add(s.getDescrption());
             data.add(s.getId_Loai());

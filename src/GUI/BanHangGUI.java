@@ -515,19 +515,11 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             for (ct_HoaDonDTO sp : dsct) {
                 System.out.println(sp.getId_SP() + " " + txtMaSP.getText());
                 if (txtMaSP.getText().equals(sp.getId_SP())) {
-                    int old = sp.getAmount();
-                    if (!spBUS.checkSL(txtMaSP.getText(), sl + old)) {
-                        return;
-                    }
-                    sp.setAmount(sl + old);
                     flag = false;
                     break;
                 }
             }
             if (flag) {
-                if (!spBUS.checkSL(txtMaSP.getText(), sl)) {
-                    return;
-                }
                 dsct.add(new ct_HoaDonDTO(Integer.parseInt(txtMaHD.getText()), Integer.parseInt(txtMaSP.getText()), txtCTTenSP.getText(), sl, gia));
                 
                 txtMaSP.setText(null);
@@ -595,7 +587,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 ctBUS.add(ct);
                 
                 SanPhamDTO sp = spBUS.getOneById(ct.getId_SP());
-                sp.setAmount(sp.getAmount() - ct.getAmount());
                 SanPhamDAO spDAO = new SanPhamDAO();
                 
                 try {
@@ -614,16 +605,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 int i = tbl.getSelectedRow();
                 if (tbl.getRowSorter() != null) {
                     i = tbl.getRowSorter().convertRowIndexToModel(i);
-                }
-                String masp = tbl.getModel().getValueAt(i, 0).toString();
-                int sl = Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập số lượng sản phẩm :"));
-                while (!spBUS.checkSL(masp, sl)) {
-                    sl = Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập số lượng sản phẩm :"));
-                }
-                for (ct_HoaDonDTO ct : dsct) {
-                    if (ct.getId_SP() == Integer.parseInt(masp)) {
-                        ct.setAmount(sl);
-                    }
                 }
                 outModel(model, dsct);
             } catch (IndexOutOfBoundsException ex) {
