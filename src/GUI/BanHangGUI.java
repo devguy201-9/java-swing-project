@@ -10,7 +10,7 @@ import BUS.ct_HDBUS;
 import BUS.KhachHangBUS;
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
-//import BUS.printBill;
+import BUS.printBill;
 import DTO.HoaDonDTO;
 import DTO.SanPhamDTO;
 import DTO.ct_HoaDonDTO;
@@ -395,8 +395,8 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         tbl.setModel(model);
     }
 
-    public float sumHD() {
-        float sum = 0;
+    public int sumHD() {
+        int sum = 0;
         for (ct_HoaDonDTO sp : dsct) {
             int sl = sp.getAmount();
             float gia = sp.getPrice();
@@ -563,18 +563,18 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập sản phẩm");
                 return;
             }
-            int maHD = Integer.parseInt(txtMaHD.getText());
-            int maKH = Integer.parseInt(txtMaKH.getText());
-            int maNV = Integer.parseInt(txtMaNV.getText());
+            int maHD = Integer.parseInt(txtMaHD.getText().trim());
+            int maKH = Integer.parseInt(txtMaKH.getText().trim());
+            int maNV = Integer.parseInt(txtMaNV.getText().trim());
             Timestamp ngayHD = Timestamp.valueOf(txtNgayHD.getText());
-            int tongTien = Integer.parseInt(txtTongTien.getText());
+            int tongTien = (int)Math.round(Integer.parseInt(txtTongTien.getText()) * 100.0 / 100);
             HoaDonDTO hd = new HoaDonDTO(maHD, maKH, maNV, tongTien, ngayHD);
             hdBUS.add(hd);
             for (ct_HoaDonDTO ct : dsct) {
                 ctBUS.add(ct);
             }
-//            printBill bill = new printBill(hd, dsct);
-//            bill.print();
+            printBill bill = new printBill(hd, dsct);
+            bill.print();
             reset(true);
         }
         if (e.getSource().equals(btnEdit)) //Sửa sl trong Chitiet sp
@@ -647,6 +647,5 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
