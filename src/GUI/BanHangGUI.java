@@ -10,7 +10,7 @@ import BUS.ct_HDBUS;
 import BUS.KhachHangBUS;
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
-//import BUS.printBill;
+import BUS.printBill;
 import DTO.HoaDonDTO;
 import DTO.SanPhamDTO;
 import DTO.ct_HoaDonDTO;
@@ -564,9 +564,9 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập sản phẩm");
                 return;
             }
-            int maHD = Integer.parseInt(txtMaHD.getText());
-            int maKH = Integer.parseInt(txtMaKH.getText());
-            int maNV = Integer.parseInt(txtMaNV.getText());
+            int maHD = Integer.parseInt(txtMaHD.getText().trim());
+            int maKH = Integer.parseInt(txtMaKH.getText().trim());
+            int maNV = Integer.parseInt(txtMaNV.getText().trim());
             Timestamp ngayHD = Timestamp.valueOf(txtNgayHD.getText());
             float tongTien = Float.parseFloat(txtTongTien.getText());
             HoaDonDTO hd = new HoaDonDTO(maHD, maKH, maNV, tongTien, ngayHD);
@@ -574,8 +574,8 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             for (ct_HoaDonDTO ct : dsct) {
                 ctBUS.add(ct);
             }
-//            printBill bill = new printBill(hd, dsct);
-//            bill.print();
+            printBill bill = new printBill(hd, dsct);
+            bill.print();
             reset(true);
         }
         if (e.getSource().equals(btnEdit)) //Sửa sl trong Chitiet sp
