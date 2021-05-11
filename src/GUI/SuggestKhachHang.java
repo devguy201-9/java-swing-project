@@ -50,7 +50,7 @@ public class SuggestKhachHang extends JDialog {
     private JTextField txtHo;
     private JTextField txtSearch;
     private JComboBox cmbChoice;
-    private JButton btnConfirm,btnBack;
+    private JButton btnConfirm, btnBack;
 
     public SuggestKhachHang() {
         setModal(true);
@@ -117,23 +117,15 @@ public class SuggestKhachHang extends JDialog {
          * *******************
          */
         Font font2 = new Font("Sogoe UI", Font.PLAIN, 18);
-        
-//        JLabel lbConfirm = new JLabel(new ImageIcon("./src/image/icons8-check-mark-30.png"));
-//        lbConfirm.setBounds(new Rectangle(0, 0, 50, 50));
-//        btnConfirm.add(lbConfirm);
-//
-//        JLabel lbBack = new JLabel(new ImageIcon("./src/image/icons8-back-30.png"));
-//        lbBack.setBounds(new Rectangle(0, 0, 50, 50));
-//        btnBack.add(lbBack);
-        
+
         btnConfirm = new JButton("XÁC NHẬN");
         btnConfirm.setFont(font2);
         btnConfirm.setForeground(Color.WHITE);
         btnConfirm.setBackground(new Color(250, 130, 49));
-        
+
         btnConfirm.setBounds(new Rectangle(20, 260, 150, 40));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
+
         btnConfirm.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 dispose();
@@ -144,7 +136,7 @@ public class SuggestKhachHang extends JDialog {
         btnBack.setFont(font2);
         btnBack.setForeground(Color.WHITE);
         btnBack.setBackground(new Color(181, 52, 113));
-        
+
         btnBack.setBounds(new Rectangle(180, 260, 150, 40));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBack.addMouseListener(new MouseAdapter() {
@@ -163,9 +155,6 @@ public class SuggestKhachHang extends JDialog {
 
         itemView.add(btnConfirm);
         itemView.add(btnBack);
-        /**
-         * **********************************************************************
-         */
 
         /**
          * ************** TẠO TABLE
@@ -184,10 +173,6 @@ public class SuggestKhachHang extends JDialog {
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
         listKH();
-
-        /**
-         * ****************************************************************
-         */
         /**
          * ****** CUSTOM TABLE ***************
          */
@@ -218,14 +203,14 @@ public class SuggestKhachHang extends JDialog {
 
         add(itemView);
         /**
-         * ***********************************
-         */
-        /**
          * **************************************************************************************
          */
         tbl.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int i = tbl.getSelectedRow();
+                if (i == -1) {
+                    return;
+                }
                 if (tbl.getRowSorter() != null) {
                     i = tbl.getRowSorter().convertRowIndexToModel(i);
                 }
@@ -235,9 +220,6 @@ public class SuggestKhachHang extends JDialog {
                 txtPhone.setText(tbl.getModel().getValueAt(i, 3).toString());
             }
         });
-        /**
-         * ******************************************************************
-         */
         /**
          * ******************* THANH SEARCH
          * **********************************************

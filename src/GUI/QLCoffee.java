@@ -174,7 +174,7 @@ public class QLCoffee extends JFrame implements MouseListener {
         switch (i) {
             case 0: //  BÁN HÀNG 
                 main.removeAll();
-                main.add(new BanHangGUI(DEFALUT_WIDTH,userId));
+                main.add(new BanHangGUI(DEFALUT_WIDTH, userId));
                 main.repaint();
                 main.revalidate();
                 break;

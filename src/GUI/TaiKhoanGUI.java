@@ -55,6 +55,8 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
 
     private boolean EditOrAdd = true;//Cờ cho button Cofirm True:ADD || False:Edit
 
+    private boolean tableSelectionActive = true;
+
     public TaiKhoanGUI(int width) {
         this.DEFAUTL_WIDTH = width;
         init();
@@ -153,7 +155,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                 btnEdit.setVisible(false);
                 btnConfirm.setVisible(true);
                 btnBack.setVisible(true);
-
+                tableSelectionActive = false;
                 tbl.setEnabled(false);
             }
         });
@@ -167,7 +169,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                 setEdit(true);
                 EditOrAdd = false;
                 txtMaTK.setEditable(false);
-
+                tableSelectionActive = false;
                 btnAdd.setVisible(false);
                 btnEdit.setVisible(false);
                 btnConfirm.setVisible(true);
@@ -205,13 +207,9 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                             PermissionDTO role = (PermissionDTO) cmbRole.getSelectedItem();
                             TaiKhoanDTO nv = new TaiKhoanDTO(manv, role.getId_Permission(), user, pass);
                             tkBUS.add(nv);
-//                        TaiKhoanBUS usBUS = new TaiKhoanBUS();
-//                        TaiKhoanDTO user = new TaiKhoanDTO(maNV, removeAccent(sdt.concat(maNV)).toLowerCase(), "123456", "Nhân Viên", "1");
-//                        usBUS.add(user, 1);
                             outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
 
                             JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                            //popup lên view nhập username and password và selectbox chọn quyền
                             cleanView();
                         } catch (NumberFormatException ex) {
                             JOptionPane.showMessageDialog(null, "Loi");
@@ -253,7 +251,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                 setEdit(false);
                 btnConfirm.setVisible(false);
                 btnBack.setVisible(false);
-
+                tableSelectionActive = true;
                 tbl.setEnabled(true);
             }
         });
@@ -262,9 +260,6 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         itemView.add(btnEdit);
         itemView.add(btnConfirm);
         itemView.add(btnBack);
-        /**
-         * **********************************************************************
-         */
         /**
          * ************** TẠO TABLE
          * ***********************************************************
@@ -284,10 +279,6 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
         list();
-
-        /**
-         * ****************************************************************
-         */
         /**
          * ****** CUSTOM TABLE ***************
          */
@@ -326,29 +317,29 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         itemView.add(scroll);
 
         add(itemView);
-        /**
-         * ***********************************
-         */
+        tableSelectionActive = true;
         /**
          * **************************************************************************************
          */
         tbl.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                int i = tbl.getSelectedRow();
-                if (tbl.getRowSorter() != null) {
-                    i = tbl.getRowSorter().convertRowIndexToModel(i);
+                if (tableSelectionActive) {
+                    int i = tbl.getSelectedRow();
+                    if (i == -1) {
+                        return;
+                    }
+                    if (tbl.getRowSorter() != null) {
+                        i = tbl.getRowSorter().convertRowIndexToModel(i);
+                    }
+                    txtMaTK.setText(tbl.getModel().getValueAt(i, 0).toString());
+                    txtMaNV.setText(tbl.getModel().getValueAt(i, 1).toString());
+                    txtUser.setText(tbl.getModel().getValueAt(i, 2).toString());
+                    txtPass.setText(tbl.getModel().getValueAt(i, 3).toString());
+                    cmbRole.setSelectedItem(roleBUS.searchID((int) tbl.getModel().getValueAt(i, 4)));
                 }
-                txtMaTK.setText(tbl.getModel().getValueAt(i, 0).toString());
-                txtMaNV.setText(tbl.getModel().getValueAt(i, 1).toString());
-                txtUser.setText(tbl.getModel().getValueAt(i, 2).toString());
-                txtPass.setText(tbl.getModel().getValueAt(i, 3).toString());
-                cmbRole.setSelectedItem(roleBUS.searchID((int) tbl.getModel().getValueAt(i, 4)));
             }
         });
         setEdit(false);
-        /**
-         * ******************************************************************
-         */
     }
 
     public void outModel(DefaultTableModel model, ArrayList<TaiKhoanDTO> user) // Xuất ra Table từ ArrayList

@@ -203,7 +203,6 @@ public class Login extends JFrame {
         try {
 
             qlcoffee = new QLCoffee(user.getId_NV(), user.getUser_name(), user.getId_permission());
-//                    
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }

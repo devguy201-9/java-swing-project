@@ -105,7 +105,8 @@ public class CT_HoaDonGUI extends JFrame {
         itemView.add(txtDonGia);
         txtDonGia.setEditable(false);
         /**
-         * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL *******************
+         * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL
+         * *******************
          */
 
         JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete_150px.png"));
@@ -131,11 +132,8 @@ public class CT_HoaDonGUI extends JFrame {
             }
         });
         /**
-         * **********************************************************************
-         */
-
-        /**
-         * ************** TẠO TABLE ***********************************************************
+         * ************** TẠO TABLE
+         * ***********************************************************
          */
         /**
          * ************ TẠO MODEL VÀ HEADER ********************************
@@ -148,10 +146,6 @@ public class CT_HoaDonGUI extends JFrame {
         model = new MyTable(header, 4);
         tbl = new JTable(model);
         list(); //Đọc từ database lên table 
-
-        /**
-         * ****************************************************************
-         */
         /**
          * ****** CUSTOM TABLE ***************
          */
@@ -180,14 +174,15 @@ public class CT_HoaDonGUI extends JFrame {
         itemView.add(scroll);
 
         add(itemView);
-        /**
-         * ***********************************
-         */
+
         tbl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!ctBUS.getCt_hdBUS().isEmpty()) {
                     int i = tbl.getSelectedRow();
+                    if (i == -1) {
+                        return;
+                    }
                     txtMaSP.setText(tbl.getModel().getValueAt(i, 0).toString());
                     txtTenSP.setText(tbl.getModel().getValueAt(i, 1).toString());
                     txtSL.setText(tbl.getModel().getValueAt(i, 2).toString());
@@ -195,13 +190,6 @@ public class CT_HoaDonGUI extends JFrame {
                 }
             }
         });
-        /**
-         * **************************************************************************************
-         */
-        /**
-         * ******************************************************************
-         */
-
         setVisible(true);
 
     }

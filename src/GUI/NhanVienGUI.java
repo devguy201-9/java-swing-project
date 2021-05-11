@@ -69,7 +69,7 @@ public class NhanVienGUI extends JPanel {
     private JTextField sortSDT;
     private Choice sortPhai;
     private JComboBox cmbPhai;
-    private JButton btnAdd,btnEdit,btnDelete,btnConfirm,btnBack,btnFile;
+    private JButton btnAdd, btnEdit, btnDelete, btnConfirm, btnBack, btnFile;
 
     private boolean tableSelectionActive = true;
 
@@ -168,10 +168,6 @@ public class NhanVienGUI extends JPanel {
         ItemView.add(lbDiaChi);
         ItemView.add(txtDiaChi);
         /**
-         * *********************************************************
-         */
-
-        /**
          * ************** TẠO CÁC BTN THÊM ,XÓA, SỬA *******************
          */
         Font font2 = new Font("Tahoma", Font.PLAIN, 25);
@@ -182,7 +178,7 @@ public class NhanVienGUI extends JPanel {
         btnConfirm = new JButton("XÁC NHẬN");
         btnBack = new JButton("QUAY LẠI");
         btnFile = new JButton("CHỌN ẢNH");
-        
+
         //font chữ
         btnAdd.setFont(font2);
         btnAdd.setForeground(Color.WHITE);
@@ -196,7 +192,7 @@ public class NhanVienGUI extends JPanel {
         btnBack.setForeground(Color.WHITE);
         btnFile.setFont(font2);
         btnFile.setForeground(Color.WHITE);
-        
+
         //màu nền
         Color colorAdd = new Color(85, 239, 196);
         btnAdd.setBackground(colorAdd);
@@ -210,7 +206,7 @@ public class NhanVienGUI extends JPanel {
         btnBack.setBackground(colorBack);
         Color colorFile = new Color(60, 64, 198);
         btnFile.setBackground(colorFile);
-        
+
         //icon
         JLabel lbAdd = new JLabel(new ImageIcon("./src/image/add-icon.png"));
         lbAdd.setBounds(new Rectangle(0, 0, 50, 50));
@@ -223,9 +219,7 @@ public class NhanVienGUI extends JPanel {
         JLabel lbDelete = new JLabel(new ImageIcon("./src/image/icons8-delete-32.png"));
         lbDelete.setBounds(new Rectangle(0, 0, 50, 50));
         btnDelete.add(lbDelete);
-        
-        
-        
+
 //        JLabel btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd.png"));
         btnAdd.setBounds(new Rectangle(620, 0, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -237,8 +231,6 @@ public class NhanVienGUI extends JPanel {
 //        JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete.png"));
         btnDelete.setBounds(new Rectangle(620, 140, 200, 50));
         btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        
 
 //        JLabel btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm.png"));
         btnConfirm.setVisible(false);
@@ -255,7 +247,6 @@ public class NhanVienGUI extends JPanel {
         btnFile.setBounds(new Rectangle(620, 140, 200, 50));
         btnFile.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        
         ItemView.add(btnAdd);
         ItemView.add(btnEdit);
         ItemView.add(btnDelete);
@@ -294,8 +285,6 @@ public class NhanVienGUI extends JPanel {
                 }
                 int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
-//                    TaiKhoanBUS usBUS = new TaiKhoanBUS();
-//                    usBUS.delete(txtMaNV.getText());
                     nvBUS.delete(txtMaNV.getText());
                     cleanView();
                     tbl.clearSelection();
@@ -402,14 +391,10 @@ public class NhanVienGUI extends JPanel {
 
                             NhanVienDTO nv = new NhanVienDTO(namSinh, hoTen, diaChi, sdt, gd, LocalDate.now(), IMG);
                             nvBUS.add(nv);
-//                        TaiKhoanBUS usBUS = new TaiKhoanBUS();
-//                        TaiKhoanDTO user = new TaiKhoanDTO(maNV, removeAccent(sdt.concat(maNV)).toLowerCase(), "123456", "Nhân Viên", "1");
-//                        usBUS.add(user, 1);
                             outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());// Load lại table
 
                             saveIMG();// Lưu hình ảnh 
                             JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                            //popup lên view nhập username and password và selectbox chọn quyền
                             cleanView();
                         } catch (NumberFormatException ex) {
                             JOptionPane.showMessageDialog(null, "Loi");
@@ -450,12 +435,6 @@ public class NhanVienGUI extends JPanel {
         });
 
         /**
-         * *************************************************************
-         */
-        /**
-         * *******************************************************************************
-         */
-        /**
          * ************ TẠO MODEL VÀ HEADER ********************
          */
         Vector header = new Vector();
@@ -484,11 +463,7 @@ public class NhanVienGUI extends JPanel {
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
         listSP(); //Đọc từ database lên table 
-
-        /**
-         * ******************************************************
-         */
-        /**
+        /*
          * ************** TẠO TABLE
          * ***********************************************************
          */
@@ -537,6 +512,9 @@ public class NhanVienGUI extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (tableSelectionActive) {
                     int i = tbl.getSelectedRow();
+                    if (i == -1) {
+                        return;
+                    }
                     imgName = tbl.getModel().getValueAt(i, 7).toString();
                     Image newImage;
                     try {
@@ -656,9 +634,6 @@ public class NhanVienGUI extends JPanel {
         sortMaNV.setBounds(new Rectangle(50, 42, 70, 30));
         sortMaNV.setInputVerifier(new MyInputVerifier());
         sort.add(sortMaNV);
-        /**
-         * **********************************
-         */
 
         /**
          * ****** SORT HONV *************
@@ -672,9 +647,6 @@ public class NhanVienGUI extends JPanel {
         sortHoNV.setFont(font0);
         sortHoNV.setBounds(new Rectangle(200, 42, 100, 30));
         sort.add(sortHoNV);
-        /**
-         * **********************************
-         */
 
         /**
          * ****** SORT SDT NV *************
@@ -688,9 +660,6 @@ public class NhanVienGUI extends JPanel {
         sortSDT.setFont(font0);
         sortSDT.setBounds(new Rectangle(350, 42, 100, 30));
         sort.add(sortSDT);
-        /**
-         * **********************************
-         */
         /**
          * ********** SORT PHÁI *************
          */
@@ -707,9 +676,6 @@ public class NhanVienGUI extends JPanel {
         sortPhai.setFont(font0);
         sortPhai.setBounds(new Rectangle(505, 43, 100, 30));
         sort.add(sortPhai);
-        /**
-         * **********************************
-         */
         /**
          * ***************************************
          */
@@ -732,9 +698,6 @@ public class NhanVienGUI extends JPanel {
 
         add(sort);
         setEdit(false);
-        /**
-         * ****************************************************************
-         */
     }
 
     //FUNCTION
@@ -800,7 +763,8 @@ public class NhanVienGUI extends JPanel {
 //        model.setRowCount(0);
         outModel(model, nv);
     }
-   private void setEdit(boolean flag) {
+
+    private void setEdit(boolean flag) {
         txtHoNV.setEditable(flag);
         txtSDT.setEditable(flag);
         txtDiaChi.setEditable(flag);

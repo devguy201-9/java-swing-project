@@ -90,7 +90,8 @@ public class SPGUI extends JPanel implements KeyListener {
         Font font0 = new Font("Segoe UI", Font.PLAIN, 13);
         Font font1 = new Font("Segoe UI", Font.BOLD, 13);
         /**
-         * **************************** PHẦN HIỂN THỊ THÔNG TIN *****************************************
+         * **************************** PHẦN HIỂN THỊ THÔNG TIN
+         * *****************************************
          */
 
         JPanel ItemView = new JPanel(null);
@@ -358,7 +359,7 @@ public class SPGUI extends JPanel implements KeyListener {
                         int sl = Integer.parseInt(txtSl.getText());
                         int gia = Integer.parseInt(txtGia.getText());
                         String mota = txtMT.getText();
-                        
+
                         LoaiDTO loai = (LoaiDTO) cmbLoai.getSelectedItem();
                         int maLoai = loai.getId_Loai();
 
@@ -408,7 +409,8 @@ public class SPGUI extends JPanel implements KeyListener {
          * *************************************************************
          */
         /**
-         * *********************** PHẦN TABLE ************************************
+         * *********************** PHẦN TABLE
+         * ************************************
          */
         /**
          * ************ TẠO MODEL VÀ HEADER ********************
@@ -448,7 +450,8 @@ public class SPGUI extends JPanel implements KeyListener {
          */
 
         /**
-         * ************** TẠO TABLE ***********************************************************
+         * ************** TẠO TABLE
+         * ***********************************************************
          */
         // Chỉnh width các cột 
         tbl.getColumnModel().getColumn(0).setPreferredWidth(40);
@@ -515,7 +518,8 @@ public class SPGUI extends JPanel implements KeyListener {
             }
         });
         /**
-         * ******************* THANH SEARCH **********************************************
+         * ******************* THANH SEARCH
+         * **********************************************
          */
 
 //         Tạo Search Box
@@ -636,7 +640,6 @@ public class SPGUI extends JPanel implements KeyListener {
         /**
          * **********************************
          */
-        
         /**
          * ********** SORT THEO GIÁ **************
          */
@@ -688,9 +691,10 @@ public class SPGUI extends JPanel implements KeyListener {
         }
     }
 
-    public void listLoai(JComboBox cmb)
-    {
-        if(loaiBUS.getLoaiBUS()== null)loaiBUS.list();
+    public void listLoai(JComboBox cmb) {
+        if (loaiBUS.getLoaiBUS() == null) {
+            loaiBUS.list();
+        }
         ArrayList<LoaiDTO> loai = (ArrayList<LoaiDTO>) loaiBUS.getLoaiBUS();
         addCombo(cmb, loai);
     }

@@ -50,7 +50,7 @@ public class SuggestNhanVien extends JDialog {
     private JTextField txtDiaChi, txtPhone, txtStartDay;
     private JTextField txtSearch;
     private JComboBox cmbChoice;
-    private JButton btnConfirm,btnBack;
+    private JButton btnConfirm, btnBack;
 
     public SuggestNhanVien() {
         setModal(true);
@@ -139,14 +139,13 @@ public class SuggestNhanVien extends JDialog {
         itemView.add(lbDay);
         itemView.add(txtStartDay);
 
-        
         Font font2 = new Font("Sogoe UI", Font.PLAIN, 18);
-        
+
         btnConfirm = new JButton("XÁC NHẬN");
         btnConfirm.setFont(font2);
         btnConfirm.setForeground(Color.WHITE);
         btnConfirm.setBackground(new Color(250, 130, 49));
-        
+
         btnConfirm.setBounds(new Rectangle(20, 420, 150, 40));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnConfirm.addMouseListener(new MouseAdapter() {
@@ -159,7 +158,7 @@ public class SuggestNhanVien extends JDialog {
         btnBack.setFont(font2);
         btnBack.setForeground(Color.WHITE);
         btnBack.setBackground(new Color(181, 52, 113));
-        
+
         btnBack.setBounds(new Rectangle(180, 420, 150, 40));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBack.addMouseListener(new MouseAdapter() {
@@ -170,9 +169,6 @@ public class SuggestNhanVien extends JDialog {
 
         itemView.add(btnConfirm);
         itemView.add(btnBack);
-        /**
-         * **********************************************************************
-         */
 
         /**
          * ************** TẠO TABLE
@@ -194,10 +190,6 @@ public class SuggestNhanVien extends JDialog {
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
         listNV();
-
-        /**
-         * ****************************************************************
-         */
         /**
          * ****** CUSTOM TABLE ***************
          */
@@ -231,14 +223,14 @@ public class SuggestNhanVien extends JDialog {
 
         add(itemView);
         /**
-         * ***********************************
-         */
-        /**
          * **************************************************************************************
          */
         tbl.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int i = tbl.getSelectedRow();
+                if (i == -1) {
+                    return;
+                }
                 if (tbl.getRowSorter() != null) {
                     i = tbl.getRowSorter().convertRowIndexToModel(i);
                 }
@@ -251,9 +243,6 @@ public class SuggestNhanVien extends JDialog {
                 txtStartDay.setText(tbl.getModel().getValueAt(i, 6).toString());
             }
         });
-        /**
-         * ******************************************************************
-         */
         /**
          * ******************* THANH SEARCH
          * **********************************************
@@ -338,9 +327,6 @@ public class SuggestNhanVien extends JDialog {
 
         });
         itemView.add(searchBox);
-        /**
-         * ******************************************************************************
-         */
         setVisible(true);
     }
 

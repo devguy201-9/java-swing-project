@@ -152,9 +152,6 @@ class SuggestSanPham extends JDialog {
 
         itemView.add(btnConfirm);
         itemView.add(btnBack);
-        /**
-         * **********************************************************************
-         */
 
         /**
          * ************** TẠO TABLE
@@ -179,9 +176,6 @@ class SuggestSanPham extends JDialog {
             tbl.setRowSelectionInterval(select, select);
             TabletoTXT(select);
         }
-        /**
-         * ****************************************************************
-         */
 
         /**
          * ****** CUSTOM TABLE ***************
@@ -213,9 +207,6 @@ class SuggestSanPham extends JDialog {
 
         add(itemView);
         /**
-         * ***********************************
-         */
-        /**
          * **************************************************************************************
          */
         tbl.addMouseListener(new MouseAdapter() {
@@ -224,9 +215,6 @@ class SuggestSanPham extends JDialog {
                 TabletoTXT(i);
             }
         });
-        /**
-         * ******************************************************************
-         */
         /**
          * ******************* THANH SEARCH
          * **********************************************
@@ -309,9 +297,6 @@ class SuggestSanPham extends JDialog {
 
         });
         itemView.add(searchBox);
-        /**
-         * ******************************************************************************
-         */
         setVisible(true);
     }
 
@@ -358,6 +343,9 @@ class SuggestSanPham extends JDialog {
     }
 
     public void TabletoTXT(int i) {
+        if (i == -1) {
+            return;
+        }
         if (tbl.getRowSorter() != null) {
             i = tbl.getRowSorter().convertRowIndexToModel(i);
         }

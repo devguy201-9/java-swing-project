@@ -116,9 +116,6 @@ public class KhachHangGUI extends JPanel {
         /**
          * ************** TẠO CÁC BTN THÊM ,XÓA, SỬA *******************
          */
-        
-        
-        
         JLabel btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd.png"));
         btnAdd.setBounds(new Rectangle(750, 0, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -280,12 +277,6 @@ public class KhachHangGUI extends JPanel {
 
             }
         });
-        /**
-         * ************************************************************
-         */
-        /**
-         * *********************************************************************************************************
-         */
 
         /**
          * ************ TẠO MODEL VÀ HEADER ********************
@@ -300,10 +291,6 @@ public class KhachHangGUI extends JPanel {
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
         list(); //Đọc từ database lên table 
-
-        /**
-         * ******************************************************
-         */
         /**
          * ************** TẠO TABLE
          * ***********************************************************
@@ -337,14 +324,14 @@ public class KhachHangGUI extends JPanel {
         scroll.setBackground(null);
 
         add(scroll);
-        /**
-         * **************************************************************************************
-         */
 
         tbl.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (tableSelectionActive) {
                     int i = tbl.getSelectedRow();
+                    if (i == -1) {
+                        return;
+                    }
                     txtMaKH.setText(tbl.getModel().getValueAt(i, 0).toString());
                     txtTenKH.setText(tbl.getModel().getValueAt(i, 1).toString());
                     txtHoKH.setText(tbl.getModel().getValueAt(i, 2).toString());
@@ -433,9 +420,6 @@ public class KhachHangGUI extends JPanel {
         });
         setEdit(false);
         itemView.add(searchBox);
-        /**
-         * ***************************************************************
-         */
     }
 
     public void cleanView() //Xóa trắng các TextField
@@ -473,7 +457,7 @@ public class KhachHangGUI extends JPanel {
 //        model.setRowCount(0);
         outModel(model, nv);
     }
-    
+
     private void setEdit(boolean flag) {
         txtHoKH.setEditable(flag);
         txtSDT.setEditable(flag);

@@ -32,7 +32,7 @@ public class ct_PhieuNhapHangBUS {
         ct_pnhBUS = new ArrayList<>();
         ct_pnhBUS = ctpnhDAO.findAll();
     }
-    
+
     public void listByCode(int maPNH) {
         ct_PNHDAO ctpnhDAO = new ct_PNHDAO();
         ct_pnhBUS = new ArrayList<>();
@@ -52,14 +52,13 @@ public class ct_PhieuNhapHangBUS {
         }
     }
 
-    public void delete(String id) {
-        int idCTPNH = Integer.parseInt(id);
+    public void delete(int idPNH) {
         for (ct_PhieuNhapHangDTO ctpnhDTO : ct_pnhBUS) {
-            if (ctpnhDTO.getId_PNH() == idCTPNH) {
+            if (ctpnhDTO.getId_PNH() == idPNH) {
                 ct_pnhBUS.remove(ctpnhDTO);
                 ct_PNHDAO ctpnhDAO = new ct_PNHDAO();
                 try {
-                    ctpnhDAO.delete(idCTPNH);
+                    ctpnhDAO.delete(idPNH);
                 } catch (FileNotFoundException e) {
                     System.out.println(e.getMessage());
                 }
@@ -68,7 +67,7 @@ public class ct_PhieuNhapHangBUS {
         }
     }
     
-    public void deleteByCode(int idPNH,int idNL) {
+    public void deleteByCode(int idPNH, int idNL) {
         for (ct_PhieuNhapHangDTO ctpnhDTO : ct_pnhBUS) {
             if (ctpnhDTO.getId_PNH() == idPNH && ctpnhDTO.getId_NL() == idNL) {
                 ct_pnhBUS.remove(ctpnhDTO);
@@ -84,17 +83,11 @@ public class ct_PhieuNhapHangBUS {
     }
 
     public void set(ct_PhieuNhapHangDTO ctpnhDTO) {
-        for (int i = 0; i < ct_pnhBUS.size(); i++) {
-            if (ct_pnhBUS.get(i).getId_PNH() == ctpnhDTO.getId_PNH()) {
-                ct_pnhBUS.set(i, ctpnhDTO);
-                ct_PNHDAO ctpnhDAO = new ct_PNHDAO();
-                try {
-                    ctpnhDAO.update(ctpnhDTO);
-                } catch (FileNotFoundException e) {
-                    System.out.println(e.getMessage());
-                }
-                return;
-            }
+        ct_PNHDAO ctpnhDAO = new ct_PNHDAO();
+        try {
+            ctpnhDAO.update(ctpnhDTO);
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
         }
     }
 

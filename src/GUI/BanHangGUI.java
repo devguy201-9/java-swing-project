@@ -160,11 +160,11 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtMaNV.setEditable(false);
         txtMaNV.addKeyListener(this);
         hdView.add(lbMaNV);
-        hdView.add(txtMaNV);        
-        btnMaNV = new JButton("+");   
+        hdView.add(txtMaNV);
+        btnMaNV = new JButton("+");
         btnMaNV.setBackground(new Color(131, 149, 167));
         btnMaNV.setBounds(new Rectangle(575, 0, 30, 30));
-        btnMaNV.addActionListener(this);        
+        btnMaNV.addActionListener(this);
         hdView.add(btnMaNV);
 
         JLabel lbTongTien = new JLabel("Tổng Tiền (VNĐ)");
@@ -218,16 +218,12 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
 
         add(hdView);
         /**
-         * *************************************************************************
-         */
-        /**
          * ********************* PHẦN VIEW THÔNG TIN CHI TIẾT
          * ****************************
          */
         page = new Page404(WIDTH, "Tạo hóa đơn");
         page.setBounds(new Rectangle(50, 0, DEFALUT_WIDTH - 60, 500));
         add(page);
-        
 
         chiTietView = new JPanel(null);
         chiTietView.setVisible(false);
@@ -249,8 +245,10 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtMaSP.setBounds(new Rectangle(60, 240, 70, 30));
         txtMaSP.setEditable(false);
         txtMaSP.addKeyListener(this);
+        
         chiTietView.add(lbMaSP);
         chiTietView.add(txtMaSP);
+        
         btnMaSP = new JButton("+");
         btnMaSP.setBounds(new Rectangle(130, 240, 30, 30));
         btnMaSP.setBackground(new Color(131, 149, 167));
@@ -345,10 +343,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
-
-        /**
-         * ******************************************************
-         */
         /**
          * ************** TẠO TABLE
          * ***********************************************************
@@ -387,13 +381,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         scroll.setBackground(null);
 
         chiTietView.add(scroll);
-        /**
-         * **************************************************************************************
-         */
-        /**
-         * *************************************************************************
-         */
-
         add(chiTietView);
         setVisible(true);
     }
@@ -405,7 +392,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         for (ct_HoaDonDTO sp : ds) {
             data = new Vector();
             data.add(sp.getId_SP());
-            data.add(sp.getName());       
+            data.add(sp.getName());
             data.add(sp.getPrice());
             data.add(sp.getAmount());
             data.add(sp.getPrice() * sp.getAmount());
@@ -501,7 +488,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         if (e.getSource().equals(btnAddCT)) // Thêm Sản Phẩm
         {
             int sl = 0;
-            try {                
+            try {
                 sl = Integer.parseInt(txtCTSL.getText());
             } catch (NumberFormatException E) {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập số lượng");
@@ -522,7 +509,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             }
             if (flag) {
                 dsct.add(new ct_HoaDonDTO(Integer.parseInt(txtMaHD.getText()), Integer.parseInt(txtMaSP.getText()), txtCTTenSP.getText(), sl, gia));
-                
+
                 txtMaSP.setText(null);
                 txtCTSL.setText(null);
                 txtCTTenSP.setText(null);
@@ -586,10 +573,10 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             hdBUS.add(hd);
             for (ct_HoaDonDTO ct : dsct) {
                 ctBUS.add(ct);
-                
+
                 SanPhamDTO sp = spBUS.getOneById(ct.getId_SP());
                 SanPhamDAO spDAO = new SanPhamDAO();
-                
+
                 try {
                     spDAO.update(sp);
                 } catch (FileNotFoundException ex) {
@@ -668,6 +655,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        
+
     }
 }

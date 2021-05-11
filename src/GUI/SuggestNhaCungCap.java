@@ -43,13 +43,13 @@ import javax.swing.table.TableRowSorter;
 public class SuggestNhaCungCap extends JDialog {
 
     private NCCBUS nccBUS = new NCCBUS();
-    private JTextField txtMaNCC, txtTen,txtDiaChi, txtPhone;
+    private JTextField txtMaNCC, txtTen, txtDiaChi, txtPhone;
     private DefaultTableModel model;
     private JTable tbl;
-    private int DWIDTH = 1200;    
+    private int DWIDTH = 1200;
     private JTextField txtSearch;
     private JComboBox cmbChoice;
-    private JButton btnConfirm,btnBack;
+    private JButton btnConfirm, btnBack;
 
     public SuggestNhaCungCap() {
         setModal(true);
@@ -116,12 +116,12 @@ public class SuggestNhaCungCap extends JDialog {
          * *******************
          */
         Font font2 = new Font("Sogoe UI", Font.PLAIN, 18);
-        
+
         btnConfirm = new JButton("XÁC NHẬN");
         btnConfirm.setFont(font2);
         btnConfirm.setForeground(Color.WHITE);
         btnConfirm.setBackground(new Color(250, 130, 49));
-        
+
         btnConfirm.setBounds(new Rectangle(20, 260, 150, 40));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnConfirm.addMouseListener(new MouseAdapter() {
@@ -134,7 +134,7 @@ public class SuggestNhaCungCap extends JDialog {
         btnBack.setFont(font2);
         btnBack.setForeground(Color.WHITE);
         btnBack.setBackground(new Color(181, 52, 113));
-        
+
         btnBack.setBounds(new Rectangle(180, 260, 150, 40));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBack.addMouseListener(new MouseAdapter() {
@@ -145,9 +145,6 @@ public class SuggestNhaCungCap extends JDialog {
 
         itemView.add(btnConfirm);
         itemView.add(btnBack);
-        /**
-         * **********************************************************************
-         */
 
         /**
          * ************** TẠO TABLE
@@ -166,10 +163,6 @@ public class SuggestNhaCungCap extends JDialog {
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
         listKH();
-
-        /**
-         * ****************************************************************
-         */
         /**
          * ****** CUSTOM TABLE ***************
          */
@@ -200,14 +193,14 @@ public class SuggestNhaCungCap extends JDialog {
 
         add(itemView);
         /**
-         * ***********************************
-         */
-        /**
          * **************************************************************************************
          */
         tbl.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int i = tbl.getSelectedRow();
+                if (i == -1) {
+                    return;
+                }
                 if (tbl.getRowSorter() != null) {
                     i = tbl.getRowSorter().convertRowIndexToModel(i);
                 }
@@ -217,9 +210,6 @@ public class SuggestNhaCungCap extends JDialog {
                 txtPhone.setText(tbl.getModel().getValueAt(i, 3).toString());
             }
         });
-        /**
-         * ******************************************************************
-         */
         /**
          * ******************* THANH SEARCH
          * **********************************************
@@ -303,9 +293,6 @@ public class SuggestNhaCungCap extends JDialog {
 
         });
         itemView.add(searchBox);
-        /**
-         * ******************************************************************************
-         */
         setVisible(true);
     }
 
@@ -324,7 +311,7 @@ public class SuggestNhaCungCap extends JDialog {
     }
 
     public void listKH() {
-        if (nccBUS.getNccBUS()== null) {
+        if (nccBUS.getNccBUS() == null) {
             nccBUS.list();
         }
         ArrayList<NhaCungCapDTO> nv = (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS();
@@ -335,5 +322,5 @@ public class SuggestNhaCungCap extends JDialog {
     public String getTextFieldContent() {
         return txtMaNCC.getText();
     }
-    
+
 }

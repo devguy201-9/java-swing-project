@@ -25,7 +25,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -60,7 +59,6 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
     private SanPhamBUS spBUS = new SanPhamBUS();
     private LoaiBUS loaiBUS = new LoaiBUS();
-//    private NsxBUS nsxBUS = new NsxBUS();
     private JTable tbl;
     private BufferedImage i = null;//Hình ảnh chọn từ file
     private JLabel img;
@@ -395,7 +393,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                             JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin để thêm sản phẩm", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
                             return;
                         }
-                        SanPhamDTO sp = new SanPhamDTO(maLoai,tenSP, mota, gia, IMG);
+                        SanPhamDTO sp = new SanPhamDTO(maLoai, tenSP, mota, gia, IMG);
                         spBUS.add(sp);
 
                         outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
@@ -550,8 +548,10 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         tbl.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (tableSelectionActive) {
-
                     int i = tbl.getSelectedRow();
+                    if (i == -1) {
+                        return;
+                    }
                     if (tbl.getRowSorter() != null) {
                         i = tbl.getRowSorter().convertRowIndexToModel(i);
                     }

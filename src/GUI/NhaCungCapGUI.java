@@ -65,7 +65,8 @@ public class NhaCungCapGUI extends JPanel {
         Font font1 = new Font("Segoe UI", Font.BOLD, 13);
 
         /**
-         * **************************** PHẦN HIỂN THỊ THÔNG TIN *****************************************
+         * **************************** PHẦN HIỂN THỊ THÔNG TIN
+         * *****************************************
          */
         JPanel itemView = new JPanel(null);
         itemView.setBounds(new Rectangle(30, 40, DEFAULT_WIDTH - 950, 600));
@@ -329,15 +330,15 @@ public class NhaCungCapGUI extends JPanel {
         scroll.setBackground(null);
         add(scroll);
 
-        /**
-         * **************************************************************************************
-         */
         //event click vào Table
         tbl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (tableSelectionActive) {
                     int click = tbl.getSelectedRow(); //Chon vao dong trong bang hiển thị lên txt
+                    if (click == -1) {
+                        return;
+                    }
                     txtMaNCC.setText(tbl.getModel().getValueAt(click, 0).toString());
                     txtTenNCC.setText(tbl.getModel().getValueAt(click, 1).toString());
                     txtDiaChi.setText(tbl.getModel().getValueAt(click, 2).toString());
@@ -457,7 +458,7 @@ public class NhaCungCapGUI extends JPanel {
         outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
     }
 
-       private void setEdit(boolean flag) {
+    private void setEdit(boolean flag) {
         txtTenNCC.setEditable(flag);
         txtDiaChi.setEditable(flag);
         txtDienThoai.setEditable(flag);

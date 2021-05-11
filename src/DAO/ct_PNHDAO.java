@@ -44,8 +44,8 @@ public class ct_PNHDAO extends AbstractDAO<ct_PhieuNhapHangDTO> {
     }
 
     public void update(ct_PhieuNhapHangDTO ctpnh) throws FileNotFoundException {
-        StringBuilder sql = new StringBuilder("UPDATE ct_phieunhaphang SET id_NL = ? , amount = ? ,");
-        sql.append(" price = ?, total_money = ? WHERE id_PNH = ?");
-        update(sql.toString(), ctpnh.getId_NL(), ctpnh.getAmount(), ctpnh.getPrice(), ctpnh.getTotal_money(), ctpnh.getId_PNH());
+        StringBuilder sql = new StringBuilder("UPDATE ct_phieunhaphang SET amount = ? ,");
+        sql.append(" total_money = ? WHERE id_PNH = ? AND id_NL = ?");
+        update(sql.toString(), ctpnh.getAmount(), ctpnh.getTotal_money(), ctpnh.getId_PNH(), ctpnh.getId_NL());
     }
 }
