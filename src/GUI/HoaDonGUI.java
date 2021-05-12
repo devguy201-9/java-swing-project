@@ -51,7 +51,7 @@ public class HoaDonGUI extends JPanel {
     private JTextField txtMaHD, txtMaKH, txtMaNV, txtNgayHD, txtTongTien;
     private JDateChooser dateChoice;
 
-    private JLabel btnDelete, btnView, btnBill, btnBack;
+    private JButton btnDelete, btnView, btnBill, btnBack;
 
     private JTable tbl;
     private DefaultTableModel model;
@@ -144,19 +144,49 @@ public class HoaDonGUI extends JPanel {
          * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL
          * *******************
          */
-        btnDelete = new JLabel(new ImageIcon(("./src/image/btnDelete.png")));
+        Font font2 = new Font("Tahoma", Font.PLAIN, 25);
+        //        btnEdit,btnDelete,btnConfirm,btnBack,btnView
+        
+        btnDelete = new JButton("XÓA");        
+        btnBack = new JButton("QUAY LẠI");
+        btnView = new JButton("CHI TIẾT HD");
+        btnBill = new JButton("IN BILL");
+        
+
+        //font chữ
+        btnBill.setFont(font2);
+        btnBill.setForeground(Color.WHITE);        
+        btnDelete.setFont(font2);
+        btnDelete.setForeground(Color.WHITE);        
+        btnBack.setFont(font2);
+        btnBack.setForeground(Color.WHITE);
+        btnView.setFont(font2);
+        btnView.setForeground(Color.WHITE);
+
+        //màu nền
+        Color colorAdd = new Color(85, 239, 196);
+        btnBill.setBackground(colorAdd);        
+        Color colorDelete = new Color(56, 103, 214);
+        btnDelete.setBackground(colorDelete);        
+        Color colorBack = new Color(181, 52, 113);
+        btnBack.setBackground(colorBack);
+        Color colorFile = new Color(254, 202, 87);
+        btnView.setBackground(colorFile);
+        
+        
+//        btnDelete = new JLabel(new ImageIcon(("./src/image/btnDelete.png")));
         btnDelete.setBounds(new Rectangle(500, 60, 200, 50));
         btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnView = new JLabel(new ImageIcon(("./src/image/btnView.png")));
+//        btnView = new JLabel(new ImageIcon(("./src/image/btnView.png")));
         btnView.setBounds(new Rectangle(730, 0, 200, 50));
         btnView.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnBill = new JLabel(new ImageIcon(("./src/image/btnBill.png")));
+//        btnBill = new JLabel(new ImageIcon(("./src/image/btnBill.png")));
         btnBill.setBounds(new Rectangle(730, 60, 200, 50));
         btnBill.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnBack = new JLabel(new ImageIcon("./src/image/btnBack.png"));
+//        btnBack = new JLabel(new ImageIcon("./src/image/btnBack.png"));
         btnBack.setVisible(false);
         btnBack.setBounds(new Rectangle(500, 60, 200, 50));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));

@@ -45,7 +45,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
     private PermissionBUS roleBUS = new PermissionBUS();
     private JTextField txtMaTK, txtMaNV, txtUser;
     private JPasswordField txtPass;
-    private JLabel btnConfirm, btnEdit, btnBack, btnAdd;
+    private JButton btnConfirm, btnEdit, btnBack, btnAdd;
     private JLabel lbMaTK, lbMaNV, lbUser, lbPass, lbPhai;
     private DefaultTableModel model;
     private JTable tbl;
@@ -129,20 +129,50 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
          * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL
          * *******************
          */
-        btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd_150px.png"));
-        btnAdd.setBounds(new Rectangle(20, 300, 150, 50));
+        Font font2 = new Font("Tahoma", Font.PLAIN, 18);
+        //        btnEdit,btnDelete,btnConfirm,btnBack,btnFile
+        btnAdd = new JButton("THÊM");
+        btnEdit = new JButton("SỬA");        
+        btnConfirm = new JButton("XÁC NHẬN");
+        btnBack = new JButton("QUAY LẠI");       
+
+        //font chữ
+        btnAdd.setFont(font2);
+        btnAdd.setForeground(Color.WHITE);
+        btnEdit.setFont(font2);
+        btnEdit.setForeground(Color.WHITE);        
+        btnConfirm.setFont(font2);
+        btnConfirm.setForeground(Color.WHITE);
+        btnBack.setFont(font2);
+        btnBack.setForeground(Color.WHITE);
+        
+
+        //màu nền
+        Color colorAdd = new Color(85, 239, 196);
+        btnAdd.setBackground(colorAdd);
+        Color colorEdit = new Color(196, 69, 105);
+        btnEdit.setBackground(colorEdit);        
+        Color colorConfirm = new Color(250, 130, 49);
+        btnConfirm.setBackground(colorConfirm);
+        Color colorBack = new Color(181, 52, 113);
+        btnBack.setBackground(colorBack);
+        
+        
+        
+//        btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd_150px.png"));
+        btnAdd.setBounds(new Rectangle(20, 300, 150, 30));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnEdit = new JLabel(new ImageIcon("./src/image/btnEdit_150px.png"));
-        btnEdit.setBounds(new Rectangle(180, 300, 150, 50));
+//        btnEdit = new JLabel(new ImageIcon("./src/image/btnEdit_150px.png"));
+        btnEdit.setBounds(new Rectangle(180, 300, 150, 30));
         btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm_150px.png"));
-        btnConfirm.setBounds(new Rectangle(20, 300, 150, 50));
+//        btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm_150px.png"));
+        btnConfirm.setBounds(new Rectangle(20, 300, 150, 30));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnBack = new JLabel(new ImageIcon("./src/image/btnBack_150px.png"));
-        btnBack.setBounds(new Rectangle(180, 300, 150, 50));
+//        btnBack = new JLabel(new ImageIcon("./src/image/btnBack_150px.png"));
+        btnBack.setBounds(new Rectangle(180, 300, 150, 30));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         btnAdd.addMouseListener(new MouseAdapter() {
@@ -256,6 +286,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
             }
         });
 
+        //hiển thị
         itemView.add(btnAdd);
         itemView.add(btnEdit);
         itemView.add(btnConfirm);

@@ -50,7 +50,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
     private JTextField txtMaPNH, txtMaNCC, txtMaNV, txtNgayHD, txtTongTien;
     private JDateChooser dateChoice;
 
-    private JLabel btnView, btnAdd;
+    private JButton btnView, btnAdd;
 
     private JButton btnMaNCC, btnMaNV, btnClear, btnReFresh;
 
@@ -157,11 +157,23 @@ public class NhapHangGUI extends JPanel implements ActionListener {
          * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL
          * *******************
          */
-        btnAdd = new JLabel(new ImageIcon(("./src/image/btnAdd.png")));
+        Font font2 = new Font("Sogoe UI", Font.PLAIN, 25);
+        
+        btnAdd = new JButton("THÊM");              
+        btnAdd.setFont(font2);
+        btnAdd.setForeground(Color.WHITE);
+        btnAdd.setBackground(new Color(85, 239, 196));
+        
+        btnView = new JButton("CHI TIẾT PN");
+        btnView.setFont(font2);
+        btnView.setForeground(Color.WHITE);
+        btnView.setBackground(new Color(254, 202, 87));
+        
+//        btnAdd = new JLabel(new ImageIcon(("./src/image/btnAdd.png")));
         btnAdd.setBounds(new Rectangle(500, 0, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnView = new JLabel(new ImageIcon(("./src/image/btnView.png")));
+//        btnView = new JLabel(new ImageIcon(("./src/image/btnView.png")));
         btnView.setBounds(new Rectangle(500, 60, 200, 50));
         btnView.setCursor(new Cursor(Cursor.HAND_CURSOR));
 

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -49,6 +50,7 @@ public class KhachHangGUI extends JPanel {
     private DefaultTableModel model;
     private int DEFALUT_WIDTH;
     private boolean EditOrAdd = true;//Cờ cho button Cofirm True:ADD || False:Edit
+    private JButton btnAdd, btnEdit, btnDelete, btnConfirm, btnBack, btnFile;
 
     private boolean tableSelectionActive = true;
 
@@ -116,32 +118,83 @@ public class KhachHangGUI extends JPanel {
         /**
          * ************** TẠO CÁC BTN THÊM ,XÓA, SỬA *******************
          */
-        JLabel btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd.png"));
+        Font font2 = new Font("Tahoma", Font.PLAIN, 25);
+        //        btnEdit,btnDelete,btnConfirm,btnBack,btnFile
+        btnAdd = new JButton("THÊM");
+        btnEdit = new JButton("SỬA");
+        btnDelete = new JButton("XÓA");
+        btnConfirm = new JButton("XÁC NHẬN");
+        btnBack = new JButton("QUAY LẠI");
+        btnFile = new JButton("CHỌN ẢNH");
+
+        //font chữ
+        btnAdd.setFont(font2);
+        btnAdd.setForeground(Color.WHITE);
+        btnEdit.setFont(font2);
+        btnEdit.setForeground(Color.WHITE);
+        btnDelete.setFont(font2);
+        btnDelete.setForeground(Color.WHITE);
+        btnConfirm.setFont(font2);
+        btnConfirm.setForeground(Color.WHITE);
+        btnBack.setFont(font2);
+        btnBack.setForeground(Color.WHITE);
+        btnFile.setFont(font2);
+        btnFile.setForeground(Color.WHITE);
+
+        //màu nền
+        Color colorAdd = new Color(85, 239, 196);
+        btnAdd.setBackground(colorAdd);
+        Color colorEdit = new Color(196, 69, 105);
+        btnEdit.setBackground(colorEdit);
+        Color colorDelete = new Color(56, 103, 214);
+        btnDelete.setBackground(colorDelete);
+        Color colorConfirm = new Color(250, 130, 49);
+        btnConfirm.setBackground(colorConfirm);
+        Color colorBack = new Color(181, 52, 113);
+        btnBack.setBackground(colorBack);
+        Color colorFile = new Color(60, 64, 198);
+        btnFile.setBackground(colorFile);
+
+        //icon
+        JLabel lbAdd = new JLabel(new ImageIcon("./src/image/add-icon.png"));
+        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));
+        btnAdd.add(lbAdd);
+
+        JLabel lbEdit = new JLabel(new ImageIcon("./src/image/icons8-gear-32.png"));
+        lbEdit.setBounds(new Rectangle(0, 0, 50, 50));
+        btnEdit.add(lbEdit);
+
+        JLabel lbDelete = new JLabel(new ImageIcon("./src/image/icons8-delete-32.png"));
+        lbDelete.setBounds(new Rectangle(0, 0, 50, 50));
+        btnDelete.add(lbDelete);
+        
+//        JLabel btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd.png"));
         btnAdd.setBounds(new Rectangle(750, 0, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel btnEdit = new JLabel(new ImageIcon("./src/image/btnEdit.png"));
+//        JLabel btnEdit = new JLabel(new ImageIcon("./src/image/btnEdit.png"));
         btnEdit.setBounds(new Rectangle(750, 55, 200, 50));
         btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete.png"));
+//        JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete.png"));
         btnDelete.setBounds(new Rectangle(750, 110, 200, 50));
         btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        itemView.add(btnAdd);
-        itemView.add(btnEdit);
-        itemView.add(btnDelete);
+        
 
-        JLabel btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm.png"));
+//        JLabel btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm.png"));
         btnConfirm.setVisible(false);
         btnConfirm.setBounds(new Rectangle(750, 0, 200, 50));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel btnBack = new JLabel(new ImageIcon("./src/image/btnBack.png"));
+//        JLabel btnBack = new JLabel(new ImageIcon("./src/image/btnBack.png"));
         btnBack.setVisible(false);
         btnBack.setBounds(new Rectangle(750, 55, 200, 50));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        itemView.add(btnAdd);
+        itemView.add(btnEdit);
+        itemView.add(btnDelete);
         itemView.add(btnConfirm);
         itemView.add(btnBack);
 
