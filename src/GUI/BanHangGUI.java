@@ -489,7 +489,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         {
             int sl = 0;
             try {
-                sl = Integer.parseInt(txtCTSL.getText());
+                sl = Math.abs(Integer.parseInt(txtCTSL.getText()));
             } catch (NumberFormatException E) {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập số lượng");
                 return;
