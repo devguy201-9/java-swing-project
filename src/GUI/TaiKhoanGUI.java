@@ -20,6 +20,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
+import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -76,7 +77,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         RoleModelCB roleModel = listRoles();
         JPanel itemView = new JPanel(null);
         itemView.setBounds(new Rectangle(0, 0, this.DEFAUTL_WIDTH, 700));
-        itemView.setBackground(new Color(201, 211, 203));
+        itemView.setBackground(new Color(247, 241, 227));
 
         lbMaTK = new JLabel("Mã tài khoản ");
         lbMaTK.setFont(font0);
@@ -148,15 +149,20 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         
 
         //màu nền
-        Color colorAdd = new Color(85, 239, 196);
+        Color colorAdd = new Color(255, 218, 121);
         btnAdd.setBackground(colorAdd);
-        Color colorEdit = new Color(196, 69, 105);
+        Color colorEdit = new Color(255, 218, 121);
         btnEdit.setBackground(colorEdit);        
-        Color colorConfirm = new Color(250, 130, 49);
+        Color colorConfirm = new Color(255, 218, 121);
         btnConfirm.setBackground(colorConfirm);
-        Color colorBack = new Color(181, 52, 113);
+        Color colorBack = new Color(255, 218, 121);
         btnBack.setBackground(colorBack);
         
+        //viền
+        btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
+        btnEdit.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
+        btnConfirm.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
+        btnBack.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
         
         
 //        btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd_150px.png"));

@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.BorderFactory;
 import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -142,19 +143,24 @@ public class KhachHangGUI extends JPanel {
         btnFile.setForeground(Color.WHITE);
 
         //màu nền
-        Color colorAdd = new Color(85, 239, 196);
-        btnAdd.setBackground(colorAdd);
-        Color colorEdit = new Color(196, 69, 105);
-        btnEdit.setBackground(colorEdit);
-        Color colorDelete = new Color(56, 103, 214);
-        btnDelete.setBackground(colorDelete);
-        Color colorConfirm = new Color(250, 130, 49);
-        btnConfirm.setBackground(colorConfirm);
-        Color colorBack = new Color(181, 52, 113);
-        btnBack.setBackground(colorBack);
-        Color colorFile = new Color(60, 64, 198);
-        btnFile.setBackground(colorFile);
-
+        Color color = new Color(255, 218, 121);
+        btnAdd.setBackground(color);
+        btnEdit.setBackground(color);
+        btnDelete.setBackground(color);
+        btnConfirm.setBackground(color);
+        btnBack.setBackground(color);
+        btnFile.setBackground(color);
+        
+        
+        //viền
+        btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnEdit.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnDelete.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnConfirm.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnBack.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnFile.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        
+        
         //icon
         JLabel lbAdd = new JLabel(new ImageIcon("./src/image/add-icon.png"));
         lbAdd.setBounds(new Rectangle(0, 0, 50, 50));

@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.*;
+import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -163,15 +164,22 @@ public class HoaDonGUI extends JPanel {
         btnView.setFont(font2);
         btnView.setForeground(Color.WHITE);
 
+        
+        
         //màu nền
-        Color colorAdd = new Color(85, 239, 196);
-        btnBill.setBackground(colorAdd);        
-        Color colorDelete = new Color(56, 103, 214);
-        btnDelete.setBackground(colorDelete);        
-        Color colorBack = new Color(181, 52, 113);
-        btnBack.setBackground(colorBack);
-        Color colorFile = new Color(254, 202, 87);
-        btnView.setBackground(colorFile);
+        Color color = new Color(255, 218, 121);
+        btnBill.setBackground(color);
+        btnDelete.setBackground(color);
+        btnBack.setBackground(color);
+        btnView.setBackground(color);
+        
+        
+        //viền
+        btnBill.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnDelete.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnBack.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnView.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        
         
         
 //        btnDelete = new JLabel(new ImageIcon(("./src/image/btnDelete.png")));

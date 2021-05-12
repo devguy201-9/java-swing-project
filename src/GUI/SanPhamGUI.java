@@ -104,7 +104,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
          */
         JPanel ItemView = new JPanel(null);
         ItemView.setBounds(new Rectangle(30, 20, this.DEFALUT_WIDTH - 220, 250));
-        ItemView.setBackground(new Color(201, 211, 203));
+        ItemView.setBackground(new Color(247, 241, 227));
 
         /**
          * ****** Tao Cac Label & TextField ***********************
@@ -191,19 +191,28 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnFile.setFont(font2);
         btnFile.setForeground(Color.WHITE);
 
+        
         //màu nền
-        Color colorAdd = new Color(85, 239, 196);
+        Color colorAdd = new Color(255, 218, 121);
         btnAdd.setBackground(colorAdd);
-        Color colorEdit = new Color(196, 69, 105);
+        Color colorEdit = new Color(255, 218, 121);
         btnEdit.setBackground(colorEdit);
-        Color colorDelete = new Color(56, 103, 214);
-        btnDelete.setBackground(colorDelete);
-        Color colorConfirm = new Color(250, 130, 49);
+        Color colorDelete = new Color(255, 218, 121);
+        btnDelete.setBackground(colorDelete);        
+        Color colorConfirm = new Color(255, 218, 121);
         btnConfirm.setBackground(colorConfirm);
-        Color colorBack = new Color(181, 52, 113);
+        Color colorBack = new Color(255, 218, 121);
         btnBack.setBackground(colorBack);
-        Color colorFile = new Color(60, 64, 198);
+        Color colorFile = new Color(255, 218, 121);
         btnFile.setBackground(colorFile);
+        
+        //viền
+        btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnEdit.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnDelete.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnConfirm.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnBack.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnFile.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
 
         //vị trí và con trỏ
         btnAdd.setBounds(new Rectangle(620, 0, 200, 50));

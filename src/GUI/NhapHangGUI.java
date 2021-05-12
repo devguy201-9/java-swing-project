@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Vector;
+import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -162,32 +163,40 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         btnAdd = new JButton("THÊM");              
         btnAdd.setFont(font2);
         btnAdd.setForeground(Color.WHITE);
-        btnAdd.setBackground(new Color(85, 239, 196));
+        btnAdd.setBounds(new Rectangle(500, 0, 200, 50));
+        btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         
         btnView = new JButton("CHI TIẾT PN");
         btnView.setFont(font2);
         btnView.setForeground(Color.WHITE);
-        btnView.setBackground(new Color(254, 202, 87));
-        
-//        btnAdd = new JLabel(new ImageIcon(("./src/image/btnAdd.png")));
-        btnAdd.setBounds(new Rectangle(500, 0, 200, 50));
-        btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-//        btnView = new JLabel(new ImageIcon(("./src/image/btnView.png")));
         btnView.setBounds(new Rectangle(500, 60, 200, 50));
-        btnView.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnView.setCursor(new Cursor(Cursor.HAND_CURSOR));     
+            
 
-        btnClear = new JButton("Làm mới dữ liệu");
-        btnClear.setBackground(new Color(131, 149, 167));
+        btnClear = new JButton("Làm mới dữ liệu");        
         btnClear.setBounds(new Rectangle(740, 5, 150, 40));
         btnClear.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnClear.addActionListener(this);
 
-        btnReFresh = new JButton("Làm mới bảng");
-        btnReFresh.setBackground(new Color(131, 149, 167));
+        btnReFresh = new JButton("Làm mới bảng");        
         btnReFresh.setBounds(new Rectangle(740, 68, 150, 40));
         btnReFresh.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnReFresh.addActionListener(this);
+        
+        //màu nền
+        Color color = new Color(255, 218, 121);
+        btnAdd.setBackground(color);
+        btnView.setBackground(color);
+        btnClear.setBackground(color);
+        btnReFresh.setBackground(color);
+        
+        
+        //viền
+        btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnView.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnClear.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
+        btnReFresh.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
 
         itemView.add(btnClear);
         itemView.add(btnReFresh);
