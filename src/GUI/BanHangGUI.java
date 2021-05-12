@@ -533,6 +533,13 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 txtMaHD.setText(hdBUS.remindMaHD());
                 return;
             }
+            
+            if (txtMaKH.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Vui lòng nhập mã khách hàng");
+                txtMaKH.requestFocus();
+                return;
+            }
+            
             if (!txtMaKH.getText().isEmpty() && !khBUS.check(txtMaKH.getText().trim())) {
                 JOptionPane.showMessageDialog(null, "Mã khách hàng không tồn tại");
                 txtMaKH.requestFocus();
