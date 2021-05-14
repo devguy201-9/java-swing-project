@@ -29,6 +29,8 @@ import java.time.LocalDate;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import static javax.swing.BorderFactory.createLineBorder;
@@ -390,38 +392,48 @@ public class NhanVienGUI extends JPanel {
                 if (EditOrAdd) //Thêm Nhân Viên
                 {
                     String soDT = txtSDT.getText();
-                    for (int j = 0; j < nvBUS.getNvBUS().size(); j++) {
-                        if (nvBUS.getNvBUS().get(j).getPhone().equals(soDT)) {
-                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
-                            return;
-                        }
+                    
+                    //validate SDT
+                    Pattern pattern = Pattern.compile("^\\d{10,11}$");
+                    Matcher m = pattern.matcher(soDT);   //so sánh
+                    if(!m.matches()){
+                        JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!! Vui lòng nhập 10 hoặc 11 số");
                     }
-                    i = JOptionPane.showConfirmDialog(null, "Xác nhận thêm nhân viên", "", JOptionPane.YES_NO_OPTION);
-                    if (i == 0) {
-                        try {
-                            String hoTen = txtHoNV.getText();
-                            String sdt = txtSDT.getText();
-                            int namSinh = Integer.parseInt(txtNamSinh.getText());
-                            String phai = choicePhai.getSelectedItem();
-                            String diaChi = txtDiaChi.getText();
-                            String IMG = imgName;
-                            if (IMG.equals("null")) {
-                                JOptionPane.showMessageDialog(null, "Bạn chưa chọn ảnh cho nhân viên, vui lòng chọn ảnh !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    else{
+                            for (int j = 0; j < nvBUS.getNvBUS().size(); j++) {
+                            if (nvBUS.getNvBUS().get(j).getPhone().equals(soDT)) {
+                                JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
                                 return;
                             }
-                            Gender gd = phai.equals("Nam") ? Gender.male : Gender.female;
+                        }
+                        i = JOptionPane.showConfirmDialog(null, "Xác nhận thêm nhân viên", "", JOptionPane.YES_NO_OPTION);
+                        if (i == 0) {
+                            try {
+                                String hoTen = txtHoNV.getText();
+                                String sdt = txtSDT.getText();
+                                int namSinh = Integer.parseInt(txtNamSinh.getText());
+                                String phai = choicePhai.getSelectedItem();
+                                String diaChi = txtDiaChi.getText();
+                                String IMG = imgName;
+                                if (IMG.equals("null")) {
+                                    JOptionPane.showMessageDialog(null, "Bạn chưa chọn ảnh cho nhân viên, vui lòng chọn ảnh !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                                    return;
+                                }
+                                Gender gd = phai.equals("Nam") ? Gender.male : Gender.female;
 
-                            NhanVienDTO nv = new NhanVienDTO(namSinh, hoTen, diaChi, sdt, gd, LocalDate.now(), IMG);
-                            nvBUS.add(nv);
-                            outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());// Load lại table
+                                NhanVienDTO nv = new NhanVienDTO(namSinh, hoTen, diaChi, sdt, gd, LocalDate.now(), IMG);
+                                nvBUS.add(nv);
+                                outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());// Load lại table
 
-                            saveIMG();// Lưu hình ảnh 
-                            JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                            cleanView();
-                        } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(null, "Loi");
+                                saveIMG();// Lưu hình ảnh 
+                                JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                                cleanView();
+                            } catch (NumberFormatException ex) {
+                                JOptionPane.showMessageDialog(null, "Loi");
+                            }
                         }
                     }
+                    
                 } else // Edit Sản phẩm
                 {
                     String soDT = txtSDT.getText();

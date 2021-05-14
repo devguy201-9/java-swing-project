@@ -18,6 +18,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
@@ -290,24 +292,34 @@ public class KhachHangGUI extends JPanel {
                 if (EditOrAdd) //Thêm Sản Phẩm
                 {
                     String sdt = txtSDT.getText();
-                    for (int j = 0; j < khBUS.getKhBUS().size(); j++) {
-                        if (khBUS.getKhBUS().get(j).getPhone().equals(sdt)) {
-                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
-                            return;
+                    
+                    //validate SDT
+                    Pattern pattern = Pattern.compile("^\\d{10,11}$");
+                    Matcher m = pattern.matcher(sdt);   //so sánh
+                    if(!m.matches()){
+                        JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!! Vui lòng nhập 10 hoặc 11 số");
+                    }
+                    else{
+                            for (int j = 0; j < khBUS.getKhBUS().size(); j++) {
+                            if (khBUS.getKhBUS().get(j).getPhone().equals(sdt)) {
+                                JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                                return;
+                            }
+                        }
+                        i = JOptionPane.showConfirmDialog(null, "Xác nhận thêm khách hàng", "", JOptionPane.YES_NO_OPTION);
+                        if (i == 0) {
+                            //Lấy dữ liệu từ TextField
+                            String hoKH = txtHoKH.getText();
+                            String tenKH = txtTenKH.getText();
+                            String dienThoai = txtSDT.getText();
+                            KhachHangDTO kh = new KhachHangDTO(hoKH, tenKH, dienThoai);
+                            khBUS.add(kh);
+
+                            outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());
+                            cleanView();
                         }
                     }
-                    i = JOptionPane.showConfirmDialog(null, "Xác nhận thêm khách hàng", "", JOptionPane.YES_NO_OPTION);
-                    if (i == 0) {
-                        //Lấy dữ liệu từ TextField
-                        String hoKH = txtHoKH.getText();
-                        String tenKH = txtTenKH.getText();
-                        String dienThoai = txtSDT.getText();
-                        KhachHangDTO kh = new KhachHangDTO(hoKH, tenKH, dienThoai);
-                        khBUS.add(kh);
-
-                        outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());
-                        cleanView();
-                    }
+                    
                 } else // Edit Sản phẩm
                 {
                     String sdt = txtSDT.getText();

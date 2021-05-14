@@ -18,6 +18,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -72,7 +74,7 @@ public class NhaCungCapGUI extends JPanel {
          */
         JPanel itemView = new JPanel(null);
         itemView.setBounds(new Rectangle(30, 40, DEFAULT_WIDTH - 950, 600));
-        itemView.setBackground(new Color(201, 211, 203));
+        itemView.setBackground(new Color(247, 241, 227));
 
         /**
          * ****** Tao Cac Label & TextField ***********************
@@ -308,27 +310,40 @@ public class NhaCungCapGUI extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 int mess;
                 if (EditOrAdd) {  //thêm NCC
-
+                    
                     String sDT = txtDienThoai.getText();
-                    for (int j = 0; j < nccBUS.getNccBUS().size(); j++) {
-                        if (nccBUS.getNccBUS().get(j).getPhone().equals(sDT)) {
-                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
-                            return;
+                    
+                    //validate SDT
+                    Pattern pattern = Pattern.compile("^\\d{10,11}$");
+                    Matcher m = pattern.matcher(sDT);   //so sánh
+                    if(!m.matches()){
+                        JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!! Vui lòng nhập 10 hoặc 11 số");
+                    }
+                    else{
+                        //kiem tra ton tai
+                        for (int j = 0; j < nccBUS.getNccBUS().size(); j++) {
+                            if (nccBUS.getNccBUS().get(j).getPhone().equals(sDT)) {
+                                JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                                return;
+                            }
                         }
-                    }
 
-                    mess = JOptionPane.showConfirmDialog(null, "Xác nhận thêm nhà cung cấp", "Thông báo xác nhận", JOptionPane.YES_NO_OPTION);
-                    if (mess == 0) {     //YES
-                        //Lấy data từ TextField lên
+                        mess = JOptionPane.showConfirmDialog(null, "Xác nhận thêm nhà cung cấp", "Thông báo xác nhận", JOptionPane.YES_NO_OPTION);
+                        if (mess == 0) {     //YES
+                            //Lấy data từ TextField lên
 
-                        String tenNCC = txtTenNCC.getText();
-                        String diaChi = txtDiaChi.getText();
-                        String sdt = txtDienThoai.getText();
-                        NhaCungCapDTO ncc = new NhaCungCapDTO(tenNCC, diaChi, sdt);
-                        nccBUS.add(ncc);
-                        outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
-                        cleanView();
+                            String tenNCC = txtTenNCC.getText();
+                            String diaChi = txtDiaChi.getText();
+                            String sdt = txtDienThoai.getText();
+                            NhaCungCapDTO ncc = new NhaCungCapDTO(tenNCC, diaChi, sdt);
+                            nccBUS.add(ncc);
+                            outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
+                            cleanView();
+                        }
+                        
                     }
+                    
+                    
                 } else {   //sửa NCC
                     mess = JOptionPane.showConfirmDialog(null, "Xác nhận sửa nhà cung cấp", "Thông báo sửa", JOptionPane.YES_NO_OPTION);
                     if (mess == 0) {  //YES
@@ -337,6 +352,13 @@ public class NhaCungCapGUI extends JPanel {
                         for (int j = 0; j < nccBUS.getNccBUS().size(); j++) {
                             if (nccBUS.getNccBUS().get(j).getPhone().equals(sDT) && nccBUS.getNccBUS().get(j).getId_NCC() != Integer.parseInt(txtMaNCC.getText())) {
                                 JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                                
+                                //validate SDT
+                                Pattern pattern = Pattern.compile("^\\d{10}$");
+                                Matcher m = pattern.matcher(sDT);   //so sánh
+                                if(!m.matches()){
+                                    JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ");
+                                }
                                 return;
                             }
                         }
