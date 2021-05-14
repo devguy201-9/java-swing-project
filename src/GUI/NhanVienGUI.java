@@ -68,8 +68,7 @@ public class NhanVienGUI extends JPanel {
     private JTextField sortMaNV;
     private JTextField sortHoNV;
     private JTextField sortSDT;
-    private Choice sortPhai;
-    private JComboBox cmbPhai;
+    private Choice sortPhai,choicePhai;
     private JButton btnAdd, btnEdit, btnDelete, btnConfirm, btnBack, btnFile;
 
     private boolean tableSelectionActive = true;
@@ -142,11 +141,14 @@ public class NhanVienGUI extends JPanel {
 
         JLabel lbPhai = new JLabel("Phái");
         lbPhai.setBounds(new Rectangle(250, 200, 30, 30));
-        lbPhai.setFont(font0);
-        String[] phai = {"Nam", "Nữ"};
-        cmbPhai = new JComboBox(phai);
-        cmbPhai.setBounds(new Rectangle(290, 200, 80, 30));
-
+        lbPhai.setFont(font0);        
+        choicePhai = new Choice();
+        choicePhai.addItem("Nam");
+        choicePhai.addItem("Nữ");
+        choicePhai.setFont(font0);
+        choicePhai.setBounds(new Rectangle(290, 200, 80, 30));
+        
+        
         img = new JLabel("Thêm hình");
         img.setBorder(createLineBorder(Color.BLACK));
         img.setBounds(new Rectangle(0, 0, 200, 230));
@@ -162,7 +164,7 @@ public class NhanVienGUI extends JPanel {
         ItemView.add(lbNamSinh);
         ItemView.add(txtNamSinh);
         ItemView.add(lbPhai);
-        ItemView.add(cmbPhai);
+        ItemView.add(choicePhai);
 //        ItemView.add(txtPhai);
         ItemView.add(lbNgay);
         ItemView.add(txtNgay);
@@ -400,7 +402,7 @@ public class NhanVienGUI extends JPanel {
                             String hoTen = txtHoNV.getText();
                             String sdt = txtSDT.getText();
                             int namSinh = Integer.parseInt(txtNamSinh.getText());
-                            String phai = cmbPhai.getSelectedItem().toString();
+                            String phai = choicePhai.getSelectedItem();
                             String diaChi = txtDiaChi.getText();
                             String IMG = imgName;
                             if (IMG.equals("null")) {
@@ -437,7 +439,7 @@ public class NhanVienGUI extends JPanel {
                         String sdt = txtSDT.getText();
                         String ngayNV = txtNgay.getText();
                         int namSinh = Integer.parseInt(txtNamSinh.getText());
-                        String phai = cmbPhai.getSelectedItem().toString();
+                        String phai = choicePhai.getSelectedItem();
                         String diaChi = txtDiaChi.getText();
                         Gender gd = phai.equals("Nam") ? Gender.male : Gender.female;
                         String IMG = imgName;
@@ -546,7 +548,7 @@ public class NhanVienGUI extends JPanel {
                     txtHoNV.setText(tbl.getModel().getValueAt(i, 1).toString());
                     txtSDT.setText(tbl.getModel().getValueAt(i, 2).toString());
                     txtNamSinh.setText(tbl.getModel().getValueAt(i, 3).toString());
-                    cmbPhai.setSelectedItem(tbl.getModel().getValueAt(i, 4).toString());
+                    choicePhai.select((tbl.getModel().getValueAt(i, 4).toString()));
                     txtNgay.setText(tbl.getModel().getValueAt(i, 5).toString());
                     txtDiaChi.setText(tbl.getModel().getValueAt(i, 6).toString());
                     img.setText("");

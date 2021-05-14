@@ -407,7 +407,6 @@ public class KhachHangGUI extends JPanel {
         searchBox.setBorder(createLineBorder(Color.BLACK)); //Chỉnh viền 
         //PHẦN CHỌN SEARCH
         JComboBox cmbChoice = new JComboBox();
-        cmbChoice.setEditable(true);
         cmbChoice.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         cmbChoice.addItem("Mã KH");
         cmbChoice.addItem("Tên KH");

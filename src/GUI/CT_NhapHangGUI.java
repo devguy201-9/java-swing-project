@@ -156,6 +156,7 @@ class CT_NhapHangGUI extends JFrame implements ActionListener {
         btnCancel.setBounds(new Rectangle(210, 240, 130, 40));
         btnCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnCancel.addActionListener(this);
+        btnCancel.setVisible(flag);
 
         itemView.add(btnAdd);
         itemView.add(btnConfirm);

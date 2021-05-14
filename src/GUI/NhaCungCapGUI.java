@@ -424,7 +424,6 @@ public class NhaCungCapGUI extends JPanel {
          */
         //PHẦN CHỌN SEARCH
         cmbChoice = new JComboBox();
-        cmbChoice.setEditable(true);
         cmbChoice.setFont(font0);
         cmbChoice.addItem("Mã NCC");
         cmbChoice.addItem("Tên NCC");
