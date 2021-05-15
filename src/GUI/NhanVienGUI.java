@@ -197,19 +197,6 @@ public class NhanVienGUI extends JPanel {
         btnFile.setForeground(Color.WHITE);
 
         //màu nền
-//        Color colorAdd = new Color(85, 239, 196);
-//        btnAdd.setBackground(colorAdd);       
-//        Color colorEdit = new Color(196, 69, 105);
-//        btnEdit.setBackground(colorEdit);              
-//        Color colorDelete = new Color(56, 103, 214);
-//        btnDelete.setBackground(colorDelete);              
-//        Color colorConfirm = new Color(250, 130, 49);
-//        btnConfirm.setBackground(colorConfirm);
-//        Color colorBack = new Color(181, 52, 113);
-//        btnBack.setBackground(colorBack);
-//        Color colorFile = new Color(60, 64, 198);
-//        btnFile.setBackground(colorFile);
-        //màu nền
         Color color = new Color(255, 218, 121);
         btnAdd.setBackground(color);
         btnEdit.setBackground(color);
@@ -406,7 +393,7 @@ public class NhanVienGUI extends JPanel {
                         try {
                             String hoTen = txtHoNV.getText();
                             String sdt = txtSDT.getText();
-                            int namSinh = Integer.parseInt(txtNamSinh.getText());
+                            int namSinh = txtNamSinh.getText().equals("") ? 0 : Integer.parseInt(txtNamSinh.getText());
                             String phai = choicePhai.getSelectedItem();
                             String diaChi = txtDiaChi.getText();
                             String IMG = imgName;
@@ -417,7 +404,7 @@ public class NhanVienGUI extends JPanel {
                             Gender gd = phai.equals("Nam") ? Gender.male : Gender.female;
                             
                             
-                            if(!hoTen.equals("") && !sdt.equals("") && !IMG.equals("") && !phai.equals("") && !diaChi.equals("")){
+                            if(!hoTen.equals("") && !sdt.equals("") && !IMG.equals("") && !phai.equals("") && !diaChi.equals("") &&namSinh!=0){
                         //Upload nhân viên lên DAO và BUS
                             NhanVienDTO nv = new NhanVienDTO(namSinh, hoTen, diaChi, sdt, gd, LocalDate.now(), IMG);
                             nvBUS.add(nv);
@@ -425,11 +412,11 @@ public class NhanVienGUI extends JPanel {
 
                             saveIMG();// Lưu hình ảnh 
                             new Toast.ToastSuccessful("Thành công", "Thêm nhân viên thành công !!!", Toast.SHORT_DELAY);
+                            cleanView();
                             }
                             else{
                                 new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
                             }
-                            cleanView();
                         } catch (NumberFormatException ex) {
                             new Toast.ToastError("Lỗi", Toast.SHORT_DELAY);
                         }

@@ -315,11 +315,11 @@ public class KhachHangGUI extends JPanel {
                         khBUS.add(kh);
                         new Toast.ToastSuccessful("Thành công", "Thêm khách hàng thành công !!!", Toast.SHORT_DELAY);
                         outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());
+                        cleanView();
                         }
                         else{                          
                             new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
                         }
-                        cleanView();
                     }
 
                 } else // Edit khách hàng

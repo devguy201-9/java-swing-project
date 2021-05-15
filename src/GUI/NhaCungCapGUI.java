@@ -149,19 +149,6 @@ public class NhaCungCapGUI extends JPanel {
         btnFile.setForeground(Color.WHITE);
 
         //màu nền
-//        Color colorAdd = new Color(85, 239, 196);
-//        btnAdd.setBackground(colorAdd);
-//        Color colorEdit = new Color(196, 69, 105);
-//        btnEdit.setBackground(colorEdit);
-//        Color colorDelete = new Color(56, 103, 214);
-//        btnDelete.setBackground(colorDelete);
-//        Color colorConfirm = new Color(250, 130, 49);
-//        btnConfirm.setBackground(colorConfirm);
-//        Color colorBack = new Color(181, 52, 113);
-//        btnBack.setBackground(colorBack);
-//        Color colorFile = new Color(60, 64, 198);
-//        btnFile.setBackground(colorFile);
-        //màu nền
         Color color = new Color(255, 218, 121);
         btnAdd.setBackground(color);
         btnEdit.setBackground(color);
@@ -301,11 +288,11 @@ public class NhaCungCapGUI extends JPanel {
                         nccBUS.add(ncc);
                         new Toast.ToastSuccessful("Thành công", "Thêm nhà cung cấp thành công !!!", Toast.SHORT_DELAY);
                         outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
+                        cleanView();
                         }
                         else{
                             new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
                         }
-                        cleanView();
                     }
                 } else {   //sửa NCC
                     mess = JOptionPane.showConfirmDialog(null, "Xác nhận sửa nhà cung cấp", "Thông báo sửa", JOptionPane.YES_NO_OPTION);

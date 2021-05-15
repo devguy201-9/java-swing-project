@@ -192,21 +192,20 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnFile.setFont(font2);
         btnFile.setForeground(Color.WHITE);
 
-        
         //màu nền
         Color colorAdd = new Color(255, 218, 121);
         btnAdd.setBackground(colorAdd);
         Color colorEdit = new Color(255, 218, 121);
         btnEdit.setBackground(colorEdit);
         Color colorDelete = new Color(255, 218, 121);
-        btnDelete.setBackground(colorDelete);        
+        btnDelete.setBackground(colorDelete);
         Color colorConfirm = new Color(255, 218, 121);
         btnConfirm.setBackground(colorConfirm);
         Color colorBack = new Color(255, 218, 121);
         btnBack.setBackground(colorBack);
         Color colorFile = new Color(255, 218, 121);
         btnFile.setBackground(colorFile);
-        
+
         //viền
         btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnEdit.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
@@ -249,12 +248,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         JLabel lbDelete = new JLabel(new ImageIcon("./src/image/icons8-delete-32.png"));
         lbDelete.setBounds(new Rectangle(0, 0, 50, 50));
         btnDelete.add(lbDelete);
-
-//        JLabel lbConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm.png"));       
-//
-//        JLabel lbBack = new JLabel(new ImageIcon("./src/image/btnBack.png"));
-//        
-//        JLabel lbFile = new JLabel(new ImageIcon("./src/image/btnFile.png"));
+        
         JLabel btnXuatExcel = new JLabel(new ImageIcon("./src/image/btnXuatExcel.png"));
         btnXuatExcel.setBounds(new Rectangle(820, 0, 200, 50));
         btnXuatExcel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -304,7 +298,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                 int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     spBUS.delete(txtId.getText());
-                    new Toast.ToastSuccessful("Thành công","Xóa sản phẩm thành công !!!",Toast.SHORT_DELAY);
+                    new Toast.ToastSuccessful("Thành công", "Xóa sản phẩm thành công !!!", Toast.SHORT_DELAY);
                     cleanView();
                     tbl.clearSelection();
                     outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
@@ -404,16 +398,11 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                             new Toast.ToastError("Bạn chưa nhập đủ thông tin để thêm sản phẩm !!!", Toast.SHORT_DELAY);
                             return;
                         }
-                        else{
-                            SanPhamDTO sp = new SanPhamDTO(maLoai, tenSP, mota, gia, IMG);
-                            spBUS.add(sp);
-
-                            outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
-
-                            saveIMG();// Lưu hình ảnh 
-                            new Toast.ToastSuccessful("Thành công","Thêm sản phẩm thành công !!!",Toast.SHORT_DELAY);
-                        }
-                        
+                        SanPhamDTO sp = new SanPhamDTO(maLoai, tenSP, mota, gia, IMG);
+                        spBUS.add(sp);
+                        outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
+                        saveIMG();// Lưu hình ảnh 
+                        new Toast.ToastSuccessful("Thành công", "Thêm sản phẩm thành công !!!", Toast.SHORT_DELAY);
                         cleanView();
                     }
                 } else // Edit Sản phẩm
@@ -440,7 +429,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         spBUS.set(sp);
                         outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
                         saveIMG();// Lưu hình ảnh 
-                        new Toast.ToastSuccessful("Thành công","Sửa sản phẩm thành công !!!",Toast.SHORT_DELAY);
+                        new Toast.ToastSuccessful("Thành công", "Sửa sản phẩm thành công !!!", Toast.SHORT_DELAY);
                     }
                 }
             }
@@ -449,7 +438,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnXuatExcel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
 //                spBUS.exportProduct();    //LUU Y: LAM CHO NAY
-                new Toast.ToastSuccessful("Thành công","Xuất file thành công !!!",Toast.SHORT_DELAY);
+                new Toast.ToastSuccessful("Thành công", "Xuất file thành công !!!", Toast.SHORT_DELAY);
             }
         });
 
@@ -466,7 +455,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 //                        spBUS.importProduct(file);    //LUU Y: LAM CHO NAY
                     spBUS.list();
                     outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
-                    new Toast.ToastSuccessful("Thành công","Nhập file thành công !!!",Toast.SHORT_DELAY);
+                    new Toast.ToastSuccessful("Thành công", "Nhập file thành công !!!", Toast.SHORT_DELAY);
 //                    } catch (IOException | ParseException ex) {
 //                        Logger.getLogger(SanPhamGUI.class.getName()).log(Level.SEVERE, null, ex);
 //                    }
@@ -688,10 +677,6 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         sortMaSP.setInputVerifier(new MyInputVerifier());
 //        sortMaSP.addKeyListener(this);
         sort.add(sortMaSP);
-        /**
-         * **********************************
-         */
-
         /**
          * ****** SORT MALOAI *************
          */
