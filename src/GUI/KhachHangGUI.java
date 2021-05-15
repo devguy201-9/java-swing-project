@@ -307,10 +307,18 @@ public class KhachHangGUI extends JPanel {
                         String hoKH = txtHoKH.getText();
                         String tenKH = txtTenKH.getText();
                         String dienThoai = txtSDT.getText();
+                        
+                        
+                        if(!hoKH.equals("") && !tenKH.equals("") && !dienThoai.equals("")){
+                            //Upload khách hàng lên DAO và BUS
                         KhachHangDTO kh = new KhachHangDTO(hoKH, tenKH, dienThoai);
                         khBUS.add(kh);
                         new Toast.ToastSuccessful("Thành công", "Thêm khách hàng thành công !!!", Toast.SHORT_DELAY);
                         outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());
+                        }
+                        else{                          
+                            new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                        }
                         cleanView();
                     }
 
@@ -336,14 +344,19 @@ public class KhachHangGUI extends JPanel {
                         String hoKH = txtHoKH.getText();
                         String tenKH = txtTenKH.getText();
                         String dienThoai = txtSDT.getText();
-
-                        //Upload khách hàng lên DAO và BUS
-                        KhachHangDTO kh = new KhachHangDTO(hoKH, tenKH, dienThoai);
-                        kh.setId_KH(maKH);
-                        khBUS.set(kh);
-                        outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());// Load lại table                        
-                        new Toast.ToastSuccessful("Thành công", "Sửa thông tin khách hàng thành công", Toast.SHORT_DELAY);
-
+                        
+                        if(!hoKH.equals("") && !tenKH.equals("") && !dienThoai.equals("")){
+                            //Upload khách hàng lên DAO và BUS
+                            KhachHangDTO kh = new KhachHangDTO(hoKH, tenKH, dienThoai);
+                            kh.setId_KH(maKH);
+                            khBUS.set(kh);
+                            outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());// Load lại table                        
+                            new Toast.ToastSuccessful("Thành công", "Sửa thông tin khách hàng thành công", Toast.SHORT_DELAY);  
+                        }
+                        else{                          
+                            new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                        }
+                            
                     }
                 }
 

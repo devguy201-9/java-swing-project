@@ -415,13 +415,20 @@ public class NhanVienGUI extends JPanel {
                                 return;
                             }
                             Gender gd = phai.equals("Nam") ? Gender.male : Gender.female;
-
+                            
+                            
+                            if(!hoTen.equals("") && !sdt.equals("") && !IMG.equals("") && !phai.equals("") && !diaChi.equals("")){
+                        //Upload nhân viên lên DAO và BUS
                             NhanVienDTO nv = new NhanVienDTO(namSinh, hoTen, diaChi, sdt, gd, LocalDate.now(), IMG);
                             nvBUS.add(nv);
                             outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());// Load lại table
 
                             saveIMG();// Lưu hình ảnh 
                             new Toast.ToastSuccessful("Thành công", "Thêm nhân viên thành công !!!", Toast.SHORT_DELAY);
+                            }
+                            else{
+                                new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                            }
                             cleanView();
                         } catch (NumberFormatException ex) {
                             new Toast.ToastError("Lỗi", Toast.SHORT_DELAY);
@@ -456,12 +463,20 @@ public class NhanVienGUI extends JPanel {
                         String diaChi = txtDiaChi.getText();
                         Gender gd = phai.equals("Nam") ? Gender.male : Gender.female;
                         String IMG = imgName;
+                        
+                        
+                        if(!hoTen.equals("") && !sdt.equals("") && !ngayNV.equals("") && !phai.equals("") && !diaChi.equals("")){
+                        //Upload nhân viên lên DAO và BUS
                         NhanVienDTO NV = new NhanVienDTO(namSinh, hoTen, diaChi, sdt, gd, LocalDate.parse(ngayNV), IMG);
                         NV.setId_NV(maNV);
                         nvBUS.set(NV);
                         outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());
                         saveIMG();
                         new Toast.ToastSuccessful("Thành công", "Sửa thông tin nhân viên thành công !!!", Toast.SHORT_DELAY);
+                        }
+                        else{
+                            new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                        }
                     }
                 }
 

@@ -404,13 +404,16 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                             new Toast.ToastError("Bạn chưa nhập đủ thông tin để thêm sản phẩm !!!", Toast.SHORT_DELAY);
                             return;
                         }
-                        SanPhamDTO sp = new SanPhamDTO(maLoai, tenSP, mota, gia, IMG);
-                        spBUS.add(sp);
+                        else{
+                            SanPhamDTO sp = new SanPhamDTO(maLoai, tenSP, mota, gia, IMG);
+                            spBUS.add(sp);
 
-                        outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
+                            outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
 
-                        saveIMG();// Lưu hình ảnh 
-                        new Toast.ToastSuccessful("Thành công","Thêm sản phẩm thành công !!!",Toast.SHORT_DELAY);
+                            saveIMG();// Lưu hình ảnh 
+                            new Toast.ToastSuccessful("Thành công","Thêm sản phẩm thành công !!!",Toast.SHORT_DELAY);
+                        }
+                        
                         cleanView();
                     }
                 } else // Edit Sản phẩm

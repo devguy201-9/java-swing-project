@@ -239,11 +239,18 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                             String user = txtUser.getText();
                             String pass = String.valueOf(txtPass.getPassword());
                             PermissionDTO role = (PermissionDTO) cmbRole.getSelectedItem();
-                            TaiKhoanDTO nv = new TaiKhoanDTO(manv, role.getId_Permission(), user, pass);
-                            tkBUS.add(nv);
-                            outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
-
-                            new Toast.ToastSuccessful("Thành công", "Thêm tài khoản thành công !!!", Toast.SHORT_DELAY);
+                            
+                            if(!user.equals("") && !pass.equals("")){
+                                //Upload  lên DAO và BUS
+                                TaiKhoanDTO nv = new TaiKhoanDTO(manv, role.getId_Permission(), user, pass);
+                                tkBUS.add(nv);
+                                outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
+                                new Toast.ToastSuccessful("Thành công", "Thêm tài khoản thành công !!!", Toast.SHORT_DELAY);
+                            }
+                            else{
+                                new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                            }    
+                                
                             cleanView();
                         } catch (NumberFormatException ex) {
                             new Toast.ToastError("Lỗi", Toast.SHORT_DELAY);
@@ -254,21 +261,27 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                     int manv = Integer.parseInt(txtMaNV.getText().trim());
 
                     i = JOptionPane.showConfirmDialog(null, "Xác nhận sửa tài khoản", "", JOptionPane.YES_NO_OPTION);
-                    if (i == 0) {
-                        //Lấy dữ liệu từ TextField
-                        int maTK = Integer.parseInt(txtMaTK.getText().trim());
-                        int maNV = Integer.parseInt(txtMaNV.getText().trim());
-                        String user = txtUser.getText();
-                        String pass = String.valueOf(txtPass.getPassword());
-                        PermissionDTO role = (PermissionDTO) cmbRole.getSelectedItem();
-                        TaiKhoanDTO us = new TaiKhoanDTO(maNV, role.getId_Permission(), user, pass);
-                        us.setId_TK(maTK);
-                        tkBUS.set(us);
+                        if (i == 0) {
+                            //Lấy dữ liệu từ TextField
+                            int maTK = Integer.parseInt(txtMaTK.getText().trim());
+                            int maNV = Integer.parseInt(txtMaNV.getText().trim());
+                            String user = txtUser.getText();
+                            String pass = String.valueOf(txtPass.getPassword());
+                            PermissionDTO role = (PermissionDTO) cmbRole.getSelectedItem();
 
-                        outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
+                        if(!user.equals("") && !pass.equals("")){
+                            //Upload  lên DAO và BUS
+                            TaiKhoanDTO us = new TaiKhoanDTO(maNV, role.getId_Permission(), user, pass);
+                            us.setId_TK(maTK);
+                            tkBUS.set(us);
 
-                        new Toast.ToastSuccessful("Thành công", "Sửa thông tin tài khoản thành công !!!", Toast.SHORT_DELAY);
+                            outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
 
+                            new Toast.ToastSuccessful("Thành công", "Sửa thông tin tài khoản thành công !!!", Toast.SHORT_DELAY);
+                        }
+                        else{
+                            new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                        } 
                     }
 
                 }

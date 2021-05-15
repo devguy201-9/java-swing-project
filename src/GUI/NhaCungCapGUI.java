@@ -294,10 +294,17 @@ public class NhaCungCapGUI extends JPanel {
                         String tenNCC = txtTenNCC.getText();
                         String diaChi = txtDiaChi.getText();
                         String sdt = txtDienThoai.getText();
+                        
+                        if(!tenNCC.equals("") && !diaChi.equals("") && !sdt.equals("")){
+                        //Upload nhà cung cấp lên DAO và BUS
                         NhaCungCapDTO ncc = new NhaCungCapDTO(tenNCC, diaChi, sdt);
                         nccBUS.add(ncc);
                         new Toast.ToastSuccessful("Thành công", "Thêm nhà cung cấp thành công !!!", Toast.SHORT_DELAY);
                         outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
+                        }
+                        else{
+                            new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                        }
                         cleanView();
                     }
                 } else {   //sửa NCC
@@ -312,7 +319,7 @@ public class NhaCungCapGUI extends JPanel {
                             }
                         }
                         //validate SDT
-                        Pattern pattern = Pattern.compile("^\\d{10}$");
+                        Pattern pattern = Pattern.compile("^\\d{10,11}$");
                         Matcher m = pattern.matcher(sDT);   //so sánh
                         if (!m.matches()) {
                             new Toast.ToastError("Số điện thoại không hợp lệ!! Vui lòng nhập 10 hoặc 11 số !!!", Toast.SHORT_DELAY);
@@ -324,11 +331,18 @@ public class NhaCungCapGUI extends JPanel {
                         String tenNCC = txtTenNCC.getText();
                         String diaChi = txtDiaChi.getText();
                         String sdt = txtDienThoai.getText();
+                        
+                        if(!tenNCC.equals("") && !diaChi.equals("") && !sdt.equals("")){
+                        //Upload nhà cung cấp lên DAO và BUS
                         NhaCungCapDTO ncc = new NhaCungCapDTO(tenNCC, diaChi, sdt);
                         ncc.setId_NCC(maNCC);
                         nccBUS.set(ncc);
                         new Toast.ToastSuccessful("Thành công", "Sửa thông tin nhà cung cấpthành công !!!", Toast.SHORT_DELAY);
                         outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
+                        }
+                        else{
+                            new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                        }
                     }
                 }
             }
