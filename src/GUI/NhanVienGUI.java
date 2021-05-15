@@ -30,6 +30,8 @@ import java.time.LocalDate;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
@@ -303,7 +305,7 @@ public class NhanVienGUI extends JPanel {
                 int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     nvBUS.delete(txtMaNV.getText());
-                    new Toast.ToastSuccessful("Thành công","Xóa nhân viên thành công !!!",Toast.SHORT_DELAY);
+                    new Toast.ToastSuccessful("Thành công", "Xóa nhân viên thành công !!!", Toast.SHORT_DELAY);
                     cleanView();
                     tbl.clearSelection();
                     outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());
@@ -386,6 +388,13 @@ public class NhanVienGUI extends JPanel {
                 if (EditOrAdd) //Thêm Nhân Viên
                 {
                     String soDT = txtSDT.getText();
+                    //validate SDT
+                    Pattern pattern = Pattern.compile("^\\d{10,11}$");
+                    Matcher m = pattern.matcher(soDT);   //so sánh
+                    if (!m.matches()) {
+                        new Toast.ToastError("Số điện thoại không hợp lệ!! Vui lòng nhập 10 hoặc 11 số !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
                     for (int j = 0; j < nvBUS.getNvBUS().size(); j++) {
                         if (nvBUS.getNvBUS().get(j).getPhone().equals(soDT)) {
                             new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
@@ -412,15 +421,23 @@ public class NhanVienGUI extends JPanel {
                             outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());// Load lại table
 
                             saveIMG();// Lưu hình ảnh 
-                            new Toast.ToastSuccessful("Thành công","Thêm nhân viên thành công !!!",Toast.SHORT_DELAY);
+                            new Toast.ToastSuccessful("Thành công", "Thêm nhân viên thành công !!!", Toast.SHORT_DELAY);
                             cleanView();
                         } catch (NumberFormatException ex) {
-                           new Toast.ToastError("Lỗi", Toast.SHORT_DELAY);
+                            new Toast.ToastError("Lỗi", Toast.SHORT_DELAY);
                         }
                     }
-                } else // Edit Sản phẩm
+
+                } else // Edit nhân viên
                 {
                     String soDT = txtSDT.getText();
+                    //validate SDT
+                    Pattern pattern = Pattern.compile("^\\d{10,11}$");
+                    Matcher m = pattern.matcher(soDT);   //so sánh
+                    if (!m.matches()) {
+                        new Toast.ToastError("Số điện thoại không hợp lệ!! Vui lòng nhập 10 hoặc 11 số !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
                     for (int j = 0; j < nvBUS.getNvBUS().size(); j++) {
                         if (nvBUS.getNvBUS().get(j).getPhone().equals(soDT) && nvBUS.getNvBUS().get(j).getId_NV() != Integer.parseInt(txtMaNV.getText())) {
                             new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
@@ -444,7 +461,7 @@ public class NhanVienGUI extends JPanel {
                         nvBUS.set(NV);
                         outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());
                         saveIMG();
-                        new Toast.ToastSuccessful("Thành công","Sửa thông tin nhân viên thành công !!!",Toast.SHORT_DELAY);
+                        new Toast.ToastSuccessful("Thành công", "Sửa thông tin nhân viên thành công !!!", Toast.SHORT_DELAY);
                     }
                 }
 

@@ -19,7 +19,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
-import javax.swing.BorderFactory;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -151,8 +152,7 @@ public class KhachHangGUI extends JPanel {
         btnConfirm.setBackground(color);
         btnBack.setBackground(color);
         btnFile.setBackground(color);
-        
-        
+
         //viền
         btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnEdit.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
@@ -160,8 +160,7 @@ public class KhachHangGUI extends JPanel {
         btnConfirm.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnBack.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnFile.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
-        
-        
+
         //icon
         JLabel lbAdd = new JLabel(new ImageIcon("./src/image/add-icon.png"));
         lbAdd.setBounds(new Rectangle(0, 0, 50, 50));
@@ -174,7 +173,7 @@ public class KhachHangGUI extends JPanel {
         JLabel lbDelete = new JLabel(new ImageIcon("./src/image/icons8-delete-32.png"));
         lbDelete.setBounds(new Rectangle(0, 0, 50, 50));
         btnDelete.add(lbDelete);
-        
+
 //        JLabel btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd.png"));
         btnAdd.setBounds(new Rectangle(750, 0, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -186,8 +185,6 @@ public class KhachHangGUI extends JPanel {
 //        JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete.png"));
         btnDelete.setBounds(new Rectangle(750, 110, 200, 50));
         btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        
 
 //        JLabel btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm.png"));
         btnConfirm.setVisible(false);
@@ -288,9 +285,16 @@ public class KhachHangGUI extends JPanel {
         btnConfirm.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int i;
-                if (EditOrAdd) //Thêm Sản Phẩm
+                if (EditOrAdd) //Thêm khách hàng
                 {
                     String sdt = txtSDT.getText();
+                    //validate SDT
+                    Pattern pattern = Pattern.compile("^\\d{10,11}$");
+                    Matcher m = pattern.matcher(sdt);   //so sánh
+                    if (!m.matches()) {
+                        new Toast.ToastError("Số điện thoại không hợp lệ!! Vui lòng nhập 10 hoặc 11 số !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
                     for (int j = 0; j < khBUS.getKhBUS().size(); j++) {
                         if (khBUS.getKhBUS().get(j).getPhone().equals(sdt)) {
                             new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
@@ -305,13 +309,21 @@ public class KhachHangGUI extends JPanel {
                         String dienThoai = txtSDT.getText();
                         KhachHangDTO kh = new KhachHangDTO(hoKH, tenKH, dienThoai);
                         khBUS.add(kh);
-                        new Toast.ToastSuccessful("Thành công","Thêm khách hàng thành công !!!",Toast.SHORT_DELAY);
+                        new Toast.ToastSuccessful("Thành công", "Thêm khách hàng thành công !!!", Toast.SHORT_DELAY);
                         outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());
                         cleanView();
                     }
-                } else // Edit Sản phẩm
+
+                } else // Edit khách hàng
                 {
                     String sdt = txtSDT.getText();
+                    //validate SDT
+                    Pattern pattern = Pattern.compile("^\\d{10,11}$");
+                    Matcher m = pattern.matcher(sdt);   //so sánh
+                    if (!m.matches()) {
+                        new Toast.ToastError("Số điện thoại không hợp lệ!! Vui lòng nhập 10 hoặc 11 số !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
                     for (int j = 0; j < khBUS.getKhBUS().size(); j++) {
                         if (khBUS.getKhBUS().get(j).getPhone().equals(sdt) && khBUS.getKhBUS().get(j).getId_KH() != Integer.parseInt(txtMaKH.getText())) {
                             new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
@@ -330,7 +342,7 @@ public class KhachHangGUI extends JPanel {
                         kh.setId_KH(maKH);
                         khBUS.set(kh);
                         outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());// Load lại table                        
-                        new Toast.ToastSuccessful("Thành công","Sửa thông tin khách hàng thành công", Toast.SHORT_DELAY);
+                        new Toast.ToastSuccessful("Thành công", "Sửa thông tin khách hàng thành công", Toast.SHORT_DELAY);
 
                     }
                 }
