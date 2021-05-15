@@ -10,6 +10,7 @@ import BUS.ct_HDBUS;
 //import BUS.printBill;
 import DTO.ct_HoaDonDTO;
 import DTO.HoaDonDTO;
+import com.kingaspx.toast.util.Toast;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Choice;
 import java.awt.Color;
@@ -147,41 +148,35 @@ public class HoaDonGUI extends JPanel {
          */
         Font font2 = new Font("Tahoma", Font.PLAIN, 25);
         //        btnEdit,btnDelete,btnConfirm,btnBack,btnView
-        
-        btnDelete = new JButton("XÓA");        
+
+        btnDelete = new JButton("XÓA");
         btnBack = new JButton("QUAY LẠI");
         btnView = new JButton("CHI TIẾT HD");
         btnBill = new JButton("IN BILL");
-        
 
         //font chữ
         btnBill.setFont(font2);
-        btnBill.setForeground(Color.WHITE);        
+        btnBill.setForeground(Color.WHITE);
         btnDelete.setFont(font2);
-        btnDelete.setForeground(Color.WHITE);        
+        btnDelete.setForeground(Color.WHITE);
         btnBack.setFont(font2);
         btnBack.setForeground(Color.WHITE);
         btnView.setFont(font2);
         btnView.setForeground(Color.WHITE);
 
-        
-        
         //màu nền
         Color color = new Color(255, 218, 121);
         btnBill.setBackground(color);
         btnDelete.setBackground(color);
         btnBack.setBackground(color);
         btnView.setBackground(color);
-        
-        
+
         //viền
         btnBill.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnDelete.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnBack.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnView.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
-        
-        
-        
+
 //        btnDelete = new JLabel(new ImageIcon(("./src/image/btnDelete.png")));
         btnDelete.setBounds(new Rectangle(500, 60, 200, 50));
         btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -208,13 +203,14 @@ public class HoaDonGUI extends JPanel {
         btnDelete.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (txtMaHD.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn hóa đơn cần xóa !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    new Toast.ToastWarning("Vui lòng chọn hóa đơn cần xóa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
+                    ctBUS.delete(txtMaHD.getText());
                     hdBUS.delete(txtMaHD.getText());
-//                    ctBUS.delete(txtMaHD.getText());
+                    new Toast.ToastSuccessful("Thành công","Xóa hóa đơn thành công !!!",Toast.SHORT_DELAY);
                     cleanView();
                     tbl.clearSelection();
                     outModel(model, (ArrayList<HoaDonDTO>) hdBUS.getHdBUS());
@@ -227,7 +223,7 @@ public class HoaDonGUI extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (txtMaHD.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn hóa đơn cần xem !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    new Toast.ToastWarning("Vui lòng chọn hóa đơn cần xem !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 CT_HoaDonGUI chitiet = new CT_HoaDonGUI(txtMaHD.getText());

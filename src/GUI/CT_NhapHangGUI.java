@@ -11,6 +11,7 @@ import BUS.ct_PhieuNhapHangBUS;
 import DTO.NguyenLieuDTO;
 import DTO.PhieuNhapHangDTO;
 import DTO.ct_PhieuNhapHangDTO;
+import com.kingaspx.toast.util.Toast;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -167,7 +168,7 @@ class CT_NhapHangGUI extends JFrame implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (txtMaNL.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng mã nguyên liệu !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    new Toast.ToastWarning("Vui lòng chọn mã nguyên liệu !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 txtTenNL.requestFocus();
@@ -198,17 +199,17 @@ class CT_NhapHangGUI extends JFrame implements ActionListener {
                             }
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Chưa có nguyên liệu nào được nhập !!!, xóa thấy bại", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                        new Toast.ToastError("Chưa có nguyên liệu nào được nhập !!!, xóa thấy bại", Toast.SHORT_DELAY);
                         return;
                     }
 
                     if (!flag) {
-                        JOptionPane.showMessageDialog(null, "Không tìm thấy mã nguyên liệu trong bảng nguyên liệu đã thêm, vui lòng nhập lại !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                        new Toast.ToastError("Không tìm thấy mã nguyên liệu trong bảng nguyên liệu đã thêm, vui lòng nhập lại !!!i", Toast.SHORT_DELAY);
                         return;
                     }
 
                     if (!flag2) {
-                        JOptionPane.showMessageDialog(null, "Số lượng nguyên liệu cần xóa vượt quá số lượng nguyên liệu mà bạn đã nhập , vui lòng nhập lại !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                        new Toast.ToastError("Số lượng nguyên liệu cần xóa vượt quá số lượng nguyên liệu mà bạn đã nhập , vui lòng nhập lại !!!", Toast.SHORT_DELAY);
                         return;
                     }
 
@@ -243,7 +244,7 @@ class CT_NhapHangGUI extends JFrame implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (txtMaNL.getText().equals("") || txtSL.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    new Toast.ToastWarning("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 txtTenNL.requestFocus();
@@ -263,7 +264,7 @@ class CT_NhapHangGUI extends JFrame implements ActionListener {
                     }
                 }
                 if (!flag) {
-                    JOptionPane.showMessageDialog(null, "Không tìm thấy mã nguyên liệu, vui lòng nhập lại !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    new Toast.ToastError("Không tìm thấy mã nguyên liệu, vui lòng nhập lại !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 int sl = 0;
@@ -311,7 +312,7 @@ class CT_NhapHangGUI extends JFrame implements ActionListener {
                 }
                 pnhdto.setTotal_money(thanhTien);
                 pnhBUS.set(pnhdto);
-                JOptionPane.showMessageDialog(null, "Nhập hàng thành công !!!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                new Toast.ToastSuccessful("Thành công", "Nhập hàng thành công !!!", Toast.SHORT_DELAY);
                 dispose();
             }
         });
@@ -429,7 +430,7 @@ class CT_NhapHangGUI extends JFrame implements ActionListener {
 
                 ctBUS.delete(maPhieuPhapHang);
                 pnhBUS.delete(maPhieuPhapHang);
-                JOptionPane.showMessageDialog(null, "Hủy phiếu nhập hàng thành công !!!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                new Toast.ToastSuccessful("Thành công", "Hủy phiếu nhập hàng thành công !!!", Toast.SHORT_DELAY);
                 dispose();
             }
         }

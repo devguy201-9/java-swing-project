@@ -16,6 +16,7 @@ import DTO.HoaDonDTO;
 import DTO.SanPhamDTO;
 import DTO.ct_HoaDonDTO;
 import GUI.model.Page404;
+import com.kingaspx.toast.util.Toast;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -491,7 +492,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             try {
                 sl = Math.abs(Integer.parseInt(txtCTSL.getText()));
             } catch (NumberFormatException E) {
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập số lượng");
+                new Toast.ToastWarning("Vui lòng nhập số lượng", Toast.SHORT_DELAY);
                 return;
             }
             // Kiểm tra số lượng
@@ -524,34 +525,34 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         {
             Date date = Timestamp.valueOf(LocalDateTime.now());
             if (txtMaHD.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập mã hóa đơn");
+                new Toast.ToastWarning("Vui lòng nhập mã hóa đơn", Toast.SHORT_DELAY);
                 txtMaHD.requestFocus();
                 return;
             } else if (hdBUS.check(txtMaHD.getText())) {
-                JOptionPane.showMessageDialog(null, "Mã hóa đơn đă tồn tại");
+                new Toast.ToastError("Mã hóa đơn đã tồn tại", Toast.SHORT_DELAY);
                 txtMaHD.requestFocus();
                 txtMaHD.setText(hdBUS.remindMaHD());
                 return;
             }
             
             if (txtMaKH.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập mã khách hàng");
+                new Toast.ToastWarning("Vui lòng chọn mã khách hàng", Toast.SHORT_DELAY);
                 txtMaKH.requestFocus();
                 return;
             }
             
             if (!txtMaKH.getText().isEmpty() && !khBUS.check(txtMaKH.getText().trim())) {
-                JOptionPane.showMessageDialog(null, "Mã khách hàng không tồn tại");
+                new Toast.ToastError("Mã khách hàng không tồn tại", Toast.SHORT_DELAY);
                 txtMaKH.requestFocus();
                 return;
             }
 
             if (txtMaNV.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập mã nhân viên");
+                new Toast.ToastWarning("Vui lòng chọn mã nhân viên", Toast.SHORT_DELAY);
                 txtMaNV.requestFocus();
                 return;
             } else if (!nvBUS.check(txtMaNV.getText().trim())) {
-                JOptionPane.showMessageDialog(null, "Mã nhân viên không tồn tại");
+                new Toast.ToastError("Mã nhân viên không tồn tại", Toast.SHORT_DELAY);
                 txtMaNV.requestFocus();
                 return;
             }
@@ -568,7 +569,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         if (e.getSource().equals(btnConfirm)) //Xác nhận
         {
             if (dsct.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập sản phẩm");
+                new Toast.ToastWarning("Vui lòng chọn mã sản phẩm", Toast.SHORT_DELAY);
                 return;
             }
             int maHD = Integer.parseInt(txtMaHD.getText().trim());
@@ -592,6 +593,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             }
             printBill bill = new printBill(hd, dsct);
             bill.print();
+            new Toast.ToastSuccessful("Thành công","Thêm hóa đơn thành công !!!",Toast.SHORT_DELAY);
             reset(true);
         }
         if (e.getSource().equals(btnEdit)) //Sửa sl trong Chitiet sp
@@ -610,7 +612,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 }
                 outModel(model, dsct);
             } catch (IndexOutOfBoundsException ex) {
-                JOptionPane.showMessageDialog(null, "Chưa chọn SP cần sửa");
+                new Toast.ToastWarning("Chưa chọn sản phẩm", Toast.SHORT_DELAY);
             }
             txtTongTien.setText(String.valueOf(sumHD()));
         }
@@ -625,7 +627,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 model.removeRow(i);
                 txtTongTien.setText(String.valueOf(sumHD()));
             } catch (IndexOutOfBoundsException ex) {
-                JOptionPane.showMessageDialog(null, "Chưa chọn SP cần xóa");
+               new Toast.ToastWarning("Chưa chọn sản phẩm cần xóa", Toast.SHORT_DELAY);
             }
         }
 
@@ -651,7 +653,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                     txtCTTenSP.setText(sp.getName());
                     txtCTGia.setText(String.valueOf(sp.getPrice()));
                 } catch (NullPointerException ex) {
-                    JOptionPane.showMessageDialog(null, "Mã sản phẩm không tồn tại !!");
+                    new Toast.ToastError("Mã sản phẩm không tồn tại", Toast.SHORT_DELAY);
                 }
             } else if (a.equals(txtCTSL)) //Enter SL
             {

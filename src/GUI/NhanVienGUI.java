@@ -9,6 +9,7 @@ import BUS.NhanVienBUS;
 import BUS.RandomCode;
 import DTO.Gender;
 import DTO.NhanVienDTO;
+import com.kingaspx.toast.util.Toast;
 import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -30,11 +31,9 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -68,7 +67,7 @@ public class NhanVienGUI extends JPanel {
     private JTextField sortMaNV;
     private JTextField sortHoNV;
     private JTextField sortSDT;
-    private Choice sortPhai,choicePhai;
+    private Choice sortPhai, choicePhai;
     private JButton btnAdd, btnEdit, btnDelete, btnConfirm, btnBack, btnFile;
 
     private boolean tableSelectionActive = true;
@@ -141,14 +140,13 @@ public class NhanVienGUI extends JPanel {
 
         JLabel lbPhai = new JLabel("Phái");
         lbPhai.setBounds(new Rectangle(250, 200, 30, 30));
-        lbPhai.setFont(font0);        
+        lbPhai.setFont(font0);
         choicePhai = new Choice();
         choicePhai.addItem("Nam");
         choicePhai.addItem("Nữ");
         choicePhai.setFont(font0);
         choicePhai.setBounds(new Rectangle(290, 200, 80, 30));
-        
-        
+
         img = new JLabel("Thêm hình");
         img.setBorder(createLineBorder(Color.BLACK));
         img.setBounds(new Rectangle(0, 0, 200, 230));
@@ -209,8 +207,6 @@ public class NhanVienGUI extends JPanel {
 //        btnBack.setBackground(colorBack);
 //        Color colorFile = new Color(60, 64, 198);
 //        btnFile.setBackground(colorFile);
-
-
         //màu nền
         Color color = new Color(255, 218, 121);
         btnAdd.setBackground(color);
@@ -219,8 +215,7 @@ public class NhanVienGUI extends JPanel {
         btnConfirm.setBackground(color);
         btnBack.setBackground(color);
         btnFile.setBackground(color);
-        
-        
+
         //viền
         btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnEdit.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
@@ -302,12 +297,13 @@ public class NhanVienGUI extends JPanel {
         btnDelete.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (txtMaNV.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần xóa !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    new Toast.ToastWarning("Vui lòng chọn nhân viên cần xóa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     nvBUS.delete(txtMaNV.getText());
+                    new Toast.ToastSuccessful("Thành công","Xóa nhân viên thành công !!!",Toast.SHORT_DELAY);
                     cleanView();
                     tbl.clearSelection();
                     outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());
@@ -319,7 +315,7 @@ public class NhanVienGUI extends JPanel {
         btnEdit.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (txtMaNV.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần sửa !!!");
+                    new Toast.ToastWarning("Vui lòng chọn nhân viên cần sửa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 tableSelectionActive = false;
@@ -392,7 +388,7 @@ public class NhanVienGUI extends JPanel {
                     String soDT = txtSDT.getText();
                     for (int j = 0; j < nvBUS.getNvBUS().size(); j++) {
                         if (nvBUS.getNvBUS().get(j).getPhone().equals(soDT)) {
-                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
                             return;
                         }
                     }
@@ -406,7 +402,7 @@ public class NhanVienGUI extends JPanel {
                             String diaChi = txtDiaChi.getText();
                             String IMG = imgName;
                             if (IMG.equals("null")) {
-                                JOptionPane.showMessageDialog(null, "Bạn chưa chọn ảnh cho nhân viên, vui lòng chọn ảnh !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                                new Toast.ToastError("Bạn chưa chọn ảnh cho nhân viên, vui lòng chọn ảnh !!!", Toast.SHORT_DELAY);
                                 return;
                             }
                             Gender gd = phai.equals("Nam") ? Gender.male : Gender.female;
@@ -416,10 +412,10 @@ public class NhanVienGUI extends JPanel {
                             outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());// Load lại table
 
                             saveIMG();// Lưu hình ảnh 
-                            JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastSuccessful("Thành công","Thêm nhân viên thành công !!!",Toast.SHORT_DELAY);
                             cleanView();
                         } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(null, "Loi");
+                           new Toast.ToastError("Lỗi", Toast.SHORT_DELAY);
                         }
                     }
                 } else // Edit Sản phẩm
@@ -427,7 +423,7 @@ public class NhanVienGUI extends JPanel {
                     String soDT = txtSDT.getText();
                     for (int j = 0; j < nvBUS.getNvBUS().size(); j++) {
                         if (nvBUS.getNvBUS().get(j).getPhone().equals(soDT) && nvBUS.getNvBUS().get(j).getId_NV() != Integer.parseInt(txtMaNV.getText())) {
-                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
                             return;
                         }
                     }
@@ -448,8 +444,7 @@ public class NhanVienGUI extends JPanel {
                         nvBUS.set(NV);
                         outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());
                         saveIMG();
-                        JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-
+                        new Toast.ToastSuccessful("Thành công","Sửa thông tin nhân viên thành công !!!",Toast.SHORT_DELAY);
                     }
                 }
 

@@ -57,6 +57,7 @@ public class ct_HDBUS {
     
     public void delete(String id) {
         int idHD = Integer.parseInt(id);
+        list();
         for (ct_HoaDonDTO cthdDTO : ct_hdBUS) {
             if (cthdDTO.getId_HD() == idHD) {
                 ct_hdBUS.remove(cthdDTO);

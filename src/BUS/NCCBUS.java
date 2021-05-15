@@ -43,22 +43,6 @@ public class NCCBUS {
         }
     }
 
-    public void delete(String id) {
-        int idNCC = Integer.parseInt(id);
-        for (NhaCungCapDTO nccDTO : nccBUS) {
-            if (nccDTO.getId_NCC() == idNCC) {
-                nccBUS.remove(nccDTO);
-                NCCDAO nccDAO = new NCCDAO();
-                try {
-                    nccDAO.delete(idNCC);
-                } catch (FileNotFoundException e) {
-                    System.out.println(e.getMessage());
-                }
-                return;
-            }
-        }
-    }
-
     public void set(NhaCungCapDTO nccDTO) {
         for (int i = 0; i < nccBUS.size(); i++) {
             if (nccBUS.get(i).getId_NCC() == nccDTO.getId_NCC()) {

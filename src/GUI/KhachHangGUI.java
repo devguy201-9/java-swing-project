@@ -7,6 +7,7 @@ package GUI;
 
 import BUS.KhachHangBUS;
 import DTO.KhachHangDTO;
+import com.kingaspx.toast.util.Toast;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -229,7 +230,7 @@ public class KhachHangGUI extends JPanel {
         btnDelete.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (txtMaKH.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng cần xóa !!!");
+                    new Toast.ToastWarning("Vui lòng chọn khách hàng cần xóa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
@@ -247,7 +248,7 @@ public class KhachHangGUI extends JPanel {
             public void mouseClicked(MouseEvent e) {
 
                 if (txtMaKH.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng cần sửa !!!");
+                    new Toast.ToastWarning("Vui lòng chọn khách hàng cần sửa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 tableSelectionActive = false;
@@ -292,7 +293,7 @@ public class KhachHangGUI extends JPanel {
                     String sdt = txtSDT.getText();
                     for (int j = 0; j < khBUS.getKhBUS().size(); j++) {
                         if (khBUS.getKhBUS().get(j).getPhone().equals(sdt)) {
-                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
                             return;
                         }
                     }
@@ -304,7 +305,7 @@ public class KhachHangGUI extends JPanel {
                         String dienThoai = txtSDT.getText();
                         KhachHangDTO kh = new KhachHangDTO(hoKH, tenKH, dienThoai);
                         khBUS.add(kh);
-
+                        new Toast.ToastSuccessful("Thành công","Thêm khách hàng thành công !!!",Toast.SHORT_DELAY);
                         outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());
                         cleanView();
                     }
@@ -313,7 +314,7 @@ public class KhachHangGUI extends JPanel {
                     String sdt = txtSDT.getText();
                     for (int j = 0; j < khBUS.getKhBUS().size(); j++) {
                         if (khBUS.getKhBUS().get(j).getPhone().equals(sdt) && khBUS.getKhBUS().get(j).getId_KH() != Integer.parseInt(txtMaKH.getText())) {
-                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
                             return;
                         }
                     }
@@ -329,7 +330,7 @@ public class KhachHangGUI extends JPanel {
                         kh.setId_KH(maKH);
                         khBUS.set(kh);
                         outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());// Load lại table                        
-                        JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                        new Toast.ToastSuccessful("Thành công","Sửa thông tin khách hàng thành công", Toast.SHORT_DELAY);
 
                     }
                 }

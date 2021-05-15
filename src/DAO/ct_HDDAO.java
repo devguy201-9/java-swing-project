@@ -33,9 +33,9 @@ public class ct_HDDAO extends AbstractDAO<ct_HoaDonDTO> {
         return query(sql, new ct_HDMapper(),maHD);
     }
 
-    public void delete(int idCTHD) throws FileNotFoundException {
-        String sql = "DELETE FROM ct_hoadon WHERE id = ? ";
-        update(sql, idCTHD);
+    public void delete(int idHD) throws FileNotFoundException {
+        String sql = "DELETE FROM ct_hoadon WHERE id_HD = ? ";
+        update(sql, idHD);
     }
     
     public void deleteByCodeProduct(int MaSP) throws FileNotFoundException {

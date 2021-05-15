@@ -26,12 +26,6 @@ public class NCCDAO extends AbstractDAO<NhaCungCapDTO>{
         String sql = "SELECT * FROM nhacungcap";
         return query(sql, new NCCMapper());
     }
-
-    public void delete(int idNCC) throws FileNotFoundException {
-        String sql = "DELETE FROM nhacungcap WHERE id_NCC = ? ";
-        update(sql, idNCC);
-    }
-
     public void update(NhaCungCapDTO ncc) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("UPDATE nhacungcap SET name_NCC = ? , address = ? ,");
         sql.append(" phone = ? WHERE id_NCC = ?");

@@ -7,6 +7,7 @@ package GUI;
 
 import BUS.NCCBUS;
 import DTO.NhaCungCapDTO;
+import com.kingaspx.toast.util.Toast;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -49,7 +50,7 @@ public class NhaCungCapGUI extends JPanel {
     private DefaultTableModel model;
     private int DEFAULT_WIDTH;
     private boolean EditOrAdd = true;  //gan co cho EditAdd
-    private JButton btnAdd, btnEdit, btnDelete, btnConfirm, btnBack, btnFile;
+    private JButton btnAdd, btnEdit, btnConfirm, btnBack, btnFile;
 
     private boolean tableSelectionActive = true;
 
@@ -129,7 +130,6 @@ public class NhaCungCapGUI extends JPanel {
         //        btnEdit,btnDelete,btnConfirm,btnBack,btnFile
         btnAdd = new JButton("THÊM");
         btnEdit = new JButton("SỬA");
-        btnDelete = new JButton("XÓA");
         btnConfirm = new JButton("XÁC NHẬN");
         btnBack = new JButton("QUAY LẠI");
         btnFile = new JButton("CHỌN ẢNH");
@@ -139,8 +139,6 @@ public class NhaCungCapGUI extends JPanel {
         btnAdd.setForeground(Color.WHITE);
         btnEdit.setFont(font2);
         btnEdit.setForeground(Color.WHITE);
-        btnDelete.setFont(font2);
-        btnDelete.setForeground(Color.WHITE);
         btnConfirm.setFont(font2);
         btnConfirm.setForeground(Color.WHITE);
         btnBack.setFont(font2);
@@ -161,25 +159,20 @@ public class NhaCungCapGUI extends JPanel {
 //        btnBack.setBackground(colorBack);
 //        Color colorFile = new Color(60, 64, 198);
 //        btnFile.setBackground(colorFile);
-        
         //màu nền
         Color color = new Color(255, 218, 121);
         btnAdd.setBackground(color);
         btnEdit.setBackground(color);
-        btnDelete.setBackground(color);
         btnConfirm.setBackground(color);
         btnBack.setBackground(color);
         btnFile.setBackground(color);
-        
-        
+
         //viền
         btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnEdit.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
-        btnDelete.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnConfirm.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnBack.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnFile.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
-
 
         //icon
         JLabel lbAdd = new JLabel(new ImageIcon("./src/image/add-icon.png"));
@@ -192,27 +185,19 @@ public class NhaCungCapGUI extends JPanel {
 
         JLabel lbDelete = new JLabel(new ImageIcon("./src/image/icons8-delete-32.png"));
         lbDelete.setBounds(new Rectangle(0, 0, 50, 50));
-        btnDelete.add(lbDelete);
-        
-        
+
         //vị trí
         btnAdd.setBounds(new Rectangle(110, 250, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        
         btnEdit.setBounds(new Rectangle(110, 320, 200, 50));
         btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        
-        btnDelete.setBounds(new Rectangle(110, 390, 200, 50));
-        btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        
         btnConfirm.setVisible(false);
         btnConfirm.setBounds(new Rectangle(110, 250, 200, 50));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        
         btnBack.setVisible(false);
         btnBack.setBounds(new Rectangle(110, 320, 200, 50));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -220,7 +205,6 @@ public class NhaCungCapGUI extends JPanel {
         //THÊM VÀO PHẦN HIỂN THỊ
         itemView.add(btnAdd);
         itemView.add(btnEdit);
-        itemView.add(btnDelete);
         itemView.add(btnConfirm);
         itemView.add(btnBack);
 
@@ -234,7 +218,6 @@ public class NhaCungCapGUI extends JPanel {
                 setEdit(true);
                 btnAdd.setVisible(!EditOrAdd);
                 btnEdit.setVisible(!EditOrAdd);
-                btnDelete.setVisible(!EditOrAdd);
 
                 btnConfirm.setVisible(EditOrAdd);
                 btnBack.setVisible(EditOrAdd);
@@ -248,7 +231,7 @@ public class NhaCungCapGUI extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (txtMaNCC.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp cần sửa !!!");
+                    new Toast.ToastWarning("Vui lòng chọn nhà cung cấp cần sửa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 tableSelectionActive = false;
@@ -256,31 +239,12 @@ public class NhaCungCapGUI extends JPanel {
                 txtMaNCC.setEditable(false);
                 btnAdd.setVisible(!EditOrAdd);
                 btnEdit.setVisible(!EditOrAdd);
-                btnDelete.setVisible(!EditOrAdd);
 
                 btnConfirm.setVisible(EditOrAdd);
                 btnBack.setVisible(EditOrAdd);
 
                 tbl.setEnabled(!EditOrAdd);
                 EditOrAdd = false;
-            }
-        });
-
-        // MouseClick btnDelete
-        btnDelete.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (txtMaNCC.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp cần xóa !!!");
-                    return;
-                }
-                int del = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Thông báo", JOptionPane.YES_NO_OPTION);
-                if (del == 0) {
-                    nccBUS.delete(txtMaNCC.getText());
-                    cleanView();
-                    tbl.clearSelection();
-                    outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
-                }
             }
         });
 
@@ -293,7 +257,6 @@ public class NhaCungCapGUI extends JPanel {
                 btnAdd.setVisible(EditOrAdd);
                 btnEdit.setVisible(EditOrAdd);
                 setEdit(false);
-                btnDelete.setVisible(EditOrAdd);
                 btnConfirm.setVisible(!EditOrAdd);
                 btnBack.setVisible(!EditOrAdd);
 
@@ -312,7 +275,7 @@ public class NhaCungCapGUI extends JPanel {
                     String sDT = txtDienThoai.getText();
                     for (int j = 0; j < nccBUS.getNccBUS().size(); j++) {
                         if (nccBUS.getNccBUS().get(j).getPhone().equals(sDT)) {
-                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
                             return;
                         }
                     }
@@ -326,6 +289,7 @@ public class NhaCungCapGUI extends JPanel {
                         String sdt = txtDienThoai.getText();
                         NhaCungCapDTO ncc = new NhaCungCapDTO(tenNCC, diaChi, sdt);
                         nccBUS.add(ncc);
+                        new Toast.ToastSuccessful("Thành công","Thêm nhà cung cấp thành công !!!",Toast.SHORT_DELAY);
                         outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
                         cleanView();
                     }
@@ -336,7 +300,7 @@ public class NhaCungCapGUI extends JPanel {
                         String sDT = txtDienThoai.getText();
                         for (int j = 0; j < nccBUS.getNccBUS().size(); j++) {
                             if (nccBUS.getNccBUS().get(j).getPhone().equals(sDT) && nccBUS.getNccBUS().get(j).getId_NCC() != Integer.parseInt(txtMaNCC.getText())) {
-                                JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                                new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
                                 return;
                             }
                         }
@@ -349,8 +313,9 @@ public class NhaCungCapGUI extends JPanel {
                         NhaCungCapDTO ncc = new NhaCungCapDTO(tenNCC, diaChi, sdt);
                         ncc.setId_NCC(maNCC);
                         nccBUS.set(ncc);
+                        new Toast.ToastSuccessful("Thành công","Sửa thông tin nhà cung cấpthành công !!!",Toast.SHORT_DELAY);
                         outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
-                        JOptionPane.showMessageDialog(null, "Sửa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        new Toast.ToastSuccessful("Thành công", "Sửa thành công !!!", Toast.SHORT_DELAY);
                     }
                 }
             }

@@ -8,6 +8,7 @@ package GUI;
 import BUS.PhieuNhapHangBUS;
 import BUS.ct_PhieuNhapHangBUS;
 import DTO.PhieuNhapHangDTO;
+import com.kingaspx.toast.util.Toast;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Choice;
 import java.awt.Color;
@@ -26,7 +27,6 @@ import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -159,39 +159,36 @@ public class NhapHangGUI extends JPanel implements ActionListener {
          * *******************
          */
         Font font2 = new Font("Sogoe UI", Font.PLAIN, 25);
-        
-        btnAdd = new JButton("THÊM");              
+
+        btnAdd = new JButton("THÊM");
         btnAdd.setFont(font2);
         btnAdd.setForeground(Color.WHITE);
         btnAdd.setBounds(new Rectangle(500, 0, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        
         btnView = new JButton("CHI TIẾT PN");
         btnView.setFont(font2);
         btnView.setForeground(Color.WHITE);
         btnView.setBounds(new Rectangle(500, 60, 200, 50));
-        btnView.setCursor(new Cursor(Cursor.HAND_CURSOR));     
-            
+        btnView.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnClear = new JButton("Làm mới dữ liệu");        
+        btnClear = new JButton("Làm mới dữ liệu");
         btnClear.setBounds(new Rectangle(740, 5, 150, 40));
         btnClear.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnClear.addActionListener(this);
 
-        btnReFresh = new JButton("Làm mới bảng");        
+        btnReFresh = new JButton("Làm mới bảng");
         btnReFresh.setBounds(new Rectangle(740, 68, 150, 40));
         btnReFresh.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnReFresh.addActionListener(this);
-        
+
         //màu nền
         Color color = new Color(255, 218, 121);
         btnAdd.setBackground(color);
         btnView.setBackground(color);
         btnClear.setBackground(color);
         btnReFresh.setBackground(color);
-        
-        
+
         //viền
         btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
         btnView.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
@@ -207,7 +204,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!txtMaPNH.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng làm mới lại dữ liệu trước khi chọn !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    new Toast.ToastWarning("Vui lòng làm mới lại dữ liệu trước khi chọn !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 int maNCC, maNV;
@@ -215,7 +212,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
                     maNCC = Integer.parseInt(txtMaNCC.getText().trim());
                     maNV = Integer.parseInt(txtMaNV.getText().trim());
                 } catch (NumberFormatException exception) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn đầy đủ nhân viên hoặc nhà cung cấp để nhập hàng !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    new Toast.ToastWarning("Vui lòng chọn đầy đủ nhân viên hoặc nhà cung cấp để nhập hàng !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 CT_NhapHangGUI chitiet = new CT_NhapHangGUI(maNV, maNCC);
@@ -229,7 +226,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (txtMaPNH.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu nhập hàng cần xem !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    new Toast.ToastWarning("Vui lòng chọn phiếu nhập hàng cần xem !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 CT_NhapHangGUI chitiet = new CT_NhapHangGUI(txtMaPNH.getText());

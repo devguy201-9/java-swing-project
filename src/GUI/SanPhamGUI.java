@@ -10,6 +10,7 @@ import BUS.LoaiBUS;
 import BUS.SanPhamBUS;
 import DTO.LoaiDTO;
 import DTO.SanPhamDTO;
+import com.kingaspx.toast.util.Toast;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -297,12 +298,13 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnDelete.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (txtId.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xóa !!!");
+                    new Toast.ToastWarning("Vui lòng chọn sản phẩm cần xóa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     spBUS.delete(txtId.getText());
+                    new Toast.ToastSuccessful("Thành công","Xóa sản phẩm thành công !!!",Toast.SHORT_DELAY);
                     cleanView();
                     tbl.clearSelection();
                     outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
@@ -314,7 +316,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnEdit.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (txtId.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần sửa !!!");
+                    new Toast.ToastWarning("Vui lòng chọn sản phẩm cần sửa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 setEdit(true);
@@ -399,7 +401,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         String IMG = imgName;
                         //Upload sản phẩm lên DAO và BUS
                         if (tenSP.equals("") || gia == 0 || mota.equals("") || IMG.equals("") || maLoai == 0) {
-                            JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin để thêm sản phẩm", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastError("Bạn chưa nhập đủ thông tin để thêm sản phẩm !!!", Toast.SHORT_DELAY);
                             return;
                         }
                         SanPhamDTO sp = new SanPhamDTO(maLoai, tenSP, mota, gia, IMG);
@@ -408,7 +410,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
 
                         saveIMG();// Lưu hình ảnh 
-                        JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                        new Toast.ToastSuccessful("Thành công","Thêm sản phẩm thành công !!!",Toast.SHORT_DELAY);
                         cleanView();
                     }
                 } else // Edit Sản phẩm
@@ -426,7 +428,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
                         String IMG = imgName;
                         if (tenSP.equals("") || gia == 0 || IMG.equals("") || maLoai == 0) {
-                            JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin để thêm sản phẩm", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastError("Bạn chưa nhập đủ thông tin để sửa sản phẩm !!!", Toast.SHORT_DELAY);
                             return;
                         }
                         //Upload sản phẩm lên DAO và BUS
@@ -435,7 +437,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         spBUS.set(sp);
                         outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
                         saveIMG();// Lưu hình ảnh 
-                        JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                        new Toast.ToastSuccessful("Thành công","Sửa sản phẩm thành công !!!",Toast.SHORT_DELAY);
                     }
                 }
             }
@@ -444,7 +446,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnXuatExcel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
 //                spBUS.exportProduct();    //LUU Y: LAM CHO NAY
-                JOptionPane.showMessageDialog(null, "Xuat file excel thanh cong");
+                new Toast.ToastSuccessful("Thành công","Xuất file thành công !!!",Toast.SHORT_DELAY);
             }
         });
 
@@ -461,7 +463,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 //                        spBUS.importProduct(file);    //LUU Y: LAM CHO NAY
                     spBUS.list();
                     outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
-                    JOptionPane.showMessageDialog(null, "Nhap file excel thanh cong");
+                    new Toast.ToastSuccessful("Thành công","Nhập file thành công !!!",Toast.SHORT_DELAY);
 //                    } catch (IOException | ParseException ex) {
 //                        Logger.getLogger(SanPhamGUI.class.getName()).log(Level.SEVERE, null, ex);
 //                    }

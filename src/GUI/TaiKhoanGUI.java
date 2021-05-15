@@ -9,6 +9,7 @@ import BUS.PermissionBUS;
 import BUS.TaiKhoanBUS;
 import DTO.PermissionDTO;
 import DTO.TaiKhoanDTO;
+import com.kingaspx.toast.util.Toast;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -21,7 +22,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
 import static javax.swing.BorderFactory.createLineBorder;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -133,38 +133,36 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         Font font2 = new Font("Tahoma", Font.PLAIN, 18);
         //        btnEdit,btnDelete,btnConfirm,btnBack,btnFile
         btnAdd = new JButton("THÊM");
-        btnEdit = new JButton("SỬA");        
+        btnEdit = new JButton("SỬA");
         btnConfirm = new JButton("XÁC NHẬN");
-        btnBack = new JButton("QUAY LẠI");       
+        btnBack = new JButton("QUAY LẠI");
 
         //font chữ
         btnAdd.setFont(font2);
         btnAdd.setForeground(Color.WHITE);
         btnEdit.setFont(font2);
-        btnEdit.setForeground(Color.WHITE);        
+        btnEdit.setForeground(Color.WHITE);
         btnConfirm.setFont(font2);
         btnConfirm.setForeground(Color.WHITE);
         btnBack.setFont(font2);
         btnBack.setForeground(Color.WHITE);
-        
 
         //màu nền
         Color colorAdd = new Color(255, 218, 121);
         btnAdd.setBackground(colorAdd);
         Color colorEdit = new Color(255, 218, 121);
-        btnEdit.setBackground(colorEdit);        
+        btnEdit.setBackground(colorEdit);
         Color colorConfirm = new Color(255, 218, 121);
         btnConfirm.setBackground(colorConfirm);
         Color colorBack = new Color(255, 218, 121);
         btnBack.setBackground(colorBack);
-        
+
         //viền
         btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
         btnEdit.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
         btnConfirm.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
         btnBack.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
-        
-        
+
 //        btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd_150px.png"));
         btnAdd.setBounds(new Rectangle(20, 300, 150, 30));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -199,7 +197,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         btnEdit.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (txtMaTK.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn tài khoản cần sửa !!!");
+                    new Toast.ToastWarning("Vui lòng chọn sản phẩm cần sửa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 setEdit(true);
@@ -224,13 +222,13 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                     String userName = txtUser.getText();
                     for (int j = 0; j < tkBUS.getTkBUS().size(); j++) {
                         if (tkBUS.getTkBUS().get(j).getUser_name().equals(userName)) {
-                            JOptionPane.showMessageDialog(null, "Tên đăng nhập đã tồn tại, vui lòng nhập tên khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastError("Tên đăng nhập đã tồn tại, vui lòng nhập tên khác !!!", Toast.SHORT_DELAY);
                             return;
                         }
                     }
 
                     if (userName.equals("null") && String.valueOf(txtPass.getPassword()).equals("null")) {
-                        JOptionPane.showMessageDialog(null, "Bạn chưa nhập tên hoặc mật khẩu!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                        new Toast.ToastError("Bạn chưa nhập tên hoặc mật khẩu !!!", Toast.SHORT_DELAY);
                         return;
                     }
 
@@ -245,10 +243,10 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                             tkBUS.add(nv);
                             outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
 
-                            JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastSuccessful("Thành công", "Thêm tài khoản thành công !!!", Toast.SHORT_DELAY);
                             cleanView();
                         } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(null, "Loi");
+                            new Toast.ToastError("Lỗi", Toast.SHORT_DELAY);
                         }
                     }
                 } else // Edit Tài khoản
@@ -269,7 +267,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
 
                         outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
 
-                        JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                        new Toast.ToastSuccessful("Thành công", "Sửa thông tin tài khoản thành công !!!", Toast.SHORT_DELAY);
 
                     }
 
