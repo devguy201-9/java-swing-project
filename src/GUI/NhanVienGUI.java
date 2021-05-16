@@ -394,7 +394,7 @@ public class NhanVienGUI extends JPanel {
                             String hoTen = txtHoNV.getText();
                             String sdt = txtSDT.getText();
                             int tuoi = txtTuoi.getText().equals("") ? 0 : Integer.parseInt(txtTuoi.getText());
-                            if (tuoi < 0) {
+                            if (tuoi < 0 || tuoi > 120) {
                                 new Toast.ToastError("Tuổi không đúng, vui lòng nhập lại !!!", Toast.SHORT_DELAY);
                                 return;
                             }
@@ -448,7 +448,7 @@ public class NhanVienGUI extends JPanel {
                         String sdt = txtSDT.getText();
                         String ngayNV = txtNgay.getText();
                         int tuoi = txtTuoi.getText().equals("") ? 0 : Integer.parseInt(txtTuoi.getText());
-                        if (tuoi < 0) {
+                        if (tuoi < 0  || tuoi > 120) {
                             new Toast.ToastError("Tuổi không đúng, vui lòng nhập lại !!!", Toast.SHORT_DELAY);
                             return;
                         }
