@@ -7,6 +7,7 @@ package GUI;
 
 import BUS.ct_HDBUS;
 import DTO.ct_HoaDonDTO;
+import com.kingaspx.toast.util.Toast;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -105,7 +106,8 @@ public class CT_HoaDonGUI extends JFrame {
         itemView.add(txtDonGia);
         txtDonGia.setEditable(false);
         /**
-         * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL *******************
+         * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL
+         * *******************
          */
 
         JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete_150px.png"));
@@ -118,12 +120,13 @@ public class CT_HoaDonGUI extends JFrame {
         btnDelete.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (txtMaSP.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn chi tiết hóa đơn cần xóa !!!");
+                    new Toast.ToastWarning("Vui lòng chọn chi tiết hóa đơn cần xóa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     ctBUS.deleteMaSP(txtMaSP.getText());
+                    new Toast.ToastSuccessful("Thành công","Xóa chi tiết hóa đơn thành công !!!",Toast.SHORT_DELAY);
                     cleanView();
                     tbl.clearSelection();
                     outModel(model, (ArrayList<ct_HoaDonDTO>) ctBUS.getCt_hdBUS());
@@ -131,11 +134,8 @@ public class CT_HoaDonGUI extends JFrame {
             }
         });
         /**
-         * **********************************************************************
-         */
-
-        /**
-         * ************** TẠO TABLE ***********************************************************
+         * ************** TẠO TABLE
+         * ***********************************************************
          */
         /**
          * ************ TẠO MODEL VÀ HEADER ********************************
@@ -148,10 +148,6 @@ public class CT_HoaDonGUI extends JFrame {
         model = new MyTable(header, 4);
         tbl = new JTable(model);
         list(); //Đọc từ database lên table 
-
-        /**
-         * ****************************************************************
-         */
         /**
          * ****** CUSTOM TABLE ***************
          */
@@ -180,14 +176,15 @@ public class CT_HoaDonGUI extends JFrame {
         itemView.add(scroll);
 
         add(itemView);
-        /**
-         * ***********************************
-         */
+
         tbl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!ctBUS.getCt_hdBUS().isEmpty()) {
                     int i = tbl.getSelectedRow();
+                    if (i == -1) {
+                        return;
+                    }
                     txtMaSP.setText(tbl.getModel().getValueAt(i, 0).toString());
                     txtTenSP.setText(tbl.getModel().getValueAt(i, 1).toString());
                     txtSL.setText(tbl.getModel().getValueAt(i, 2).toString());
@@ -195,13 +192,6 @@ public class CT_HoaDonGUI extends JFrame {
                 }
             }
         });
-        /**
-         * **************************************************************************************
-         */
-        /**
-         * ******************************************************************
-         */
-
         setVisible(true);
 
     }

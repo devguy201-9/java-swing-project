@@ -43,14 +43,14 @@ class SuggestSanPham extends JDialog {
 
     private String maSP;
     private SanPhamBUS spBUS = new SanPhamBUS();
-    private JTextField txtMaSP, txtTenSP, txtGia, txtSL, txtDVT;
+    private JTextField txtMaSP, txtTenSP, txtGia, txtDVT;
     private String img;
     private DefaultTableModel model;
     private JTable tbl;
     private int DWIDTH = 1200;
     private JTextField txtSearch;
     private JComboBox cmbChoice;
-    private JButton btnConfirm,btnBack;
+    private JButton btnConfirm, btnBack;
 
     public SuggestSanPham(String maSP) {
         this.maSP = maSP;
@@ -87,6 +87,7 @@ class SuggestSanPham extends JDialog {
         lbMaSP.setBounds(20, 20, 100, 30);
         txtMaSP = new JTextField();
         txtMaSP.setBounds(new Rectangle(120, 20, 250, 30));
+        txtMaSP.setEditable(false);
         itemView.add(lbMaSP);
         itemView.add(txtMaSP);
 
@@ -95,6 +96,7 @@ class SuggestSanPham extends JDialog {
         lbTenSP.setBounds(20, 70, 100, 30);
         txtTenSP = new JTextField();
         txtTenSP.setBounds(new Rectangle(120, 70, 250, 30));
+        txtTenSP.setEditable(false);
         itemView.add(lbTenSP);
         itemView.add(txtTenSP);
 
@@ -103,6 +105,7 @@ class SuggestSanPham extends JDialog {
         lbGia.setBounds(20, 120, 100, 30);
         txtGia = new JTextField();
         txtGia.setBounds(new Rectangle(120, 120, 250, 30));
+        txtGia.setEditable(false);
         itemView.add(lbGia);
         itemView.add(txtGia);
 
@@ -111,28 +114,21 @@ class SuggestSanPham extends JDialog {
         lbDVT.setBounds(20, 170, 100, 30);
         txtDVT = new JTextField();
         txtDVT.setBounds(new Rectangle(120, 170, 250, 30));
+        txtDVT.setEditable(false);
         itemView.add(lbDVT);
         itemView.add(txtDVT);
-
-        JLabel lbSL = new JLabel("SL tồn");
-        lbSL.setFont(font0);
-        lbSL.setBounds(20, 220, 100, 30);
-        txtSL = new JTextField();
-        txtSL.setBounds(new Rectangle(120, 220, 250, 30));
-        itemView.add(lbSL);
-        itemView.add(txtSL);
 
         /**
          * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL
          * *******************
          */
         Font font2 = new Font("Sogoe UI", Font.PLAIN, 18);
-        
+
         btnConfirm = new JButton("XÁC NHẬN");
         btnConfirm.setFont(font2);
         btnConfirm.setForeground(Color.WHITE);
         btnConfirm.setBackground(new Color(250, 130, 49));
-        
+
         btnConfirm.setBounds(new Rectangle(20, 320, 150, 40));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnConfirm.addMouseListener(new MouseAdapter() {
@@ -145,7 +141,7 @@ class SuggestSanPham extends JDialog {
         btnBack.setFont(font2);
         btnBack.setForeground(Color.WHITE);
         btnBack.setBackground(new Color(181, 52, 113));
-        
+
         btnBack.setBounds(new Rectangle(180, 320, 150, 40));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBack.addMouseListener(new MouseAdapter() {
@@ -156,9 +152,6 @@ class SuggestSanPham extends JDialog {
 
         itemView.add(btnConfirm);
         itemView.add(btnBack);
-        /**
-         * **********************************************************************
-         */
 
         /**
          * ************** TẠO TABLE
@@ -172,9 +165,8 @@ class SuggestSanPham extends JDialog {
         header.add("Tên SP");
         header.add("Đơn giá");
         header.add("ĐVT");
-        header.add("SL tồn");
         header.add("IMG");
-        model = new DefaultTableModel(header, 5);
+        model = new MyTable(header, 5);
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
@@ -184,9 +176,6 @@ class SuggestSanPham extends JDialog {
             tbl.setRowSelectionInterval(select, select);
             TabletoTXT(select);
         }
-        /**
-         * ****************************************************************
-         */
 
         /**
          * ****** CUSTOM TABLE ***************
@@ -218,9 +207,6 @@ class SuggestSanPham extends JDialog {
 
         add(itemView);
         /**
-         * ***********************************
-         */
-        /**
          * **************************************************************************************
          */
         tbl.addMouseListener(new MouseAdapter() {
@@ -229,9 +215,6 @@ class SuggestSanPham extends JDialog {
                 TabletoTXT(i);
             }
         });
-        /**
-         * ******************************************************************
-         */
         /**
          * ******************* THANH SEARCH
          * **********************************************
@@ -245,7 +228,7 @@ class SuggestSanPham extends JDialog {
 
         //PHẦN CHỌN SEARCH
         cmbChoice = new JComboBox();
-        cmbChoice.setEditable(true);
+        cmbChoice.setEditable(false);
         cmbChoice.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         cmbChoice.addItem("Mã SP");
         cmbChoice.addItem("Tên SP");
@@ -314,9 +297,6 @@ class SuggestSanPham extends JDialog {
 
         });
         itemView.add(searchBox);
-        /**
-         * ******************************************************************************
-         */
         setVisible(true);
     }
 
@@ -330,7 +310,6 @@ class SuggestSanPham extends JDialog {
             data.add(s.getName());
             data.add(s.getPrice());
             data.add(s.getId_Loai());
-            data.add(s.getAmount());
             data.add(s.getImg());
             model.addRow(data);
         }
@@ -364,6 +343,9 @@ class SuggestSanPham extends JDialog {
     }
 
     public void TabletoTXT(int i) {
+        if (i == -1) {
+            return;
+        }
         if (tbl.getRowSorter() != null) {
             i = tbl.getRowSorter().convertRowIndexToModel(i);
         }
@@ -371,9 +353,7 @@ class SuggestSanPham extends JDialog {
         txtTenSP.setText(tbl.getModel().getValueAt(i, 1).toString());
         txtGia.setText(tbl.getModel().getValueAt(i, 2).toString());
         txtDVT.setText(tbl.getModel().getValueAt(i, 3).toString());
-        txtSL.setText(tbl.getModel().getValueAt(i, 4).toString());
-        img = tbl.getModel().getValueAt(i, 5).toString();
+        img = tbl.getModel().getValueAt(i, 4).toString();
     }
-    
-    
+
 }

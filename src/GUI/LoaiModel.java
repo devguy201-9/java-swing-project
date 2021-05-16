@@ -6,7 +6,6 @@
 package GUI;
 
 import DTO.LoaiDTO;
-import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 
 /**

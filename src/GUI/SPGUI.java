@@ -90,7 +90,8 @@ public class SPGUI extends JPanel implements KeyListener {
         Font font0 = new Font("Segoe UI", Font.PLAIN, 13);
         Font font1 = new Font("Segoe UI", Font.BOLD, 13);
         /**
-         * **************************** PHẦN HIỂN THỊ THÔNG TIN *****************************************
+         * **************************** PHẦN HIỂN THỊ THÔNG TIN
+         * *****************************************
          */
 
         JPanel ItemView = new JPanel(null);
@@ -339,7 +340,7 @@ public class SPGUI extends JPanel implements KeyListener {
                             return;
                         }
                         //Upload sản phẩm lên DAO và BUS
-                        SanPhamDTO sp = new SanPhamDTO(maLoai, sl, tenSP, mota, gia, IMG);
+                        SanPhamDTO sp = new SanPhamDTO(maLoai, tenSP, mota, gia, IMG);
                         spBUS.add(sp);
 
                         outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
@@ -358,14 +359,14 @@ public class SPGUI extends JPanel implements KeyListener {
                         int sl = Integer.parseInt(txtSl.getText());
                         int gia = Integer.parseInt(txtGia.getText());
                         String mota = txtMT.getText();
-                        
+
                         LoaiDTO loai = (LoaiDTO) cmbLoai.getSelectedItem();
                         int maLoai = loai.getId_Loai();
 
                         String IMG = imgName;
 
                         //Upload sản phẩm lên DAO và BUS
-                        SanPhamDTO sp = new SanPhamDTO(maLoai, sl, tenSP, mota, gia, IMG);
+                        SanPhamDTO sp = new SanPhamDTO(maLoai, tenSP, mota, gia, IMG);
                         spBUS.set(sp);
 
                         outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
@@ -408,7 +409,8 @@ public class SPGUI extends JPanel implements KeyListener {
          * *************************************************************
          */
         /**
-         * *********************** PHẦN TABLE ************************************
+         * *********************** PHẦN TABLE
+         * ************************************
          */
         /**
          * ************ TẠO MODEL VÀ HEADER ********************
@@ -448,7 +450,8 @@ public class SPGUI extends JPanel implements KeyListener {
          */
 
         /**
-         * ************** TẠO TABLE ***********************************************************
+         * ************** TẠO TABLE
+         * ***********************************************************
          */
         // Chỉnh width các cột 
         tbl.getColumnModel().getColumn(0).setPreferredWidth(40);
@@ -515,7 +518,8 @@ public class SPGUI extends JPanel implements KeyListener {
             }
         });
         /**
-         * ******************* THANH SEARCH **********************************************
+         * ******************* THANH SEARCH
+         * **********************************************
          */
 
 //         Tạo Search Box
@@ -636,7 +640,6 @@ public class SPGUI extends JPanel implements KeyListener {
         /**
          * **********************************
          */
-        
         /**
          * ********** SORT THEO GIÁ **************
          */
@@ -688,9 +691,10 @@ public class SPGUI extends JPanel implements KeyListener {
         }
     }
 
-    public void listLoai(JComboBox cmb)
-    {
-        if(loaiBUS.getLoaiBUS()== null)loaiBUS.list();
+    public void listLoai(JComboBox cmb) {
+        if (loaiBUS.getLoaiBUS() == null) {
+            loaiBUS.list();
+        }
         ArrayList<LoaiDTO> loai = (ArrayList<LoaiDTO>) loaiBUS.getLoaiBUS();
         addCombo(cmb, loai);
     }
@@ -730,7 +734,6 @@ public class SPGUI extends JPanel implements KeyListener {
             data = new Vector();
             data.add(s.getId_SP());
             data.add(s.getName());
-            data.add(s.getAmount());
             data.add(s.getPrice());
             data.add(s.getDescrption());
             data.add(s.getId_Loai());

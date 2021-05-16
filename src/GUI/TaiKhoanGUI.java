@@ -9,6 +9,7 @@ import BUS.PermissionBUS;
 import BUS.TaiKhoanBUS;
 import DTO.PermissionDTO;
 import DTO.TaiKhoanDTO;
+import com.kingaspx.toast.util.Toast;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -20,7 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
-import javax.swing.ImageIcon;
+import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -45,7 +46,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
     private PermissionBUS roleBUS = new PermissionBUS();
     private JTextField txtMaTK, txtMaNV, txtUser;
     private JPasswordField txtPass;
-    private JLabel btnConfirm, btnEdit, btnBack, btnAdd;
+    private JButton btnConfirm, btnEdit, btnBack, btnAdd;
     private JLabel lbMaTK, lbMaNV, lbUser, lbPass, lbPhai;
     private DefaultTableModel model;
     private JTable tbl;
@@ -54,6 +55,8 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
     private JButton btnMaNV;
 
     private boolean EditOrAdd = true;//Cờ cho button Cofirm True:ADD || False:Edit
+
+    private boolean tableSelectionActive = true;
 
     public TaiKhoanGUI(int width) {
         this.DEFAUTL_WIDTH = width;
@@ -71,11 +74,10 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         /**
          * *************** PHẦN HIỂN THỊ THÔNG TIN **************************
          */
-        
         RoleModelCB roleModel = listRoles();
         JPanel itemView = new JPanel(null);
         itemView.setBounds(new Rectangle(0, 0, this.DEFAUTL_WIDTH, 700));
-        itemView.setBackground(new Color(201, 211, 203));
+        itemView.setBackground(new Color(247, 241, 227));
 
         lbMaTK = new JLabel("Mã tài khoản ");
         lbMaTK.setFont(font0);
@@ -91,9 +93,11 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         lbMaNV.setBounds(20, 70, 100, 30);
         txtMaNV = new JTextField();
         txtMaNV.setBounds(new Rectangle(120, 70, 220, 30));
+        txtMaNV.setEditable(false);
         itemView.add(lbMaNV);
         itemView.add(txtMaNV);
         btnMaNV = new JButton("...");
+        btnMaNV.setBackground(new Color(131, 149, 167));
         btnMaNV.setBounds(new Rectangle(340, 70, 30, 30));
         btnMaNV.addActionListener(this);
         itemView.add(btnMaNV);
@@ -123,22 +127,56 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         itemView.add(cmbRole);
 
         /**
-         * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL *******************
+         * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL
+         * *******************
          */
-        btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd_150px.png"));
-        btnAdd.setBounds(new Rectangle(20, 300, 150, 50));
+        Font font2 = new Font("Tahoma", Font.PLAIN, 18);
+        //        btnEdit,btnDelete,btnConfirm,btnBack,btnFile
+        btnAdd = new JButton("THÊM");
+        btnEdit = new JButton("SỬA");
+        btnConfirm = new JButton("XÁC NHẬN");
+        btnBack = new JButton("QUAY LẠI");
+
+        //font chữ
+        btnAdd.setFont(font2);
+        btnAdd.setForeground(Color.WHITE);
+        btnEdit.setFont(font2);
+        btnEdit.setForeground(Color.WHITE);
+        btnConfirm.setFont(font2);
+        btnConfirm.setForeground(Color.WHITE);
+        btnBack.setFont(font2);
+        btnBack.setForeground(Color.WHITE);
+
+        //màu nền
+        Color colorAdd = new Color(255, 218, 121);
+        btnAdd.setBackground(colorAdd);
+        Color colorEdit = new Color(255, 218, 121);
+        btnEdit.setBackground(colorEdit);
+        Color colorConfirm = new Color(255, 218, 121);
+        btnConfirm.setBackground(colorConfirm);
+        Color colorBack = new Color(255, 218, 121);
+        btnBack.setBackground(colorBack);
+
+        //viền
+        btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
+        btnEdit.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
+        btnConfirm.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
+        btnBack.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
+
+//        btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd_150px.png"));
+        btnAdd.setBounds(new Rectangle(20, 300, 150, 30));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnEdit = new JLabel(new ImageIcon("./src/image/btnEdit_150px.png"));
-        btnEdit.setBounds(new Rectangle(180, 300, 150, 50));
+//        btnEdit = new JLabel(new ImageIcon("./src/image/btnEdit_150px.png"));
+        btnEdit.setBounds(new Rectangle(180, 300, 150, 30));
         btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm_150px.png"));
-        btnConfirm.setBounds(new Rectangle(20, 300, 150, 50));
+//        btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm_150px.png"));
+        btnConfirm.setBounds(new Rectangle(20, 300, 150, 30));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnBack = new JLabel(new ImageIcon("./src/image/btnBack_150px.png"));
-        btnBack.setBounds(new Rectangle(180, 300, 150, 50));
+//        btnBack = new JLabel(new ImageIcon("./src/image/btnBack_150px.png"));
+        btnBack.setBounds(new Rectangle(180, 300, 150, 30));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         btnAdd.addMouseListener(new MouseAdapter() {
@@ -146,11 +184,12 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                 EditOrAdd = true;
                 txtMaTK.setEditable(false);
                 cleanView();
+                setEdit(true);
                 btnAdd.setVisible(false);
                 btnEdit.setVisible(false);
                 btnConfirm.setVisible(true);
                 btnBack.setVisible(true);
-
+                tableSelectionActive = false;
                 tbl.setEnabled(false);
             }
         });
@@ -158,13 +197,13 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         btnEdit.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (txtMaTK.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn tài khoản cần sửa !!!");
+                    new Toast.ToastWarning("Vui lòng chọn sản phẩm cần sửa !!!", Toast.SHORT_DELAY);
                     return;
                 }
-
+                setEdit(true);
                 EditOrAdd = false;
                 txtMaTK.setEditable(false);
-
+                tableSelectionActive = false;
                 btnAdd.setVisible(false);
                 btnEdit.setVisible(false);
                 btnConfirm.setVisible(true);
@@ -183,16 +222,21 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                     String userName = txtUser.getText();
                     for (int j = 0; j < tkBUS.getTkBUS().size(); j++) {
                         if (tkBUS.getTkBUS().get(j).getUser_name().equals(userName)) {
-                            JOptionPane.showMessageDialog(null, "Tên đăng nhập đã tồn tại, vui lòng nhập tên khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastError("Tên đăng nhập đã tồn tại, vui lòng nhập tên khác !!!", Toast.SHORT_DELAY);
                             return;
                         }
                     }
 
-                    if (userName.equals("null") && String.valueOf(txtPass.getPassword()).equals("null")) {
-                        JOptionPane.showMessageDialog(null, "Bạn chưa nhập tên hoặc mật khẩu!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    if (userName.equals("") || String.valueOf(txtPass.getPassword()).equals("")) {
+                        new Toast.ToastError("Bạn chưa nhập tên hoặc mật khẩu !!!", Toast.SHORT_DELAY);
                         return;
                     }
-                    
+
+                    if (txtMaNV.getText().trim().equals("")) {
+                        new Toast.ToastError("Bạn chưa chọn nhân viên cho tài khoản này !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
+
                     i = JOptionPane.showConfirmDialog(null, "Xác nhận thêm tài khoản", "", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {//yes
                         try {
@@ -200,23 +244,34 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                             String user = txtUser.getText();
                             String pass = String.valueOf(txtPass.getPassword());
                             PermissionDTO role = (PermissionDTO) cmbRole.getSelectedItem();
-                            TaiKhoanDTO nv = new TaiKhoanDTO(manv, role.getId_Permission(),user, pass);
-                            tkBUS.add(nv);
-//                        TaiKhoanBUS usBUS = new TaiKhoanBUS();
-//                        TaiKhoanDTO user = new TaiKhoanDTO(maNV, removeAccent(sdt.concat(maNV)).toLowerCase(), "123456", "Nhân Viên", "1");
-//                        usBUS.add(user, 1);
-                            outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
 
-                            JOptionPane.showMessageDialog(null, "Thêm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                            //popup lên view nhập username and password và selectbox chọn quyền
-                            cleanView();
+                            if (role.getId_Permission() != 0) {
+                                //Upload  lên DAO và BUS
+                                TaiKhoanDTO nv = new TaiKhoanDTO(manv, role.getId_Permission(), user, pass);
+                                tkBUS.add(nv);
+                                outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
+                                new Toast.ToastSuccessful("Thành công", "Thêm tài khoản thành công !!!", Toast.SHORT_DELAY);
+                                cleanView();
+                            } else {
+                                new Toast.ToastError("Vui lòng chọn quyền cho nhân viên !!!", Toast.SHORT_DELAY);
+                            }
+
                         } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(null, "Loi");
+                            new Toast.ToastError("Lỗi", Toast.SHORT_DELAY);
                         }
                     }
                 } else // Edit Tài khoản
                 {
-                    int manv = Integer.parseInt(txtMaNV.getText().trim());
+                    String userName = txtUser.getText();
+                    if (userName.equals("") || String.valueOf(txtPass.getPassword()).equals("")) {
+                        new Toast.ToastError("Bạn chưa nhập tên hoặc mật khẩu !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
+
+                    if (txtMaNV.getText().trim().equals("")) {
+                        new Toast.ToastError("Bạn chưa chọn nhân viên cho tài khoản này !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
 
                     i = JOptionPane.showConfirmDialog(null, "Xác nhận sửa tài khoản", "", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {
@@ -226,14 +281,17 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                         String user = txtUser.getText();
                         String pass = String.valueOf(txtPass.getPassword());
                         PermissionDTO role = (PermissionDTO) cmbRole.getSelectedItem();
-                        TaiKhoanDTO us = new TaiKhoanDTO(maNV, role.getId_Permission(), user, pass);
-                        us.setId_TK(maTK);
-                        tkBUS.set(us);
 
-                        outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
-
-                        JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-
+                        if (role.getId_Permission() != 0) {
+                            //Upload  lên DAO và BUS
+                            TaiKhoanDTO us = new TaiKhoanDTO(maNV, role.getId_Permission(), user, pass);
+                            us.setId_TK(maTK);
+                            tkBUS.set(us);
+                            outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
+                            new Toast.ToastSuccessful("Thành công", "Sửa thông tin tài khoản thành công !!!", Toast.SHORT_DELAY);
+                        } else {
+                            new Toast.ToastError("Vui lòng chọn quyền cho nhân viên !!!", Toast.SHORT_DELAY);
+                        }
                     }
 
                 }
@@ -247,23 +305,22 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
 
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
-
+                setEdit(false);
                 btnConfirm.setVisible(false);
                 btnBack.setVisible(false);
-
+                tableSelectionActive = true;
                 tbl.setEnabled(true);
             }
         });
 
+        //hiển thị
         itemView.add(btnAdd);
         itemView.add(btnEdit);
         itemView.add(btnConfirm);
         itemView.add(btnBack);
         /**
-         * **********************************************************************
-         */
-        /**
-         * ************** TẠO TABLE ***********************************************************
+         * ************** TẠO TABLE
+         * ***********************************************************
          */
 
         /**
@@ -280,10 +337,6 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
         list();
-
-        /**
-         * ****************************************************************
-         */
         /**
          * ****** CUSTOM TABLE ***************
          */
@@ -322,28 +375,29 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         itemView.add(scroll);
 
         add(itemView);
-        /**
-         * ***********************************
-         */
+        tableSelectionActive = true;
         /**
          * **************************************************************************************
          */
         tbl.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                int i = tbl.getSelectedRow();
-                if (tbl.getRowSorter() != null) {
-                    i = tbl.getRowSorter().convertRowIndexToModel(i);
+                if (tableSelectionActive) {
+                    int i = tbl.getSelectedRow();
+                    if (i == -1) {
+                        return;
+                    }
+                    if (tbl.getRowSorter() != null) {
+                        i = tbl.getRowSorter().convertRowIndexToModel(i);
+                    }
+                    txtMaTK.setText(tbl.getModel().getValueAt(i, 0).toString());
+                    txtMaNV.setText(tbl.getModel().getValueAt(i, 1).toString());
+                    txtUser.setText(tbl.getModel().getValueAt(i, 2).toString());
+                    txtPass.setText(tbl.getModel().getValueAt(i, 3).toString());
+                    cmbRole.setSelectedItem(roleBUS.searchID((int) tbl.getModel().getValueAt(i, 4)));
                 }
-                txtMaTK.setText(tbl.getModel().getValueAt(i, 0).toString());
-                txtMaNV.setText(tbl.getModel().getValueAt(i, 1).toString());
-                txtUser.setText(tbl.getModel().getValueAt(i, 2).toString());
-                txtPass.setText(tbl.getModel().getValueAt(i, 3).toString());
-                cmbRole.setSelectedItem(roleBUS.searchID((int) tbl.getModel().getValueAt(i, 4)));
             }
         });
-        /**
-         * ******************************************************************
-         */
+        setEdit(false);
     }
 
     public void outModel(DefaultTableModel model, ArrayList<TaiKhoanDTO> user) // Xuất ra Table từ ArrayList
@@ -371,9 +425,9 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
 //        model.setRowCount(0);
         outModel(model, nv);
     }
-    
+
     public RoleModelCB listRoles() {
-        if (roleBUS.getPermissionList()== null) {
+        if (roleBUS.getPermissionList() == null) {
             roleBUS.list();
         }
         PermissionDTO[] roles = new PermissionDTO[roleBUS.getPermissionList().size() + 1];
@@ -406,10 +460,17 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnMaNV) // Suggest Nhan Vien
         {
-            SuggestNhanVien rm = new SuggestNhanVien();
-            String s = rm.getTextFieldContent();
-            txtMaNV.setText(s);
+            if (EditOrAdd) {
+                SuggestNhanVien rm = new SuggestNhanVien();
+                String s = rm.getTextFieldContent();
+                txtMaNV.setText(s);
+            }
         }
 
+    }
+
+    private void setEdit(boolean flag) {
+        txtPass.setEditable(flag);
+        txtUser.setEditable(flag);
     }
 }

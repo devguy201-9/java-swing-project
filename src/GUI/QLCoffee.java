@@ -124,7 +124,7 @@ public class QLCoffee extends JFrame implements MouseListener {
          * ********** PHẦN MAIN ( HIỂN THỊ ) *************************
          */
         main = new JPanel(null);
-        main.setBackground(new Color(201, 211, 203));
+        main.setBackground(new Color(247, 241, 227));
         navObj.get(0).doActive();
         changeMainInfo(0);  //HIEN THI MAC DINH BAN HANG
         /**
@@ -174,7 +174,7 @@ public class QLCoffee extends JFrame implements MouseListener {
         switch (i) {
             case 0: //  BÁN HÀNG 
                 main.removeAll();
-                main.add(new BanHangGUI(DEFALUT_WIDTH,userId));
+                main.add(new BanHangGUI(DEFALUT_WIDTH, userId));
                 main.repaint();
                 main.revalidate();
                 break;

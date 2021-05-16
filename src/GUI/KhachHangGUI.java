@@ -7,6 +7,7 @@ package GUI;
 
 import BUS.KhachHangBUS;
 import DTO.KhachHangDTO;
+import com.kingaspx.toast.util.Toast;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -18,8 +19,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -49,6 +53,7 @@ public class KhachHangGUI extends JPanel {
     private DefaultTableModel model;
     private int DEFALUT_WIDTH;
     private boolean EditOrAdd = true;//Cờ cho button Cofirm True:ADD || False:Edit
+    private JButton btnAdd, btnEdit, btnDelete, btnConfirm, btnBack, btnFile;
 
     private boolean tableSelectionActive = true;
 
@@ -116,35 +121,84 @@ public class KhachHangGUI extends JPanel {
         /**
          * ************** TẠO CÁC BTN THÊM ,XÓA, SỬA *******************
          */
-        
-        
-        
-        JLabel btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd.png"));
+        Font font2 = new Font("Tahoma", Font.PLAIN, 25);
+        //        btnEdit,btnDelete,btnConfirm,btnBack,btnFile
+        btnAdd = new JButton("THÊM");
+        btnEdit = new JButton("SỬA");
+        btnDelete = new JButton("XÓA");
+        btnConfirm = new JButton("XÁC NHẬN");
+        btnBack = new JButton("QUAY LẠI");
+        btnFile = new JButton("CHỌN ẢNH");
+
+        //font chữ
+        btnAdd.setFont(font2);
+        btnAdd.setForeground(Color.WHITE);
+        btnEdit.setFont(font2);
+        btnEdit.setForeground(Color.WHITE);
+        btnDelete.setFont(font2);
+        btnDelete.setForeground(Color.WHITE);
+        btnConfirm.setFont(font2);
+        btnConfirm.setForeground(Color.WHITE);
+        btnBack.setFont(font2);
+        btnBack.setForeground(Color.WHITE);
+        btnFile.setFont(font2);
+        btnFile.setForeground(Color.WHITE);
+
+        //màu nền
+        Color color = new Color(255, 218, 121);
+        btnAdd.setBackground(color);
+        btnEdit.setBackground(color);
+        btnDelete.setBackground(color);
+        btnConfirm.setBackground(color);
+        btnBack.setBackground(color);
+        btnFile.setBackground(color);
+
+        //viền
+        btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnEdit.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnDelete.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnConfirm.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnBack.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnFile.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+
+        //icon
+        JLabel lbAdd = new JLabel(new ImageIcon("./src/image/add-icon.png"));
+        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));
+        btnAdd.add(lbAdd);
+
+        JLabel lbEdit = new JLabel(new ImageIcon("./src/image/icons8-gear-32.png"));
+        lbEdit.setBounds(new Rectangle(0, 0, 50, 50));
+        btnEdit.add(lbEdit);
+
+        JLabel lbDelete = new JLabel(new ImageIcon("./src/image/icons8-delete-32.png"));
+        lbDelete.setBounds(new Rectangle(0, 0, 50, 50));
+        btnDelete.add(lbDelete);
+
+//        JLabel btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd.png"));
         btnAdd.setBounds(new Rectangle(750, 0, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel btnEdit = new JLabel(new ImageIcon("./src/image/btnEdit.png"));
+//        JLabel btnEdit = new JLabel(new ImageIcon("./src/image/btnEdit.png"));
         btnEdit.setBounds(new Rectangle(750, 55, 200, 50));
         btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete.png"));
+//        JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete.png"));
         btnDelete.setBounds(new Rectangle(750, 110, 200, 50));
         btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        itemView.add(btnAdd);
-        itemView.add(btnEdit);
-        itemView.add(btnDelete);
-
-        JLabel btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm.png"));
+//        JLabel btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm.png"));
         btnConfirm.setVisible(false);
         btnConfirm.setBounds(new Rectangle(750, 0, 200, 50));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel btnBack = new JLabel(new ImageIcon("./src/image/btnBack.png"));
+//        JLabel btnBack = new JLabel(new ImageIcon("./src/image/btnBack.png"));
         btnBack.setVisible(false);
         btnBack.setBounds(new Rectangle(750, 55, 200, 50));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        itemView.add(btnAdd);
+        itemView.add(btnEdit);
+        itemView.add(btnDelete);
         itemView.add(btnConfirm);
         itemView.add(btnBack);
 
@@ -159,7 +213,7 @@ public class KhachHangGUI extends JPanel {
                 btnAdd.setVisible(false);
                 btnEdit.setVisible(false);
                 btnDelete.setVisible(false);
-
+                setEdit(true);
                 btnConfirm.setVisible(true);
                 btnBack.setVisible(true);
 //                btnFile.setVisible(true);
@@ -173,7 +227,7 @@ public class KhachHangGUI extends JPanel {
         btnDelete.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (txtMaKH.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng cần xóa !!!");
+                    new Toast.ToastWarning("Vui lòng chọn khách hàng cần xóa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
@@ -191,12 +245,12 @@ public class KhachHangGUI extends JPanel {
             public void mouseClicked(MouseEvent e) {
 
                 if (txtMaKH.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng cần sửa !!!");
+                    new Toast.ToastWarning("Vui lòng chọn khách hàng cần sửa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 tableSelectionActive = false;
                 EditOrAdd = false;
-
+                setEdit(true);
                 txtMaKH.setEditable(false);
 
                 btnAdd.setVisible(false);
@@ -218,7 +272,7 @@ public class KhachHangGUI extends JPanel {
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
                 btnDelete.setVisible(true);
-
+                setEdit(false);
                 btnConfirm.setVisible(false);
                 btnBack.setVisible(false);
 //                btnFile.setVisible(false);
@@ -231,12 +285,19 @@ public class KhachHangGUI extends JPanel {
         btnConfirm.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int i;
-                if (EditOrAdd) //Thêm Sản Phẩm
+                if (EditOrAdd) //Thêm khách hàng
                 {
                     String sdt = txtSDT.getText();
+                    //validate SDT
+                    Pattern pattern = Pattern.compile("^\\d{10,11}$");
+                    Matcher m = pattern.matcher(sdt);   //so sánh
+                    if (!m.matches()) {
+                        new Toast.ToastError("Số điện thoại không hợp lệ!! Vui lòng nhập 10 hoặc 11 số !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
                     for (int j = 0; j < khBUS.getKhBUS().size(); j++) {
                         if (khBUS.getKhBUS().get(j).getPhone().equals(sdt)) {
-                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
                             return;
                         }
                     }
@@ -246,18 +307,34 @@ public class KhachHangGUI extends JPanel {
                         String hoKH = txtHoKH.getText();
                         String tenKH = txtTenKH.getText();
                         String dienThoai = txtSDT.getText();
+                        
+                        
+                        if(!hoKH.equals("") && !tenKH.equals("") && !dienThoai.equals("")){
+                            //Upload khách hàng lên DAO và BUS
                         KhachHangDTO kh = new KhachHangDTO(hoKH, tenKH, dienThoai);
                         khBUS.add(kh);
-
+                        new Toast.ToastSuccessful("Thành công", "Thêm khách hàng thành công !!!", Toast.SHORT_DELAY);
                         outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());
                         cleanView();
+                        }
+                        else{                          
+                            new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                        }
                     }
-                } else // Edit Sản phẩm
+
+                } else // Edit khách hàng
                 {
                     String sdt = txtSDT.getText();
+                    //validate SDT
+                    Pattern pattern = Pattern.compile("^\\d{10,11}$");
+                    Matcher m = pattern.matcher(sdt);   //so sánh
+                    if (!m.matches()) {
+                        new Toast.ToastError("Số điện thoại không hợp lệ!! Vui lòng nhập 10 hoặc 11 số !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
                     for (int j = 0; j < khBUS.getKhBUS().size(); j++) {
                         if (khBUS.getKhBUS().get(j).getPhone().equals(sdt) && khBUS.getKhBUS().get(j).getId_KH() != Integer.parseInt(txtMaKH.getText())) {
-                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
                             return;
                         }
                     }
@@ -267,25 +344,24 @@ public class KhachHangGUI extends JPanel {
                         String hoKH = txtHoKH.getText();
                         String tenKH = txtTenKH.getText();
                         String dienThoai = txtSDT.getText();
-
-                        //Upload khách hàng lên DAO và BUS
-                        KhachHangDTO kh = new KhachHangDTO(hoKH, tenKH, dienThoai);
-                        kh.setId_KH(maKH);
-                        khBUS.set(kh);
-                        outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());// Load lại table                        
-                        JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-
+                        
+                        if(!hoKH.equals("") && !tenKH.equals("") && !dienThoai.equals("")){
+                            //Upload khách hàng lên DAO và BUS
+                            KhachHangDTO kh = new KhachHangDTO(hoKH, tenKH, dienThoai);
+                            kh.setId_KH(maKH);
+                            khBUS.set(kh);
+                            outModel(model, (ArrayList<KhachHangDTO>) khBUS.getKhBUS());// Load lại table                        
+                            new Toast.ToastSuccessful("Thành công", "Sửa thông tin khách hàng thành công", Toast.SHORT_DELAY);  
+                        }
+                        else{                          
+                            new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                        }
+                            
                     }
                 }
 
             }
         });
-        /**
-         * ************************************************************
-         */
-        /**
-         * *********************************************************************************************************
-         */
 
         /**
          * ************ TẠO MODEL VÀ HEADER ********************
@@ -300,10 +376,6 @@ public class KhachHangGUI extends JPanel {
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
         list(); //Đọc từ database lên table 
-
-        /**
-         * ******************************************************
-         */
         /**
          * ************** TẠO TABLE
          * ***********************************************************
@@ -337,14 +409,14 @@ public class KhachHangGUI extends JPanel {
         scroll.setBackground(null);
 
         add(scroll);
-        /**
-         * **************************************************************************************
-         */
 
         tbl.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (tableSelectionActive) {
                     int i = tbl.getSelectedRow();
+                    if (i == -1) {
+                        return;
+                    }
                     txtMaKH.setText(tbl.getModel().getValueAt(i, 0).toString());
                     txtTenKH.setText(tbl.getModel().getValueAt(i, 1).toString());
                     txtHoKH.setText(tbl.getModel().getValueAt(i, 2).toString());
@@ -361,7 +433,6 @@ public class KhachHangGUI extends JPanel {
         searchBox.setBorder(createLineBorder(Color.BLACK)); //Chỉnh viền 
         //PHẦN CHỌN SEARCH
         JComboBox cmbChoice = new JComboBox();
-        cmbChoice.setEditable(true);
         cmbChoice.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         cmbChoice.addItem("Mã KH");
         cmbChoice.addItem("Tên KH");
@@ -431,10 +502,8 @@ public class KhachHangGUI extends JPanel {
             }
 
         });
+        setEdit(false);
         itemView.add(searchBox);
-        /**
-         * ***************************************************************
-         */
     }
 
     public void cleanView() //Xóa trắng các TextField
@@ -471,5 +540,11 @@ public class KhachHangGUI extends JPanel {
         ArrayList<KhachHangDTO> nv = (ArrayList<KhachHangDTO>) khBUS.getKhBUS();
 //        model.setRowCount(0);
         outModel(model, nv);
+    }
+
+    private void setEdit(boolean flag) {
+        txtHoKH.setEditable(flag);
+        txtSDT.setEditable(flag);
+        txtTenKH.setEditable(flag);
     }
 }

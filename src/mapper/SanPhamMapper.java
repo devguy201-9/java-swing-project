@@ -23,7 +23,6 @@ public class SanPhamMapper implements RowMapper<SanPhamDTO>{
             sp.setId_Loai(rs.getInt("id_Loai"));
             sp.setName(rs.getString("name"));
             sp.setDescrption(rs.getString("descrption"));
-            sp.setAmount(rs.getInt("amount"));
             sp.setPrice(rs.getFloat("price"));
             sp.setImg(rs.getString("img"));
             return sp;

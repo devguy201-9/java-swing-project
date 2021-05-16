@@ -5,10 +5,10 @@
  */
 package GUI;
 
+import com.kingaspx.toast.util.Toast;
 import java.math.BigDecimal;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -25,7 +25,8 @@ public class MyInputVerifier extends InputVerifier {
                 BigDecimal value = new BigDecimal(text);
                 return (value.scale() <= Math.abs(4));
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập một số !!!");
+                new Toast.ToastError("Vui lòng nhập số !!!", Toast.SHORT_DELAY);
+                ((JTextField) input).setText("");
                 return false;
             }
         } else {

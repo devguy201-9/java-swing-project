@@ -4,6 +4,7 @@ package GUI;
 import BUS.NhanVienBUS;
 import BUS.TaiKhoanBUS;
 import DTO.TaiKhoanDTO;
+import com.kingaspx.toast.util.Toast;
 //thu vien event
 import java.awt.Color;
 import java.awt.Cursor;
@@ -25,7 +26,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -196,14 +196,13 @@ public class Login extends JFrame {
         char[] passwd = textPasswd.getPassword();
         TaiKhoanDTO user = usBUS.findTKByUserNameAndPass(username, String.valueOf(passwd));
         if (user == null) {
-            JOptionPane.showMessageDialog(null, "Sai tên tài khoản hoặc mật khẩu");
+            new Toast.ToastError("Sai tên tài khoản hoặc mật khẩu, vui lòng nhập lại", Toast.SHORT_DELAY);
             return;
         }
 
         try {
 
             qlcoffee = new QLCoffee(user.getId_NV(), user.getUser_name(), user.getId_permission());
-//                    
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }

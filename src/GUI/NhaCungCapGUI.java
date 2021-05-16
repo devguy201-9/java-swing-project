@@ -7,6 +7,7 @@ package GUI;
 
 import BUS.NCCBUS;
 import DTO.NhaCungCapDTO;
+import com.kingaspx.toast.util.Toast;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -18,8 +19,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -48,6 +52,7 @@ public class NhaCungCapGUI extends JPanel {
     private DefaultTableModel model;
     private int DEFAULT_WIDTH;
     private boolean EditOrAdd = true;  //gan co cho EditAdd
+    private JButton btnAdd, btnEdit, btnConfirm, btnBack, btnFile;
 
     private boolean tableSelectionActive = true;
 
@@ -65,11 +70,12 @@ public class NhaCungCapGUI extends JPanel {
         Font font1 = new Font("Segoe UI", Font.BOLD, 13);
 
         /**
-         * **************************** PHẦN HIỂN THỊ THÔNG TIN *****************************************
+         * **************************** PHẦN HIỂN THỊ THÔNG TIN
+         * *****************************************
          */
         JPanel itemView = new JPanel(null);
         itemView.setBounds(new Rectangle(30, 40, DEFAULT_WIDTH - 950, 600));
-        itemView.setBackground(new Color(201, 211, 203));
+        itemView.setBackground(new Color(247, 241, 227));
 
         /**
          * ****** Tao Cac Label & TextField ***********************
@@ -122,24 +128,64 @@ public class NhaCungCapGUI extends JPanel {
         /**
          * ************** TẠO CÁC BTN THÊM ,XÓA, SỬA *******************
          */
-        JLabel btnAdd = new JLabel(new ImageIcon("./src/image/btnAdd.png"));
+        Font font2 = new Font("Tahoma", Font.PLAIN, 25);
+        //        btnEdit,btnDelete,btnConfirm,btnBack,btnFile
+        btnAdd = new JButton("THÊM");
+        btnEdit = new JButton("SỬA");
+        btnConfirm = new JButton("XÁC NHẬN");
+        btnBack = new JButton("QUAY LẠI");
+        btnFile = new JButton("CHỌN ẢNH");
+
+        //font chữ
+        btnAdd.setFont(font2);
+        btnAdd.setForeground(Color.WHITE);
+        btnEdit.setFont(font2);
+        btnEdit.setForeground(Color.WHITE);
+        btnConfirm.setFont(font2);
+        btnConfirm.setForeground(Color.WHITE);
+        btnBack.setFont(font2);
+        btnBack.setForeground(Color.WHITE);
+        btnFile.setFont(font2);
+        btnFile.setForeground(Color.WHITE);
+
+        //màu nền
+        Color color = new Color(255, 218, 121);
+        btnAdd.setBackground(color);
+        btnEdit.setBackground(color);
+        btnConfirm.setBackground(color);
+        btnBack.setBackground(color);
+        btnFile.setBackground(color);
+
+        //viền
+        btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnEdit.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnConfirm.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnBack.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnFile.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+
+        //icon
+        JLabel lbAdd = new JLabel(new ImageIcon("./src/image/add-icon.png"));
+        lbAdd.setBounds(new Rectangle(0, 0, 50, 50));
+        btnAdd.add(lbAdd);
+
+        JLabel lbEdit = new JLabel(new ImageIcon("./src/image/icons8-gear-32.png"));
+        lbEdit.setBounds(new Rectangle(0, 0, 50, 50));
+        btnEdit.add(lbEdit);
+
+        JLabel lbDelete = new JLabel(new ImageIcon("./src/image/icons8-delete-32.png"));
+        lbDelete.setBounds(new Rectangle(0, 0, 50, 50));
+
+        //vị trí
         btnAdd.setBounds(new Rectangle(110, 250, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel btnEdit = new JLabel(new ImageIcon("./src/image/btnEdit.png"));
         btnEdit.setBounds(new Rectangle(110, 320, 200, 50));
         btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete.png"));
-        btnDelete.setBounds(new Rectangle(110, 390, 200, 50));
-        btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        JLabel btnConfirm = new JLabel(new ImageIcon("./src/image/btnConfirm.png"));
         btnConfirm.setVisible(false);
         btnConfirm.setBounds(new Rectangle(110, 250, 200, 50));
         btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel btnBack = new JLabel(new ImageIcon("./src/image/btnBack.png"));
         btnBack.setVisible(false);
         btnBack.setBounds(new Rectangle(110, 320, 200, 50));
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -147,7 +193,6 @@ public class NhaCungCapGUI extends JPanel {
         //THÊM VÀO PHẦN HIỂN THỊ
         itemView.add(btnAdd);
         itemView.add(btnEdit);
-        itemView.add(btnDelete);
         itemView.add(btnConfirm);
         itemView.add(btnBack);
 
@@ -158,10 +203,9 @@ public class NhaCungCapGUI extends JPanel {
                 EditOrAdd = true;
 
                 cleanView();
-
+                setEdit(true);
                 btnAdd.setVisible(!EditOrAdd);
                 btnEdit.setVisible(!EditOrAdd);
-                btnDelete.setVisible(!EditOrAdd);
 
                 btnConfirm.setVisible(EditOrAdd);
                 btnBack.setVisible(EditOrAdd);
@@ -175,39 +219,20 @@ public class NhaCungCapGUI extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (txtMaNCC.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp cần sửa !!!");
+                    new Toast.ToastWarning("Vui lòng chọn nhà cung cấp cần sửa !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 tableSelectionActive = false;
-
+                setEdit(true);
                 txtMaNCC.setEditable(false);
                 btnAdd.setVisible(!EditOrAdd);
                 btnEdit.setVisible(!EditOrAdd);
-                btnDelete.setVisible(!EditOrAdd);
 
                 btnConfirm.setVisible(EditOrAdd);
                 btnBack.setVisible(EditOrAdd);
 
                 tbl.setEnabled(!EditOrAdd);
                 EditOrAdd = false;
-            }
-        });
-
-        // MouseClick btnDelete
-        btnDelete.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (txtMaNCC.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp cần xóa !!!");
-                    return;
-                }
-                int del = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Thông báo", JOptionPane.YES_NO_OPTION);
-                if (del == 0) {
-                    nccBUS.delete(txtMaNCC.getText());
-                    cleanView();
-                    tbl.clearSelection();
-                    outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
-                }
             }
         });
 
@@ -219,7 +244,7 @@ public class NhaCungCapGUI extends JPanel {
                 EditOrAdd = true;
                 btnAdd.setVisible(EditOrAdd);
                 btnEdit.setVisible(EditOrAdd);
-                btnDelete.setVisible(EditOrAdd);
+                setEdit(false);
                 btnConfirm.setVisible(!EditOrAdd);
                 btnBack.setVisible(!EditOrAdd);
 
@@ -236,24 +261,38 @@ public class NhaCungCapGUI extends JPanel {
                 if (EditOrAdd) {  //thêm NCC
 
                     String sDT = txtDienThoai.getText();
+                    //validate SDT
+                    Pattern pattern = Pattern.compile("^\\d{10,11}$");
+                    Matcher m = pattern.matcher(sDT);   //so sánh
+                    if (!m.matches()) {
+                        new Toast.ToastError("Số điện thoại không hợp lệ!! Vui lòng nhập 10 hoặc 11 số !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
+                    //kiem tra ton tai
                     for (int j = 0; j < nccBUS.getNccBUS().size(); j++) {
                         if (nccBUS.getNccBUS().get(j).getPhone().equals(sDT)) {
-                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                            new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
                             return;
                         }
                     }
 
                     mess = JOptionPane.showConfirmDialog(null, "Xác nhận thêm nhà cung cấp", "Thông báo xác nhận", JOptionPane.YES_NO_OPTION);
                     if (mess == 0) {     //YES
-                        //Lấy data từ TextField lên
-
                         String tenNCC = txtTenNCC.getText();
                         String diaChi = txtDiaChi.getText();
                         String sdt = txtDienThoai.getText();
+                        
+                        if(!tenNCC.equals("") && !diaChi.equals("") && !sdt.equals("")){
+                        //Upload nhà cung cấp lên DAO và BUS
                         NhaCungCapDTO ncc = new NhaCungCapDTO(tenNCC, diaChi, sdt);
                         nccBUS.add(ncc);
+                        new Toast.ToastSuccessful("Thành công", "Thêm nhà cung cấp thành công !!!", Toast.SHORT_DELAY);
                         outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
                         cleanView();
+                        }
+                        else{
+                            new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                        }
                     }
                 } else {   //sửa NCC
                     mess = JOptionPane.showConfirmDialog(null, "Xác nhận sửa nhà cung cấp", "Thông báo sửa", JOptionPane.YES_NO_OPTION);
@@ -262,9 +301,16 @@ public class NhaCungCapGUI extends JPanel {
                         String sDT = txtDienThoai.getText();
                         for (int j = 0; j < nccBUS.getNccBUS().size(); j++) {
                             if (nccBUS.getNccBUS().get(j).getPhone().equals(sDT) && nccBUS.getNccBUS().get(j).getId_NCC() != Integer.parseInt(txtMaNCC.getText())) {
-                                JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                                new Toast.ToastError("Số điện thoại đã tồn tại, vui lòng nhập số khác !!!", Toast.SHORT_DELAY);
                                 return;
                             }
+                        }
+                        //validate SDT
+                        Pattern pattern = Pattern.compile("^\\d{10,11}$");
+                        Matcher m = pattern.matcher(sDT);   //so sánh
+                        if (!m.matches()) {
+                            new Toast.ToastError("Số điện thoại không hợp lệ!! Vui lòng nhập 10 hoặc 11 số !!!", Toast.SHORT_DELAY);
+                            return;
                         }
 
                         //Lấy data từ textField lên
@@ -272,15 +318,23 @@ public class NhaCungCapGUI extends JPanel {
                         String tenNCC = txtTenNCC.getText();
                         String diaChi = txtDiaChi.getText();
                         String sdt = txtDienThoai.getText();
+                        
+                        if(!tenNCC.equals("") && !diaChi.equals("") && !sdt.equals("")){
+                        //Upload nhà cung cấp lên DAO và BUS
                         NhaCungCapDTO ncc = new NhaCungCapDTO(tenNCC, diaChi, sdt);
                         ncc.setId_NCC(maNCC);
                         nccBUS.set(ncc);
+                        new Toast.ToastSuccessful("Thành công", "Sửa thông tin nhà cung cấpthành công !!!", Toast.SHORT_DELAY);
                         outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
-                        JOptionPane.showMessageDialog(null, "Sửa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        else{
+                            new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                        }
                     }
                 }
             }
-        });
+        }
+        );
 
         /**
          * ******************TABLE***************************************************************************
@@ -289,6 +343,7 @@ public class NhaCungCapGUI extends JPanel {
          * ************ TẠO MODEL VÀ HEADER ********************
          */
         Vector header = new Vector();
+
         header.add("Mã NCC");
         header.add("Tên NCC");
         header.add("Địa chỉ");
@@ -297,90 +352,130 @@ public class NhaCungCapGUI extends JPanel {
         tbl = new JTable(model);
         //sap xep
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
+
         tbl.setRowSorter(rowSorter);
 
         listNCC();
+
         /**
          * ************ TẠO TABLE ********************
          */
-
         //Chỉnh độ rộng cột
-        tbl.getColumnModel().getColumn(0).setPreferredWidth(30);
-        tbl.getColumnModel().getColumn(1).setPreferredWidth(50);
-        tbl.getColumnModel().getColumn(2).setPreferredWidth(70);
-        tbl.getColumnModel().getColumn(3).setPreferredWidth(30);
+        tbl.getColumnModel()
+                .getColumn(0).setPreferredWidth(30);
+        tbl.getColumnModel()
+                .getColumn(1).setPreferredWidth(50);
+        tbl.getColumnModel()
+                .getColumn(2).setPreferredWidth(70);
+        tbl.getColumnModel()
+                .getColumn(3).setPreferredWidth(30);
 
         //Chỉnh table
-        tbl.setFocusable(false);
-        tbl.getTableHeader().setFont(font1);
-        tbl.setRowHeight(30);
-        tbl.setShowVerticalLines(false);
-        tbl.getTableHeader().setBackground(new Color(134, 64, 0));
-        tbl.getTableHeader().setForeground(Color.WHITE);
-        tbl.setSelectionBackground(new Color(52, 152, 219));
-        tbl.setFillsViewportHeight(true);
-        tbl.getTableHeader().setOpaque(false);
-        tbl.setIntercellSpacing(new Dimension(0, 0));
+        tbl.setFocusable(
+                false);
+        tbl.getTableHeader()
+                .setFont(font1);
+        tbl.setRowHeight(
+                30);
+        tbl.setShowVerticalLines(
+                false);
+        tbl.getTableHeader()
+                .setBackground(new Color(134, 64, 0));
+        tbl.getTableHeader()
+                .setForeground(Color.WHITE);
+        tbl.setSelectionBackground(
+                new Color(52, 152, 219));
+        tbl.setFillsViewportHeight(
+                true);
+        tbl.getTableHeader()
+                .setOpaque(false);
+        tbl.setIntercellSpacing(
+                new Dimension(0, 0));
 
         //Add table vào scrollPane
         JScrollPane scroll = new JScrollPane(tbl);
-        scroll.setBounds(new Rectangle(400, 40, DEFAULT_WIDTH - 700, 500));
-        scroll.setBackground(null);
+
+        scroll.setBounds(
+                new Rectangle(400, 40, DEFAULT_WIDTH - 700, 500));
+        scroll.setBackground(
+                null);
         add(scroll);
 
-        /**
-         * **************************************************************************************
-         */
         //event click vào Table
-        tbl.addMouseListener(new MouseAdapter() {
+        tbl.addMouseListener(
+                new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(MouseEvent e
+            ) {
                 if (tableSelectionActive) {
                     int click = tbl.getSelectedRow(); //Chon vao dong trong bang hiển thị lên txt
+                    if (click == -1) {
+                        return;
+                    }
                     txtMaNCC.setText(tbl.getModel().getValueAt(click, 0).toString());
                     txtTenNCC.setText(tbl.getModel().getValueAt(click, 1).toString());
                     txtDiaChi.setText(tbl.getModel().getValueAt(click, 2).toString());
                     txtDienThoai.setText(tbl.getModel().getValueAt(click, 3).toString());
                 }
             }
-        });
+        }
+        );
 
         /**
          * ********************* SORT TABLE ****************************
          */
         //PHẦN CHỌN SEARCH
         cmbChoice = new JComboBox();
-        cmbChoice.setEditable(true);
+
         cmbChoice.setFont(font0);
-        cmbChoice.addItem("Mã NCC");
-        cmbChoice.addItem("Tên NCC");
-        cmbChoice.addItem("Địa chỉ");
-        cmbChoice.addItem("SDT");
-        cmbChoice.setBounds(new Rectangle(0, 180, 100, 30));
-        cmbChoice.setEditable(false);
+
+        cmbChoice.addItem(
+                "Mã NCC");
+        cmbChoice.addItem(
+                "Tên NCC");
+        cmbChoice.addItem(
+                "Địa chỉ");
+        cmbChoice.addItem(
+                "SDT");
+        cmbChoice.setBounds(
+                new Rectangle(0, 180, 100, 30));
+        cmbChoice.setEditable(
+                false);
 
         // Custem Icon search
         iconSearch = new JLabel(new ImageIcon("./src/image/search_25px.png"));
-        iconSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        iconSearch.setBounds(290, 170, 50, 50);
+
+        iconSearch.setCursor(
+                new Cursor(Cursor.HAND_CURSOR));
+        iconSearch.setBounds(
+                290, 170, 50, 50);
 
         //Phần TextField
         txtSearch = new JTextField();
+
         txtSearch.setFont(font0);
 //        txtSearch.setBorder(null);
+
         txtSearch.setBackground(Color.WHITE);
-        txtSearch.setOpaque(false);
-        txtSearch.setBounds(new Rectangle(110, 180, 220, 30));
+
+        txtSearch.setOpaque(
+                false);
+        txtSearch.setBounds(
+                new Rectangle(110, 180, 220, 30));
 
         //Add tất cả vào ItemView
         itemView.add(cmbChoice);
+
         itemView.add(iconSearch);
+
         itemView.add(txtSearch);
 
         //bắt sự kiện FOCUS search box
-        txtSearch.addFocusListener(new FocusAdapter() {
+        txtSearch.addFocusListener(
+                new FocusAdapter() {
             @Override
-            public void focusGained(FocusEvent e) {
+            public void focusGained(FocusEvent e
+            ) {
                 iconSearch.setIcon(new ImageIcon("./src/image/search_25px_focus.png"));
             }
 
@@ -420,7 +515,7 @@ public class NhaCungCapGUI extends JPanel {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-
+        setEdit(false);
     }
 
 //FUNCTION
@@ -456,4 +551,9 @@ public class NhaCungCapGUI extends JPanel {
         outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
     }
 
+    private void setEdit(boolean flag) {
+        txtTenNCC.setEditable(flag);
+        txtDiaChi.setEditable(flag);
+        txtDienThoai.setEditable(flag);
+    }
 }

@@ -54,8 +54,7 @@ public class PhieuNhapHangBUS {
         pnhBUS.add(pnhDAO.findByCode(pnhDTO.getId_PNH()));
     }
     
-    public void delete(String id) {
-        int idPNH = Integer.parseInt(id);
+    public void delete(int idPNH) {
         for (PhieuNhapHangDTO pnhDTO : pnhBUS) {
             if (pnhDTO.getId_PNH() == idPNH) {
                 pnhBUS.remove(pnhDTO);

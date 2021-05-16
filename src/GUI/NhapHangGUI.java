@@ -8,6 +8,7 @@ package GUI;
 import BUS.PhieuNhapHangBUS;
 import BUS.ct_PhieuNhapHangBUS;
 import DTO.PhieuNhapHangDTO;
+import com.kingaspx.toast.util.Toast;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Choice;
 import java.awt.Color;
@@ -22,10 +23,10 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Vector;
+import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -50,9 +51,9 @@ public class NhapHangGUI extends JPanel implements ActionListener {
     private JTextField txtMaPNH, txtMaNCC, txtMaNV, txtNgayHD, txtTongTien;
     private JDateChooser dateChoice;
 
-    private JLabel btnView, btnAdd;
+    private JButton btnView, btnAdd;
 
-    private JButton btnMaNCC, btnMaNV, btnClear,btnReFresh;
+    private JButton btnMaNCC, btnMaNV, btnClear, btnReFresh;
 
     private JTable tbl;
     private DefaultTableModel model;
@@ -97,6 +98,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         txtMaNCC.setFont(font0);
         txtMaNCC.setBounds(new Rectangle(215, 0, 50, 30));
         txtMaNCC.setEditable(false);
+
         btnMaNCC = new JButton("...");
         btnMaNCC.setBackground(new Color(131, 149, 167));
         btnMaNCC.setBounds(new Rectangle(265, 0, 30, 30));
@@ -112,6 +114,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         txtMaNV.setFont(font0);
         txtMaNV.setBounds(new Rectangle(375, 0, 50, 30));
         txtMaNV.setEditable(false);
+
         btnMaNV = new JButton("...");
         btnMaNV.setBackground(new Color(131, 149, 167));
         btnMaNV.setBounds(new Rectangle(425, 0, 30, 30));
@@ -155,25 +158,42 @@ public class NhapHangGUI extends JPanel implements ActionListener {
          * ************** TẠO CÁC BTN XÓA, SỬA, VIEW, IN BILL
          * *******************
          */
-        btnAdd = new JLabel(new ImageIcon(("./src/image/btnAdd.png")));
+        Font font2 = new Font("Sogoe UI", Font.PLAIN, 25);
+
+        btnAdd = new JButton("THÊM");
+        btnAdd.setFont(font2);
+        btnAdd.setForeground(Color.WHITE);
         btnAdd.setBounds(new Rectangle(500, 0, 200, 50));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        btnView = new JLabel(new ImageIcon(("./src/image/btnView.png")));
+        btnView = new JButton("CHI TIẾT PN");
+        btnView.setFont(font2);
+        btnView.setForeground(Color.WHITE);
         btnView.setBounds(new Rectangle(500, 60, 200, 50));
         btnView.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         btnClear = new JButton("Làm mới dữ liệu");
-        btnClear.setBackground(new Color(131, 149, 167));
         btnClear.setBounds(new Rectangle(740, 5, 150, 40));
         btnClear.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnClear.addActionListener(this);
-        
+
         btnReFresh = new JButton("Làm mới bảng");
-        btnReFresh.setBackground(new Color(131, 149, 167));
         btnReFresh.setBounds(new Rectangle(740, 68, 150, 40));
         btnReFresh.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnReFresh.addActionListener(this);
+
+        //màu nền
+        Color color = new Color(255, 218, 121);
+        btnAdd.setBackground(color);
+        btnView.setBackground(color);
+        btnClear.setBackground(color);
+        btnReFresh.setBackground(color);
+
+        //viền
+        btnAdd.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnView.setBorder(createLineBorder(new Color(134, 64, 0), 5, true));
+        btnClear.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
+        btnReFresh.setBorder(createLineBorder(new Color(134, 64, 0), 3, true));
 
         itemView.add(btnClear);
         itemView.add(btnReFresh);
@@ -184,7 +204,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!txtMaPNH.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng làm mới lại dữ liệu trước khi chọn !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    new Toast.ToastWarning("Vui lòng làm mới lại dữ liệu trước khi chọn !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 int maNCC, maNV;
@@ -192,7 +212,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
                     maNCC = Integer.parseInt(txtMaNCC.getText().trim());
                     maNV = Integer.parseInt(txtMaNV.getText().trim());
                 } catch (NumberFormatException exception) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn đầy đủ nhân viên hoặc nhà cung cấp để nhập hàng !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    new Toast.ToastWarning("Vui lòng chọn đầy đủ nhân viên hoặc nhà cung cấp để nhập hàng !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 CT_NhapHangGUI chitiet = new CT_NhapHangGUI(maNV, maNCC);
@@ -206,13 +226,13 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (txtMaPNH.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu nhập hàng cần xem !!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+                    new Toast.ToastWarning("Vui lòng chọn phiếu nhập hàng cần xem !!!", Toast.SHORT_DELAY);
                     return;
                 }
                 CT_NhapHangGUI chitiet = new CT_NhapHangGUI(txtMaPNH.getText());
             }
         });
-        
+
         btnReFresh.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -236,9 +256,6 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         tbl.setRowSorter(rowSorter);
         list(); //Đọc từ database lên table 
 
-        /**
-         * ******************************************************
-         */
         /**
          * ************** TẠO TABLE
          * ***********************************************************
@@ -277,6 +294,9 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         tbl.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int i = tbl.getSelectedRow();
+                if (i == -1) {
+                    return;
+                }
                 if (tbl.getRowSorter() != null) {
                     i = tbl.getRowSorter().convertRowIndexToModel(i);
                 }
@@ -291,10 +311,6 @@ public class NhapHangGUI extends JPanel implements ActionListener {
                 txtTongTien.setText(tbl.getModel().getValueAt(i, 4).toString());
             }
         });
-
-        /**
-         * **************************************************************************************
-         */
         /**
          * ********************* SORT TABLE ****************************
          */
@@ -302,10 +318,6 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         sort.setBackground(null);
         sort.setBounds(30, 170, this.DEFAULT_WIDTH - 400, 140);
 
-//        JLabel sortTitle = new JLabel("------------------------------------------------------------------------------------ BỘ LỌC ------------------------------------------------------------------------------------",JLabel.CENTER); // Mỗi bên 84 dấu ( - )
-//        sortTitle.setFont(font1);
-//        sortTitle.setBounds(new Rectangle(0,0,this.DEFAULT_WIDTH - 400,30));
-//        sort.add(sortTitle);
         /**
          * ****** SORT THỜI GIAN *************
          */
@@ -335,9 +347,6 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         yearChoice.select(0);
         yearChoice.setBounds(new Rectangle(170, 42, 80, 40));
         sort.add(yearChoice);
-        /**
-         * **********************************
-         */
 
         /**
          * ********** SORT THEO GIÁ **************
@@ -350,6 +359,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         txtMinPrice = new JTextField();
         txtMinPrice.setFont(font0);
         txtMinPrice.setBounds(new Rectangle(380, 42, 100, 26));
+        txtMinPrice.setInputVerifier(new MyInputVerifier());
         sort.add(txtMinPrice);
 
         JSeparator sepPrice = new JSeparator(JSeparator.HORIZONTAL);
@@ -359,11 +369,8 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         txtMaxPrice = new JTextField();
         txtMaxPrice.setFont(font0);
         txtMaxPrice.setBounds(new Rectangle(510, 42, 100, 26));
+        txtMaxPrice.setInputVerifier(new MyInputVerifier());
         sort.add(txtMaxPrice);
-
-        /**
-         * ***************************************
-         */
         /**
          * ********** SORT MÃ SP **************
          */
@@ -375,6 +382,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         txtMaPN = new JTextField();
         txtMaPN.setFont(font0);
         txtMaPN.setBounds(new Rectangle(700, 42, 100, 26));
+        txtMaPN.setInputVerifier(new MyInputVerifier());
         sort.add(txtMaPN);
 //        /******************************************/
         JLabel btnSearch = new JLabel(new ImageIcon("./src/image/btnSearch_45px.png"));
@@ -382,6 +390,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSearch.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+                txtTongTien.requestFocus();
                 search();
             }
         });
@@ -443,7 +452,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnMaNV) // Suggest Nhan Vien
         {
-            if (!txtMaNV.getText().equals("")) {
+            if (!txtMaNV.getText().equals("") && !txtMaNCC.getText().equals("")) {
                 return;
             }
             SuggestNhanVien rm = new SuggestNhanVien();
@@ -453,7 +462,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
 
         if (e.getSource() == btnMaNCC) // Suggest Nha cung cap
         {
-            if (!txtMaNCC.getText().equals("")) {
+            if (!txtMaNCC.getText().equals("") && !txtMaNV.getText().equals("")) {
                 return;
             }
             SuggestNhaCungCap rm = new SuggestNhaCungCap();
