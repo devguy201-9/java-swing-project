@@ -8,8 +8,11 @@ package BUS;
 import DAO.ThongKeDAO;
 import DTO.HoaDonDTO;
 import DTO.PhieuNhapHangDTO;
+import DTO.ThongKeDTO;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -23,59 +26,11 @@ public class ThongKeBUS {
         hdBUS.list();
         nhBUS.list();
     }
-    public String StatisticSP(String Id,Calendar from,Calendar to)
-    {
-        ArrayList<HoaDonDTO> dsHD = new ArrayList<> ();
-        dsHD = hdBUS.ListTime(from, to);
-        
-        ArrayList<PhieuNhapHangDTO> dsNhap = new ArrayList<> ();
-        dsNhap = nhBUS.ListTime(from, to);
-        
-        ThongKeDAO tkDAO = new ThongKeDAO();
-        return tkDAO.StatisticSP(dsHD,dsNhap, Id);
-    }
-    public String StatisticNV(String Id,Calendar from,Calendar to)
-    {
-        ArrayList<HoaDonDTO> dsHD = new ArrayList<> ();
-        dsHD = hdBUS.ListTime(from, to);
-        
-        ThongKeDAO tkDAO = new ThongKeDAO();
-        return tkDAO.StatisticNV(dsHD, Id);
-    }
-    public String StatisticKH(String Id,Calendar from,Calendar to)
-    {
-        ArrayList<HoaDonDTO> dsHD = new ArrayList<> ();
-        dsHD = hdBUS.ListTime(from, to);
-        
-        ThongKeDAO tkDAO = new ThongKeDAO();
-        return tkDAO.StatisticKH(dsHD, Id);
-    }
     
-    public ArrayList<String> StatisticTopSP(Calendar from,Calendar to)
-    {
-        ArrayList<HoaDonDTO> dsHD = new ArrayList<> ();
-        dsHD = hdBUS.ListTime(from, to);
-        
+    public List<ThongKeDTO> getChartByTime (LocalDate startDate , LocalDate endDate){
         ThongKeDAO tkDAO = new ThongKeDAO();
-        return tkDAO.StatisticTopSP(dsHD);
-    }
-    
-    public ArrayList<String> StatisticTopNV(Calendar from,Calendar to)
-    {
-        ArrayList<HoaDonDTO> dsHD = new ArrayList<> ();
-        dsHD = hdBUS.ListTime(from, to);
-        
-        ThongKeDAO tkDAO = new ThongKeDAO();
-        return tkDAO.StatisticTopNV(dsHD);
-    }
-    
-    public ArrayList<String> StatisticTopKH(Calendar from,Calendar to)
-    {
-        ArrayList<HoaDonDTO> dsHD = new ArrayList<> ();
-        dsHD = hdBUS.ListTime(from, to);
-        
-        ThongKeDAO tkDAO = new ThongKeDAO();
-        return tkDAO.StatisticTopKH(dsHD);
+        List<ThongKeDTO> tks = tkDAO.getChartByTime(startDate, endDate);
+        return tks;
     }
 
 }
