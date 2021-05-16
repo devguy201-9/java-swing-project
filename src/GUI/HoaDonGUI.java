@@ -7,7 +7,7 @@ package GUI;
 
 import BUS.HoaDonBUS;
 import BUS.ct_HDBUS;
-//import BUS.printBill;
+import BUS.printBill;
 import DTO.ct_HoaDonDTO;
 import DTO.HoaDonDTO;
 import com.kingaspx.toast.util.Toast;
@@ -233,15 +233,19 @@ public class HoaDonGUI extends JPanel {
         // In Bill
         btnBill.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+                if (txtMaHD.getText().equals("")) {
+                    new Toast.ToastWarning("Vui lòng chọn hóa đơn cần in !!!", Toast.SHORT_DELAY);
+                    return;
+                }
                 int maHD = Integer.parseInt(txtMaHD.getText());
                 int maKH = Integer.parseInt(txtMaKH.getText());
                 int maNv = Integer.parseInt(txtMaNV.getText());
                 Timestamp ngayLap = Timestamp.valueOf(txtNgayHD.getText());
                 float tongTien = Float.parseFloat(txtTongTien.getText());
                 HoaDonDTO hd = new HoaDonDTO(maHD, maKH, maNv, tongTien, ngayLap);
+                ctBUS.listMaHD(txtMaHD.getText());
                 ArrayList<ct_HoaDonDTO> cthd = (ArrayList<ct_HoaDonDTO>) ctBUS.getCt_hdBUS();
-//                printBill bill = new printBill(hd, cthd);
-//                bill.print();
+                printBill bill = new printBill(hd, cthd);
             }
         });
 

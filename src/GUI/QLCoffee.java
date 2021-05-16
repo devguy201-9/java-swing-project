@@ -200,7 +200,7 @@ public class QLCoffee extends JFrame implements MouseListener {
             case 4: //NHẬP VẦ XUẤT
                 if (flag) {
                     // Thêm 2 btn vào dưới thống kê
-                    navItem.add(5, "Bán Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
+                    navItem.add(5, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
                     navItem.add(6, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
 
                     flag = false; // Thông báo là đang Dropdown thống kê
