@@ -110,29 +110,29 @@ public class CT_HoaDonGUI extends JFrame {
          * *******************
          */
 
-        JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete_150px.png"));
-        btnDelete.setBounds(new Rectangle(80, 180, 150, 50));
-        btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        itemView.add(btnDelete);
-
-        // MouseClick btnDelete
-        btnDelete.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                if (txtMaSP.getText().equals("")) {
-                    new Toast.ToastWarning("Vui lòng chọn chi tiết hóa đơn cần xóa !!!", Toast.SHORT_DELAY);
-                    return;
-                }
-                int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
-                if (i == 0) {
-                    ctBUS.deleteMaSP(txtMaSP.getText());
-                    new Toast.ToastSuccessful("Thành công","Xóa chi tiết hóa đơn thành công !!!",Toast.SHORT_DELAY);
-                    cleanView();
-                    tbl.clearSelection();
-                    outModel(model, (ArrayList<ct_HoaDonDTO>) ctBUS.getCt_hdBUS());
-                }
-            }
-        });
+//        JLabel btnDelete = new JLabel(new ImageIcon("./src/image/btnDelete_150px.png"));
+//        btnDelete.setBounds(new Rectangle(80, 180, 150, 50));
+//        btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
+//
+//        itemView.add(btnDelete);
+//
+//        // MouseClick btnDelete
+//        btnDelete.addMouseListener(new MouseAdapter() {
+//            public void mouseClicked(MouseEvent e) {
+//                if (txtMaSP.getText().equals("")) {
+//                    new Toast.ToastWarning("Vui lòng chọn chi tiết hóa đơn cần xóa !!!", Toast.SHORT_DELAY);
+//                    return;
+//                }
+//                int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
+//                if (i == 0) {
+//                    ctBUS.deleteMaSP(txtMaSP.getText());
+//                    new Toast.ToastSuccessful("Thành công","Xóa chi tiết hóa đơn thành công !!!",Toast.SHORT_DELAY);
+//                    cleanView();
+//                    tbl.clearSelection();
+//                    outModel(model, (ArrayList<ct_HoaDonDTO>) ctBUS.getCt_hdBUS());
+//                }
+//            }
+//        });
         /**
          * ************** TẠO TABLE
          * ***********************************************************
