@@ -62,7 +62,7 @@ public class NhanVienGUI extends JPanel {
     private BufferedImage i = null;//Hình ảnh chọn từ file
     private JLabel img;
     private String imgName = "null";
-    private JTextField txtMaNV, txtHoNV, txtSDT, txtNamSinh, txtPhai, txtNgay, txtDiaChi, txtSearch;
+    private JTextField txtMaNV, txtHoNV, txtSDT, txtTuoi, txtPhai, txtNgay, txtDiaChi, txtSearch;
     private DefaultTableModel model;
     private int DEFALUT_WIDTH;
     private boolean EditOrAdd = true;//Cờ cho button Cofirm True:ADD || False:Edit
@@ -133,12 +133,12 @@ public class NhanVienGUI extends JPanel {
         txtDiaChi = new JTextField("");
         txtDiaChi.setBounds(new Rectangle(350, 160, 220, 30));
 
-        JLabel lbNamSinh = new JLabel("Năm sinh");
-        lbNamSinh.setBounds(new Rectangle(420, 200, 80, 30));
-        lbNamSinh.setFont(font0);
-        txtNamSinh = new JTextField("");
-        txtNamSinh.setBounds(new Rectangle(490, 200, 80, 30));
-        txtNamSinh.setInputVerifier(new MyInputVerifier());
+        JLabel lbTuoi = new JLabel("Tuổi");
+        lbTuoi.setBounds(new Rectangle(420, 200, 80, 30));
+        lbTuoi.setFont(font0);
+        txtTuoi = new JTextField("");
+        txtTuoi.setBounds(new Rectangle(490, 200, 80, 30));
+        txtTuoi.setInputVerifier(new MyInputVerifier());
 
         JLabel lbPhai = new JLabel("Phái");
         lbPhai.setBounds(new Rectangle(250, 200, 30, 30));
@@ -161,8 +161,8 @@ public class NhanVienGUI extends JPanel {
         ItemView.add(txtHoNV);
         ItemView.add(lbSDT);
         ItemView.add(txtSDT);
-        ItemView.add(lbNamSinh);
-        ItemView.add(txtNamSinh);
+        ItemView.add(lbTuoi);
+        ItemView.add(txtTuoi);
         ItemView.add(lbPhai);
         ItemView.add(choicePhai);
 //        ItemView.add(txtPhai);
@@ -393,7 +393,11 @@ public class NhanVienGUI extends JPanel {
                         try {
                             String hoTen = txtHoNV.getText();
                             String sdt = txtSDT.getText();
-                            int namSinh = txtNamSinh.getText().equals("") ? 0 : Integer.parseInt(txtNamSinh.getText());
+                            int tuoi = txtTuoi.getText().equals("") ? 0 : Integer.parseInt(txtTuoi.getText());
+                            if (tuoi < 0) {
+                                new Toast.ToastError("Tuổi không đúng, vui lòng nhập lại !!!", Toast.SHORT_DELAY);
+                                return;
+                            }
                             String phai = choicePhai.getSelectedItem();
                             String diaChi = txtDiaChi.getText();
                             String IMG = imgName;
@@ -402,19 +406,17 @@ public class NhanVienGUI extends JPanel {
                                 return;
                             }
                             Gender gd = phai.equals("Nam") ? Gender.male : Gender.female;
-                            
-                            
-                            if(!hoTen.equals("") && !sdt.equals("") && !IMG.equals("") && !phai.equals("") && !diaChi.equals("") &&namSinh!=0){
-                        //Upload nhân viên lên DAO và BUS
-                            NhanVienDTO nv = new NhanVienDTO(namSinh, hoTen, diaChi, sdt, gd, LocalDate.now(), IMG);
-                            nvBUS.add(nv);
-                            outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());// Load lại table
 
-                            saveIMG();// Lưu hình ảnh 
-                            new Toast.ToastSuccessful("Thành công", "Thêm nhân viên thành công !!!", Toast.SHORT_DELAY);
-                            cleanView();
-                            }
-                            else{
+                            if (!hoTen.equals("") && !sdt.equals("") && !IMG.equals("") && !phai.equals("") && !diaChi.equals("") && tuoi != 0) {
+                                //Upload nhân viên lên DAO và BUS
+                                NhanVienDTO nv = new NhanVienDTO(tuoi, hoTen, diaChi, sdt, gd, LocalDate.now(), IMG);
+                                nvBUS.add(nv);
+                                outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());// Load lại table
+
+                                saveIMG();// Lưu hình ảnh 
+                                new Toast.ToastSuccessful("Thành công", "Thêm nhân viên thành công !!!", Toast.SHORT_DELAY);
+                                cleanView();
+                            } else {
                                 new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
                             }
                         } catch (NumberFormatException ex) {
@@ -445,23 +447,25 @@ public class NhanVienGUI extends JPanel {
                         String hoTen = txtHoNV.getText();
                         String sdt = txtSDT.getText();
                         String ngayNV = txtNgay.getText();
-                        int namSinh = Integer.parseInt(txtNamSinh.getText());
+                        int tuoi = txtTuoi.getText().equals("") ? 0 : Integer.parseInt(txtTuoi.getText());
+                        if (tuoi < 0) {
+                            new Toast.ToastError("Tuổi không đúng, vui lòng nhập lại !!!", Toast.SHORT_DELAY);
+                            return;
+                        }
                         String phai = choicePhai.getSelectedItem();
                         String diaChi = txtDiaChi.getText();
                         Gender gd = phai.equals("Nam") ? Gender.male : Gender.female;
                         String IMG = imgName;
-                        
-                        
-                        if(!hoTen.equals("") && !sdt.equals("") && !ngayNV.equals("") && !phai.equals("") && !diaChi.equals("")){
-                        //Upload nhân viên lên DAO và BUS
-                        NhanVienDTO NV = new NhanVienDTO(namSinh, hoTen, diaChi, sdt, gd, LocalDate.parse(ngayNV), IMG);
-                        NV.setId_NV(maNV);
-                        nvBUS.set(NV);
-                        outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());
-                        saveIMG();
-                        new Toast.ToastSuccessful("Thành công", "Sửa thông tin nhân viên thành công !!!", Toast.SHORT_DELAY);
-                        }
-                        else{
+
+                        if (!hoTen.equals("") && !sdt.equals("") && !ngayNV.equals("") && !phai.equals("") && !diaChi.equals("")) {
+                            //Upload nhân viên lên DAO và BUS
+                            NhanVienDTO NV = new NhanVienDTO(tuoi, hoTen, diaChi, sdt, gd, LocalDate.parse(ngayNV), IMG);
+                            NV.setId_NV(maNV);
+                            nvBUS.set(NV);
+                            outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());
+                            saveIMG();
+                            new Toast.ToastSuccessful("Thành công", "Sửa thông tin nhân viên thành công !!!", Toast.SHORT_DELAY);
+                        } else {
                             new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
                         }
                     }
@@ -561,7 +565,7 @@ public class NhanVienGUI extends JPanel {
                     txtMaNV.setText(tbl.getModel().getValueAt(i, 0).toString());
                     txtHoNV.setText(tbl.getModel().getValueAt(i, 1).toString());
                     txtSDT.setText(tbl.getModel().getValueAt(i, 2).toString());
-                    txtNamSinh.setText(tbl.getModel().getValueAt(i, 3).toString());
+                    txtTuoi.setText(tbl.getModel().getValueAt(i, 3).toString());
                     choicePhai.select((tbl.getModel().getValueAt(i, 4).toString()));
                     txtNgay.setText(tbl.getModel().getValueAt(i, 5).toString());
                     txtDiaChi.setText(tbl.getModel().getValueAt(i, 6).toString());
@@ -744,7 +748,7 @@ public class NhanVienGUI extends JPanel {
         txtMaNV.setText("");
         txtHoNV.setText("");
         txtSDT.setText("");
-        txtNamSinh.setText("");
+        txtTuoi.setText("");
         txtNgay.setText("");
         txtDiaChi.setText("");
 
@@ -804,6 +808,6 @@ public class NhanVienGUI extends JPanel {
         txtHoNV.setEditable(flag);
         txtSDT.setEditable(flag);
         txtDiaChi.setEditable(flag);
-        txtNamSinh.setEditable(flag);
+        txtTuoi.setEditable(flag);
     }
 }

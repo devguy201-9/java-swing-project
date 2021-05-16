@@ -91,6 +91,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
     private JButton btnRemove;
     private Page404 page;
     private JButton btnMaKH;
+    private boolean flag = true;
 
     public BanHangGUI(int width, int userID) {
         this.userID = userID;
@@ -205,7 +206,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         btnConfirm.setBounds(new Rectangle(500, 50, 150, 30));
         hdView.add(btnConfirm);
 
-        btnDeleteHD = new JButton("Xóa");
+        btnDeleteHD = new JButton("Hủy hóa đơn");
         btnDeleteHD.setFont(font0);
         btnDeleteHD.setBounds(new Rectangle(700, 50, 150, 30));
         btnDeleteHD.setBackground(new Color(131, 149, 167));
@@ -246,10 +247,10 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtMaSP.setBounds(new Rectangle(60, 240, 70, 30));
         txtMaSP.setEditable(false);
         txtMaSP.addKeyListener(this);
-        
+
         chiTietView.add(lbMaSP);
         chiTietView.add(txtMaSP);
-        
+
         btnMaSP = new JButton("+");
         btnMaSP.setBounds(new Rectangle(130, 240, 30, 30));
         btnMaSP.setBackground(new Color(131, 149, 167));
@@ -306,7 +307,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         btnEdit.setBounds(new Rectangle(300, 420, 150, 40));
         chiTietView.add(btnEdit);
 
-        btnRemove = new JButton("Xóa");
+        btnRemove = new JButton("Xóa sản phẩm");
         btnRemove.setFont(font0);
         btnRemove.addActionListener(this);
         btnRemove.setBackground(new Color(131, 149, 167));
@@ -457,15 +458,19 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnMaNV) // Suggest Nhan Vien
         {
-            SuggestNhanVien rm = new SuggestNhanVien();
-            String s = rm.getTextFieldContent();
-            txtMaNV.setText(s);
+            if (flag) {
+                SuggestNhanVien rm = new SuggestNhanVien();
+                String s = rm.getTextFieldContent();
+                txtMaNV.setText(s);
+            }
         }
         if (e.getSource() == btnMaKH) // Suggest Nhan Vien
         {
-            SuggestKhachHang rm = new SuggestKhachHang();
-            String s = rm.getTextFieldContent();
-            txtMaKH.setText(s);
+            if (flag) {
+                SuggestKhachHang rm = new SuggestKhachHang();
+                String s = rm.getTextFieldContent();
+                txtMaKH.setText(s);
+            }
         }
         if (e.getSource().equals(btnMaSP)) // Suggest San Pham
         {
@@ -534,15 +539,9 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 txtMaHD.setText(hdBUS.remindMaHD());
                 return;
             }
-            
+
             if (txtMaKH.getText().isEmpty()) {
                 new Toast.ToastWarning("Vui lòng chọn mã khách hàng", Toast.SHORT_DELAY);
-                txtMaKH.requestFocus();
-                return;
-            }
-            
-            if (!txtMaKH.getText().isEmpty() && !khBUS.check(txtMaKH.getText().trim())) {
-                new Toast.ToastError("Mã khách hàng không tồn tại", Toast.SHORT_DELAY);
                 txtMaKH.requestFocus();
                 return;
             }
@@ -551,19 +550,17 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 new Toast.ToastWarning("Vui lòng chọn mã nhân viên", Toast.SHORT_DELAY);
                 txtMaNV.requestFocus();
                 return;
-            } else if (!nvBUS.check(txtMaNV.getText().trim())) {
-                new Toast.ToastError("Mã nhân viên không tồn tại", Toast.SHORT_DELAY);
-                txtMaNV.requestFocus();
-                return;
             }
+            
             txtNgayHD.setText(date.toString());
-
             reset(false);
-
+            flag = false;
             txtMaSP.requestFocus();
         }
+        
         if (e.getSource().equals(btnDeleteHD)) //Xóa HD 
         {
+            flag = true;
             reset(true);
         }
         if (e.getSource().equals(btnConfirm)) //Xác nhận
@@ -593,7 +590,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             }
             printBill bill = new printBill(hd, dsct);
             bill.print();
-            new Toast.ToastSuccessful("Thành công","Thêm hóa đơn thành công !!!",Toast.SHORT_DELAY);
+            new Toast.ToastSuccessful("Thành công", "Thêm hóa đơn thành công !!!", Toast.SHORT_DELAY);
             reset(true);
         }
         if (e.getSource().equals(btnEdit)) //Sửa sl trong Chitiet sp
@@ -627,7 +624,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 model.removeRow(i);
                 txtTongTien.setText(String.valueOf(sumHD()));
             } catch (IndexOutOfBoundsException ex) {
-               new Toast.ToastWarning("Chưa chọn sản phẩm cần xóa", Toast.SHORT_DELAY);
+                new Toast.ToastWarning("Chưa chọn sản phẩm cần xóa", Toast.SHORT_DELAY);
             }
         }
 

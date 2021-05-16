@@ -227,8 +227,13 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                         }
                     }
 
-                    if (userName.equals("null") && String.valueOf(txtPass.getPassword()).equals("null")) {
+                    if (userName.equals("") || String.valueOf(txtPass.getPassword()).equals("")) {
                         new Toast.ToastError("Bạn chưa nhập tên hoặc mật khẩu !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
+
+                    if (txtMaNV.getText().trim().equals("")) {
+                        new Toast.ToastError("Bạn chưa chọn nhân viên cho tài khoản này !!!", Toast.SHORT_DELAY);
                         return;
                     }
 
@@ -240,7 +245,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                             String pass = String.valueOf(txtPass.getPassword());
                             PermissionDTO role = (PermissionDTO) cmbRole.getSelectedItem();
 
-                            if (!user.equals("") && !pass.equals("")) {
+                            if (role.getId_Permission() != 0) {
                                 //Upload  lên DAO và BUS
                                 TaiKhoanDTO nv = new TaiKhoanDTO(manv, role.getId_Permission(), user, pass);
                                 tkBUS.add(nv);
@@ -248,7 +253,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                                 new Toast.ToastSuccessful("Thành công", "Thêm tài khoản thành công !!!", Toast.SHORT_DELAY);
                                 cleanView();
                             } else {
-                                new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                                new Toast.ToastError("Vui lòng chọn quyền cho nhân viên !!!", Toast.SHORT_DELAY);
                             }
 
                         } catch (NumberFormatException ex) {
@@ -257,7 +262,16 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                     }
                 } else // Edit Tài khoản
                 {
-                    int manv = Integer.parseInt(txtMaNV.getText().trim());
+                    String userName = txtUser.getText();
+                    if (userName.equals("") || String.valueOf(txtPass.getPassword()).equals("")) {
+                        new Toast.ToastError("Bạn chưa nhập tên hoặc mật khẩu !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
+
+                    if (txtMaNV.getText().trim().equals("")) {
+                        new Toast.ToastError("Bạn chưa chọn nhân viên cho tài khoản này !!!", Toast.SHORT_DELAY);
+                        return;
+                    }
 
                     i = JOptionPane.showConfirmDialog(null, "Xác nhận sửa tài khoản", "", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {
@@ -268,7 +282,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                         String pass = String.valueOf(txtPass.getPassword());
                         PermissionDTO role = (PermissionDTO) cmbRole.getSelectedItem();
 
-                        if (!user.equals("") && !pass.equals("")) {
+                        if (role.getId_Permission() != 0) {
                             //Upload  lên DAO và BUS
                             TaiKhoanDTO us = new TaiKhoanDTO(maNV, role.getId_Permission(), user, pass);
                             us.setId_TK(maTK);
@@ -276,7 +290,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
                             outModel(model, (ArrayList<TaiKhoanDTO>) tkBUS.getTkBUS());// Load lại table
                             new Toast.ToastSuccessful("Thành công", "Sửa thông tin tài khoản thành công !!!", Toast.SHORT_DELAY);
                         } else {
-                            new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
+                            new Toast.ToastError("Vui lòng chọn quyền cho nhân viên !!!", Toast.SHORT_DELAY);
                         }
                     }
 
@@ -446,9 +460,11 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnMaNV) // Suggest Nhan Vien
         {
-            SuggestNhanVien rm = new SuggestNhanVien();
-            String s = rm.getTextFieldContent();
-            txtMaNV.setText(s);
+            if (EditOrAdd) {
+                SuggestNhanVien rm = new SuggestNhanVien();
+                String s = rm.getTextFieldContent();
+                txtMaNV.setText(s);
+            }
         }
 
     }
