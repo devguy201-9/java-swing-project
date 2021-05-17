@@ -11,11 +11,11 @@ package DTO;
  */
 public class ThongKeDTO {
     private String nameSP;
-    private int soluongDaBan;
+    private int doanhThu;
 
     public ThongKeDTO() {
     }
-    
+
     public String getNameSP() {
         return nameSP;
     }
@@ -24,11 +24,13 @@ public class ThongKeDTO {
         this.nameSP = nameSP;
     }
 
-    public int getSoluongDaBan() {
-        return soluongDaBan;
+    public int getDoanhThu() {
+        return doanhThu;
     }
 
-    public void setSoluongDaBan(int soluongDaBan) {
-        this.soluongDaBan = soluongDaBan;
+    public void setDoanhThu(int doanhThu) {
+        this.doanhThu = doanhThu;
     }
+
+   
 }

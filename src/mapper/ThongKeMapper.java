@@ -22,7 +22,7 @@ public class ThongKeMapper implements RowMapper<ThongKeDTO>{
         ThongKeDTO tk = new ThongKeDTO();
         try {
             tk.setNameSP(rs.getString("name"));
-            tk.setSoluongDaBan(rs.getInt("tong"));
+            tk.setDoanhThu(rs.getInt("tong"));
             return tk;
         } catch (SQLException ex) {
             return null;
