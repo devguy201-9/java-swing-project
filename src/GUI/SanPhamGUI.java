@@ -538,7 +538,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                     txtId.setText(tbl.getModel().getValueAt(i, 0).toString());
                     txtTenSP.setText(tbl.getModel().getValueAt(i, 1).toString());
                     txtGia.setText(tbl.getModel().getValueAt(i, 2).toString());
-                    cmbLoai.setSelectedItem(loaiBUS.searchMaLoai((int) tbl.getModel().getValueAt(i, 3)));
+                    cmbLoai.setSelectedItem(loaiBUS.searchMaLoai(loaiBUS.getID((String) tbl.getModel().getValueAt(i, 3))));
                     txtMT.setText(tbl.getModel().getValueAt(i, 4).toString());
 
                     img.setText("");
@@ -766,7 +766,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
             data.add(s.getId_SP());
             data.add(s.getName());
             data.add(s.getPrice());
-            data.add(s.getId_Loai());
+            data.add(loaiBUS.getName(s.getId_Loai()));
             data.add(s.getDescrption());
             data.add(s.getImg());
             model.addRow(data);

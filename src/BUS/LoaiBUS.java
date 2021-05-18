@@ -82,4 +82,26 @@ public class LoaiBUS {
         }
         return null;
     }
+    
+    public String getName(int idLoai){
+        String name = "";
+        for (LoaiDTO loaiDTO : loaiBUS) {
+            if (loaiDTO.getId_Loai() == idLoai) {
+                name = loaiDTO.getName();
+                break;
+            }
+        }
+        return name;
+    }
+    
+    public int getID(String name){
+        int id = 0;
+        for (LoaiDTO loaiDTO : loaiBUS) {
+            if (loaiDTO.getName().equals(name)) {
+                id = loaiDTO.getId_Loai();
+                break;
+            }
+        }
+        return id;
+    }
 }
