@@ -19,7 +19,7 @@
 
 ## Hướng dẫn cài đặt
 
-Phần mềm chạy tốt trên nền tảng java 8 với jdk 1. 8 với độ phân giải màn hình chuẩn của máy là > 1280x900 ( FullHD )
+Phần mềm chạy tốt trên nền tảng java version 8 với jdk version 1. 8 với độ phân giải màn hình chuẩn của máy là > 1280x900 ( FullHD )
 ```
 1. Tạo database "coffeemanagement" và import file coffeemanagement.sql vào phpadmin trên XAMPP .
 ```
