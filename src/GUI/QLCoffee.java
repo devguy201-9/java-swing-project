@@ -113,6 +113,7 @@ public class QLCoffee extends JFrame implements MouseListener {
 
         ct_quyenBUS permisisondetail = new ct_quyenBUS();
         permisisondetail.getByIdPermission(id_permission);
+        permisisondetail.bubbleSort();
         List<ct_quyenDTO> detail = permisisondetail.getPermissionList();
         for (ct_quyenDTO temp : detail) {
             CategoryBUS category = new CategoryBUS();
@@ -120,7 +121,6 @@ public class QLCoffee extends JFrame implements MouseListener {
             permissions.add(temp.getid_duty());
             navItem.add(cate.toString());
         }
-
         outNav();
 
         /**
@@ -206,14 +206,13 @@ public class QLCoffee extends JFrame implements MouseListener {
             case 4: //NHẬP VẦ XUẤT
                 if (flag) {
                     // Thêm 2 btn vào dưới thống kê
-                    navItem.add(i, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
-                    navItem.add(i + 1, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
+                    navItem.add(i+1, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
+                    navItem.add(i + 2, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
                     flag = false; // Thông báo là đang Dropdown thống kê
                 } else {
                     // Xóa 2 btn của thống kê
-                    navItem.remove(i);
-                    navItem.remove(i);
-
+                    navItem.remove(i+1);
+                    navItem.remove(i+1);
                     flag = true;  // Thông báo là Dropdown thống kê đă ẩn
                 }
                 outNav(); //Load lại phần Navigation
