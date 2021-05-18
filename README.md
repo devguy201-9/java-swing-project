@@ -1,4 +1,8 @@
 # Đồ án Java - Quản lý cửa hàng caffee(CoffeeManager)
+![Alt text](imgReadme/main.jpg?raw=true "Màn hình chính")
+
+![image](https://user-images.githubusercontent.com/75055290/118688787-91dc3180-b830-11eb-9cd6-a1576de613b6.png)
+ ![](https://img.shields.io/github/tag/pandao/editor.md.svg)  ![](https://img.shields.io/bower/v/editor.md.svg) 
 ## Thành viên nhóm 7:
 |STT  |MSSV        |Họ và tên       |
 |:---:|:----------:|----------------|
@@ -8,8 +12,3 @@
 ### Hướng dẫn:
 1) Tạo database "coffeemanagement" và import coffeemanagement.sql vào phpadmin trên Xampp.
 2) Import các thư viện liên quan trong thư mục dist/lib/
-
-## Ảnh chụp màn hình:
-![Alt text](imgReadme/lib.jpg?raw=true "Thư viện hỗ trợ")
-![Alt text](imgReadme/login.jpg?raw=true "Form đăng nhập")
-![Alt text](imgReadme/main.jpg?raw=true "Màn hình chính")
