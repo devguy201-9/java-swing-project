@@ -588,6 +588,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 }
             }
             new Toast.ToastSuccessful("Thành công", "Thêm hóa đơn thành công !!!", Toast.SHORT_DELAY);
+            flag = true;
             reset(true);
         }
         if (e.getSource().equals(btnEdit)) //Sửa sl trong Chitiet sp
