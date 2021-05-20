@@ -65,7 +65,7 @@ public class QLCoffee extends JFrame implements MouseListener {
         header hmain = new header(DEFALUT_WIDTH, 40);
 
         if (userName != null) {
-            JLabel user = new JLabel("Hello " + userName);
+            JLabel user = new JLabel("Xin chào, " + userName);
             user.setFont(font);
             user.setForeground(Color.WHITE);
             user.setBounds(DEFALUT_WIDTH - 300, -7, 150, 50);

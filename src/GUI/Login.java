@@ -60,11 +60,11 @@ public class Login extends JFrame {
         panel.setLayout(null);
 
         //login
-        JLabel labelLogin = new JLabel("Login");
-        labelLogin.setBounds(37, 13, 174, 73);
+        JLabel labelLogin = new JLabel("Đăng nhập tài khoản");
+        labelLogin.setBounds(37, 13, 350, 73);
         panel.add(labelLogin);
         labelLogin.setForeground(Color.WHITE);
-        labelLogin.setFont(new Font("Tahoma", Font.BOLD, 60));
+        labelLogin.setFont(new Font("Tahoma", Font.BOLD, 30));
 
         //tao nut "X" thoat
         JLabel labelClose = new JLabel("X");
@@ -76,7 +76,7 @@ public class Login extends JFrame {
         });
         labelClose.setForeground(Color.WHITE);
         labelClose.setFont(new Font("Tahoma", Font.BOLD, 35));
-        labelClose.setBounds(380, 0, 38, 65);
+        labelClose.setBounds(390, -5, 38, 65);
         labelClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panel.add(labelClose);
 
@@ -153,7 +153,7 @@ public class Login extends JFrame {
         panel_1.add(textPasswd);
 
         //btnlogin
-        JButton btnLogin = new JButton("Sign in");
+        JButton btnLogin = new JButton("Đăng nhập");
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 

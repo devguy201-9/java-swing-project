@@ -485,7 +485,7 @@ public class NhanVienGUI extends JPanel {
         header.add("Tuổi");
         header.add("Phái");
         header.add("Ngày bắt đầu");
-        header.add("Status");
+        header.add("T.thái");
         header.add("Địa chỉ");
         header.add("IMG");
         model = new MyTable(header, 5) {

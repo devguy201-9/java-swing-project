@@ -329,9 +329,9 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         Vector header = new Vector();
         header.add("Mã TK");
         header.add("Mã NV");
-        header.add("Username");
-        header.add("Pass");
-        header.add("Role");
+        header.add("Tên đăng nhập");
+        header.add("Mật khẩu");
+        header.add("Mã quyền");
         model = new MyTable(header, 5);
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
