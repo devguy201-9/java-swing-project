@@ -248,14 +248,10 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         JLabel lbDelete = new JLabel(new ImageIcon("./src/image/icons8-delete-32.png"));
         lbDelete.setBounds(new Rectangle(0, 0, 50, 50));
         btnDelete.add(lbDelete);
-        
-        JLabel btnXuatExcel = new JLabel(new ImageIcon("./src/image/btnXuatExcel.png"));
-        btnXuatExcel.setBounds(new Rectangle(820, 0, 200, 50));
-        btnXuatExcel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel btnNhapExcel = new JLabel(new ImageIcon("./src/image/btnNhapExcel.png"));
-        btnNhapExcel.setBounds(new Rectangle(820, 60, 200, 50));
-        btnNhapExcel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        JLabel btnXuatExcel = new JLabel(new ImageIcon("./src/image/btnXuatExcel.png"));
+        btnXuatExcel.setBounds(new Rectangle(820, 70, 200, 50));
+        btnXuatExcel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         //hiển thị
         ItemView.add(btnAdd);
@@ -265,7 +261,6 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         ItemView.add(btnBack);
         ItemView.add(btnFile);
         ItemView.add(btnXuatExcel);
-        ItemView.add(btnNhapExcel);
 
         // MouseClick btnADD
         btnAdd.addMouseListener(new MouseAdapter() {
@@ -437,35 +432,10 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
         btnXuatExcel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-//                spBUS.exportProduct();    //LUU Y: LAM CHO NAY
+                spBUS.exportProduct();    //LUU Y: LAM CHO NAY
                 new Toast.ToastSuccessful("Thành công", "Xuất file thành công !!!", Toast.SHORT_DELAY);
             }
         });
-
-        btnNhapExcel.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                JFileChooser fc = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                        "Excel", "xlsx");
-                fc.setFileFilter(filter);
-                int result = fc.showOpenDialog(null);
-                if (result == JFileChooser.APPROVE_OPTION) {
-//                    try {
-                    File file = fc.getSelectedFile(); //Lấy URL
-//                        spBUS.importProduct(file);    //LUU Y: LAM CHO NAY
-                    spBUS.list();
-                    outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
-                    new Toast.ToastSuccessful("Thành công", "Nhập file thành công !!!", Toast.SHORT_DELAY);
-//                    } catch (IOException | ParseException ex) {
-//                        Logger.getLogger(SanPhamGUI.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-                }
-            }
-        });
-
-        /**
-         * *************************************************************
-         */
         /**
          * *********************** PHẦN TABLE
          * ************************************
@@ -568,7 +538,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                     txtId.setText(tbl.getModel().getValueAt(i, 0).toString());
                     txtTenSP.setText(tbl.getModel().getValueAt(i, 1).toString());
                     txtGia.setText(tbl.getModel().getValueAt(i, 2).toString());
-                    cmbLoai.setSelectedItem(loaiBUS.searchMaLoai((int) tbl.getModel().getValueAt(i, 3)));
+                    cmbLoai.setSelectedItem(loaiBUS.searchMaLoai(loaiBUS.getID((String) tbl.getModel().getValueAt(i, 3))));
                     txtMT.setText(tbl.getModel().getValueAt(i, 4).toString());
 
                     img.setText("");
@@ -796,7 +766,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
             data.add(s.getId_SP());
             data.add(s.getName());
             data.add(s.getPrice());
-            data.add(s.getId_Loai());
+            data.add(loaiBUS.getName(s.getId_Loai()));
             data.add(s.getDescrption());
             data.add(s.getImg());
             model.addRow(data);

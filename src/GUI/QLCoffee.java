@@ -20,6 +20,7 @@ import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +37,7 @@ public class QLCoffee extends JFrame implements MouseListener {
     private int DEFAULT_HEIGHT = 730, DEFALUT_WIDTH = 1300;
     private ArrayList<String> navItem = new ArrayList<>();  //Chứa thông tin có button cho menu gồm
     private ArrayList<navItem> navObj = new ArrayList<>();  //Chứa cái button trên thanh menu
+    private ArrayList<Integer> permissions = new ArrayList<>();
 
     public QLCoffee(int userId, String userName, int id_permission) throws FileNotFoundException {
         this.userId = userId;
@@ -111,13 +113,14 @@ public class QLCoffee extends JFrame implements MouseListener {
 
         ct_quyenBUS permisisondetail = new ct_quyenBUS();
         permisisondetail.getByIdPermission(id_permission);
+        permisisondetail.bubbleSort();
         List<ct_quyenDTO> detail = permisisondetail.getPermissionList();
         for (ct_quyenDTO temp : detail) {
             CategoryBUS category = new CategoryBUS();
             CategoryDTO cate = category.getByIdDuty(temp.getid_duty());
+            permissions.add(temp.getid_duty());
             navItem.add(cate.toString());
         }
-
         outNav();
 
         /**
@@ -125,8 +128,7 @@ public class QLCoffee extends JFrame implements MouseListener {
          */
         main = new JPanel(null);
         main.setBackground(new Color(247, 241, 227));
-        navObj.get(0).doActive();
-        changeMainInfo(0);  //HIEN THI MAC DINH BAN HANG
+        changeMainInfo(Collections.min(permissions) -1);  //HIEN THI MAC DINH
         /**
          * ***********************************************************
          */
@@ -149,8 +151,12 @@ public class QLCoffee extends JFrame implements MouseListener {
         }
         if (!flag && navObj.size() > 8) //Đổi màu phần DropDown của thống kê
         {
-            navObj.get(5).setColorNormal(new Color(255, 177, 66));
-            navObj.get(6).setColorNormal(new Color(255, 177, 66));
+            for (Integer permission : permissions) {
+                if (permission == 5) {
+                    navObj.get(permission - 1).setColorNormal(new Color(255, 177, 66));
+                    navObj.get(permission).setColorNormal(new Color(255, 177, 66));
+                }
+            }
         }
 
         //Xuất ra Naigation
@@ -200,15 +206,13 @@ public class QLCoffee extends JFrame implements MouseListener {
             case 4: //NHẬP VẦ XUẤT
                 if (flag) {
                     // Thêm 2 btn vào dưới thống kê
-                    navItem.add(5, "Bán Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
-                    navItem.add(6, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
-
+                    navItem.add(i+1, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
+                    navItem.add(i + 2, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
                     flag = false; // Thông báo là đang Dropdown thống kê
                 } else {
                     // Xóa 2 btn của thống kê
-                    navItem.remove(5);
-                    navItem.remove(5);
-
+                    navItem.remove(i+1);
+                    navItem.remove(i+1);
                     flag = true;  // Thông báo là Dropdown thống kê đă ẩn
                 }
                 outNav(); //Load lại phần Navigation
@@ -253,10 +257,18 @@ public class QLCoffee extends JFrame implements MouseListener {
     public void mouseClicked(java.awt.event.MouseEvent e) {
         for (int i = 0; i < navObj.size(); i++) {
             navItem item = navObj.get(i); // lấy vị trí item trong menu
-            if (e.getSource() == item) {
-                item.doActive(); // Active NavItem đc chọn 
+            if ( e.getSource() == item) {
+                item.doActive(); // Active NavItem đc chọn
                 try {
-                    changeMainInfo(i); // Hiển thị ra phần main
+                    int j = i;
+                    if (!flag) {
+                        j -=2;
+                    }
+                    int index = permissions.get(j);
+                    if (!flag) {
+                        index += 2;
+                    }
+                    changeMainInfo(index - 1); // Hiển thị ra phần main
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(QLCoffee.class.getName()).log(Level.SEVERE, null, ex);
                 }

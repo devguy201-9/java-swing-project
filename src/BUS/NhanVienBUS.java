@@ -61,7 +61,7 @@ public class NhanVienBUS {
         return nvBUS.get(nvBUS.size());
     }
     
-    public NhanVienDTO getEmployeeById(String MaNV) //Như thêm á?? hên xui :>>
+    public NhanVienDTO getEmployeeById(String MaNV) 
     {
         for (NhanVienDTO nv : nvBUS) {
             if (nv.getId_NV() == Integer.parseInt(MaNV)) {

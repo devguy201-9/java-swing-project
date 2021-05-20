@@ -283,12 +283,12 @@ public class NhaCungCapGUI extends JPanel {
                         String sdt = txtDienThoai.getText();
                         
                         if(!tenNCC.equals("") && !diaChi.equals("") && !sdt.equals("")){
-                        //Upload nhà cung cấp lên DAO và BUS
-                        NhaCungCapDTO ncc = new NhaCungCapDTO(tenNCC, diaChi, sdt);
-                        nccBUS.add(ncc);
-                        new Toast.ToastSuccessful("Thành công", "Thêm nhà cung cấp thành công !!!", Toast.SHORT_DELAY);
-                        outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
-                        cleanView();
+                            //Upload nhà cung cấp lên DAO và BUS
+                            NhaCungCapDTO ncc = new NhaCungCapDTO(tenNCC, diaChi, sdt);
+                            nccBUS.add(ncc);
+                            new Toast.ToastSuccessful("Thành công", "Thêm nhà cung cấp thành công !!!", Toast.SHORT_DELAY);
+                            outModel(model, (ArrayList<NhaCungCapDTO>) nccBUS.getNccBUS());
+                            cleanView();
                         }
                         else{
                             new Toast.ToastError("Vui lòng nhập đầy đủ thông tin !!!", Toast.SHORT_DELAY);
@@ -352,61 +352,42 @@ public class NhaCungCapGUI extends JPanel {
         tbl = new JTable(model);
         //sap xep
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
-
         tbl.setRowSorter(rowSorter);
-
         listNCC();
 
         /**
          * ************ TẠO TABLE ********************
          */
         //Chỉnh độ rộng cột
-        tbl.getColumnModel()
-                .getColumn(0).setPreferredWidth(30);
-        tbl.getColumnModel()
-                .getColumn(1).setPreferredWidth(50);
-        tbl.getColumnModel()
-                .getColumn(2).setPreferredWidth(70);
-        tbl.getColumnModel()
-                .getColumn(3).setPreferredWidth(30);
+        tbl.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tbl.getColumnModel().getColumn(1).setPreferredWidth(50);
+        tbl.getColumnModel().getColumn(2).setPreferredWidth(70);
+        tbl.getColumnModel().getColumn(3).setPreferredWidth(30);
 
         //Chỉnh table
-        tbl.setFocusable(
-                false);
-        tbl.getTableHeader()
-                .setFont(font1);
-        tbl.setRowHeight(
-                30);
-        tbl.setShowVerticalLines(
-                false);
-        tbl.getTableHeader()
-                .setBackground(new Color(134, 64, 0));
-        tbl.getTableHeader()
-                .setForeground(Color.WHITE);
-        tbl.setSelectionBackground(
-                new Color(52, 152, 219));
-        tbl.setFillsViewportHeight(
-                true);
-        tbl.getTableHeader()
-                .setOpaque(false);
-        tbl.setIntercellSpacing(
-                new Dimension(0, 0));
+        tbl.setFocusable(false);
+        tbl.getTableHeader().setFont(font1);
+        tbl.setRowHeight(30);
+        tbl.setShowVerticalLines(false);
+        tbl.getTableHeader().setBackground(new Color(134, 64, 0));
+        tbl.getTableHeader().setForeground(Color.WHITE);
+        tbl.setSelectionBackground(new Color(52, 152, 219));
+        tbl.setFillsViewportHeight(true);
+        tbl.getTableHeader().setOpaque(false);
+        tbl.setIntercellSpacing(new Dimension(0, 0));
 
         //Add table vào scrollPane
         JScrollPane scroll = new JScrollPane(tbl);
 
-        scroll.setBounds(
-                new Rectangle(400, 40, DEFAULT_WIDTH - 700, 500));
-        scroll.setBackground(
-                null);
+        scroll.setBounds(new Rectangle(400, 40, DEFAULT_WIDTH - 700, 500));
+        scroll.setBackground(null);
         add(scroll);
 
         //event click vào Table
         tbl.addMouseListener(
                 new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e
-            ) {
+            public void mouseClicked(MouseEvent e) {
                 if (tableSelectionActive) {
                     int click = tbl.getSelectedRow(); //Chon vao dong trong bang hiển thị lên txt
                     if (click == -1) {
@@ -429,26 +410,18 @@ public class NhaCungCapGUI extends JPanel {
 
         cmbChoice.setFont(font0);
 
-        cmbChoice.addItem(
-                "Mã NCC");
-        cmbChoice.addItem(
-                "Tên NCC");
-        cmbChoice.addItem(
-                "Địa chỉ");
-        cmbChoice.addItem(
-                "SDT");
-        cmbChoice.setBounds(
-                new Rectangle(0, 180, 100, 30));
-        cmbChoice.setEditable(
-                false);
+        cmbChoice.addItem("Mã NCC");
+        cmbChoice.addItem("Tên NCC");
+        cmbChoice.addItem("Địa chỉ");
+        cmbChoice.addItem("SDT");
+        cmbChoice.setBounds(new Rectangle(0, 180, 100, 30));
+        cmbChoice.setEditable(false);
 
         // Custem Icon search
         iconSearch = new JLabel(new ImageIcon("./src/image/search_25px.png"));
 
-        iconSearch.setCursor(
-                new Cursor(Cursor.HAND_CURSOR));
-        iconSearch.setBounds(
-                290, 170, 50, 50);
+        iconSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        iconSearch.setBounds(290, 170, 50, 50);
 
         //Phần TextField
         txtSearch = new JTextField();
@@ -458,10 +431,8 @@ public class NhaCungCapGUI extends JPanel {
 
         txtSearch.setBackground(Color.WHITE);
 
-        txtSearch.setOpaque(
-                false);
-        txtSearch.setBounds(
-                new Rectangle(110, 180, 220, 30));
+        txtSearch.setOpaque(false);
+        txtSearch.setBounds(new Rectangle(110, 180, 220, 30));
 
         //Add tất cả vào ItemView
         itemView.add(cmbChoice);
@@ -471,11 +442,9 @@ public class NhaCungCapGUI extends JPanel {
         itemView.add(txtSearch);
 
         //bắt sự kiện FOCUS search box
-        txtSearch.addFocusListener(
-                new FocusAdapter() {
+        txtSearch.addFocusListener(new FocusAdapter() {
             @Override
-            public void focusGained(FocusEvent e
-            ) {
+            public void focusGained(FocusEvent e) {
                 iconSearch.setIcon(new ImageIcon("./src/image/search_25px_focus.png"));
             }
 

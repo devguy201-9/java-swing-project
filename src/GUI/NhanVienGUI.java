@@ -541,8 +541,8 @@ public class NhanVienGUI extends JPanel {
         tbl.setFillsViewportHeight(true);
         tbl.getTableHeader().setBackground(new Color(134, 64, 0)); //tieu de nâu
         tbl.getTableHeader().setForeground(Color.WHITE);
-        tbl.setSelectionBackground(new Color(52, 152, 219));
-        
+        tbl.setSelectionBackground(new Color(52, 152, 219));  //Dòng nhấp vào table màu xanh nè
+
         // Add table vào ScrollPane
         JScrollPane scroll = new JScrollPane(tbl);
         scroll.setBounds(new Rectangle(30, 360, this.DEFALUT_WIDTH - 400, 300));

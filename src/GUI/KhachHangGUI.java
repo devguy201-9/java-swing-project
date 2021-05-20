@@ -434,9 +434,10 @@ public class KhachHangGUI extends JPanel {
         //PHẦN CHỌN SEARCH
         JComboBox cmbChoice = new JComboBox();
         cmbChoice.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        cmbChoice.addItem("Mã KH");
-        cmbChoice.addItem("Tên KH");
-        cmbChoice.addItem("SĐT");
+        cmbChoice.addItem("Mã KH");//cmbchoice index = 0
+        cmbChoice.addItem("Tên KH");//1
+        cmbChoice.addItem("Họ KH");//2
+        cmbChoice.addItem("SĐT");//3
         cmbChoice.setBounds(new Rectangle(0, 0, 120, 30));
         cmbChoice.setEditable(false);
 
@@ -475,7 +476,7 @@ public class KhachHangGUI extends JPanel {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = txtSearch.getText();
-                int choice = cmbChoice.getSelectedIndex() == 2 ? 3 : cmbChoice.getSelectedIndex();
+                int choice = cmbChoice.getSelectedIndex(); // lấy index sort
 
                 if (text.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
@@ -487,7 +488,7 @@ public class KhachHangGUI extends JPanel {
             @Override
             public void removeUpdate(DocumentEvent e) {
                 String text = txtSearch.getText();
-                int choice = cmbChoice.getSelectedIndex() == 2 ? 3 : cmbChoice.getSelectedIndex();
+                int choice = cmbChoice.getSelectedIndex();
 
                 if (text.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
@@ -495,7 +496,6 @@ public class KhachHangGUI extends JPanel {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text + "", choice));
                 }
             }
-
             @Override
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -523,10 +523,10 @@ public class KhachHangGUI extends JPanel {
         model.setRowCount(0);
         for (KhachHangDTO n : nv) {
             data = new Vector();
-            data.add(n.getId_KH());
-            data.add(n.getFirst_name());
-            data.add(n.getLast_name());
-            data.add(n.getPhone());
+            data.add(n.getId_KH());//indext table = 0
+            data.add(n.getFirst_name());//1
+            data.add(n.getLast_name());//2
+            data.add(n.getPhone());//3 ý dòng xết ấy
             model.addRow(data);
         }
         tbl.setModel(model);

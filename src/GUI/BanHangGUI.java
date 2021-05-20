@@ -11,7 +11,6 @@ import BUS.KhachHangBUS;
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
 import DAO.SanPhamDAO;
-import BUS.printBill;
 import DTO.HoaDonDTO;
 import DTO.SanPhamDTO;
 import DTO.ct_HoaDonDTO;
@@ -588,8 +587,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                     Logger.getLogger(BanHangGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            printBill bill = new printBill(hd, dsct);
-            bill.print();
             new Toast.ToastSuccessful("Thành công", "Thêm hóa đơn thành công !!!", Toast.SHORT_DELAY);
             reset(true);
         }

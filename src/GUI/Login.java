@@ -8,7 +8,6 @@ import com.kingaspx.toast.util.Toast;
 //thu vien event
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,27 +45,6 @@ public class Login extends JFrame {
     private JTextField textUser;
     private JPasswordField textPasswd;
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Login frame = new Login();
-                    frame.setLocationRelativeTo(null);
-                    frame.setVisible(true);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Create the frame.
-     */
     public Login() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 432, 460);
@@ -196,10 +174,9 @@ public class Login extends JFrame {
         char[] passwd = textPasswd.getPassword();
         TaiKhoanDTO user = usBUS.findTKByUserNameAndPass(username, String.valueOf(passwd));
         if (user == null) {
-            new Toast.ToastError("Sai tên tài khoản hoặc mật khẩu, vui lòng nhập lại", Toast.SHORT_DELAY);
+            new Toast.ToastError("Sai tên tài khoản hoặc mật khẩu, vui lòng nhập lại", Toast.LONG_DELAY);
             return;
         }
-
         try {
 
         qlcoffee = new QLCoffee(user.getId_NV(), user.getUser_name(), user.getId_permission());

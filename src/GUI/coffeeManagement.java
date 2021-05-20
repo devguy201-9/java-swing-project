@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import DTO.TaiKhoanDTO;
+import java.awt.EventQueue;
 import java.io.FileNotFoundException;
 
 /**
@@ -15,9 +15,18 @@ import java.io.FileNotFoundException;
 public final class coffeeManagement {
 
     public static void main(String[] args) throws FileNotFoundException {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Login frame = new Login();
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
 
-        TaiKhoanDTO tk = new TaiKhoanDTO();
-        QLCoffee gui = new QLCoffee(1, tk.getUser_name(), 1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }
