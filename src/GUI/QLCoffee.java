@@ -29,7 +29,7 @@ import javax.swing.JScrollPane;
 
 public class QLCoffee extends JFrame implements MouseListener {
 
-    private int userId;
+    private String userId;
     private String userName;
     private int id_permission;
     private boolean flag = true;
@@ -39,7 +39,7 @@ public class QLCoffee extends JFrame implements MouseListener {
     private ArrayList<navItem> navObj = new ArrayList<>();  //Chứa cái button trên thanh menu
     private ArrayList<Integer> permissions = new ArrayList<>();
 
-    public QLCoffee(int userId, String userName, int id_permission) throws FileNotFoundException {
+    public QLCoffee(String userId, String userName, int id_permission) throws FileNotFoundException {
         this.userId = userId;
         this.userName = userName;
         this.id_permission = id_permission;
@@ -128,7 +128,7 @@ public class QLCoffee extends JFrame implements MouseListener {
          */
         main = new JPanel(null);
         main.setBackground(new Color(247, 241, 227));
-        changeMainInfo(Collections.min(permissions) -1);  //HIEN THI MAC DINH
+        changeMainInfo(Collections.min(permissions) - 1);  //HIEN THI MAC DINH
         /**
          * ***********************************************************
          */
@@ -206,13 +206,23 @@ public class QLCoffee extends JFrame implements MouseListener {
             case 4: //NHẬP VẦ XUẤT
                 if (flag) {
                     // Thêm 2 btn vào dưới thống kê
-                    navItem.add(i+1, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
-                    navItem.add(i + 2, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
+                    if (Collections.max(permissions) == 5) {
+                        navItem.add(i, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
+                        navItem.add(i + 1, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
+                    } else {
+                        navItem.add(i + 1, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
+                        navItem.add(i + 2, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
+                    }
                     flag = false; // Thông báo là đang Dropdown thống kê
                 } else {
                     // Xóa 2 btn của thống kê
-                    navItem.remove(i+1);
-                    navItem.remove(i+1);
+                    if (Collections.max(permissions) == 5) {
+                        navItem.remove(i);
+                        navItem.remove(i);
+                    } else {
+                        navItem.remove(i + 1);
+                        navItem.remove(i + 1);
+                    }
                     flag = true;  // Thông báo là Dropdown thống kê đă ẩn
                 }
                 outNav(); //Load lại phần Navigation
@@ -257,15 +267,24 @@ public class QLCoffee extends JFrame implements MouseListener {
     public void mouseClicked(java.awt.event.MouseEvent e) {
         for (int i = 0; i < navObj.size(); i++) {
             navItem item = navObj.get(i); // lấy vị trí item trong menu
-            if ( e.getSource() == item) {
+            if (e.getSource() == item) {
                 item.doActive(); // Active NavItem đc chọn
                 try {
-                    int j = i;
-                    if (!flag) {
-                        j -=2;
+                    int j = i, index = i;
+                    boolean flag2 = false;
+                    if (!flag && i > 5) {
+                        j -= 2;
                     }
-                    int index = permissions.get(j);
-                    if (!flag) {
+                    if (Collections.max(permissions) == 5) {
+                        if (!flag && (i == 4 || i == 5)) {
+                            index += 2;
+                            flag2 = true;
+                        }
+                    }
+                    if (!flag2) {
+                        index = permissions.get(j);
+                    }
+                    if (!flag && i > 5) {
                         index += 2;
                     }
                     changeMainInfo(index - 1); // Hiển thị ra phần main

@@ -7,6 +7,7 @@ package GUI;
 
 import BUS.ThongKeBUS;
 import DTO.ThongKeDTO;
+import com.kingaspx.toast.util.Toast;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Font;
@@ -90,11 +91,10 @@ public class ThongKeGUI extends JPanel{
     txtDateEnd.setDateFormatString("dd/MM/yyyy");
     add(lbDateEnd);
     add(txtDateEnd);
-    
-    Font font = new Font("Tahoma", Font.PLAIN, 18);
-    
+        
     JButton btnSubmit = new JButton("Thống kê");
     //set font chu
+    Font font = new Font("Tahoma", Font.PLAIN, 18);
     btnSubmit.setFont(font);
     btnSubmit.setForeground(Color.WHITE);
     //set mau sac
@@ -120,13 +120,19 @@ public class ThongKeGUI extends JPanel{
             DefaultCategoryDataset dcd = new DefaultCategoryDataset();
             LocalDate startDate = Instant.ofEpochMilli(txtDateStart.getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate endDate = Instant.ofEpochMilli(txtDateEnd.getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+            
+            //validation
+            if(endDate.isBefore(startDate)){
+                new Toast.ToastWarning("Ngày nhập không hợp lệ !!!", Toast.SHORT_DELAY);
+                return;
+            }
 
             List<ThongKeDTO> tks = tkBUS.getChartByTime(startDate,endDate);
             for(ThongKeDTO tk : tks){
                 dcd.setValue(tk.getDoanhThu(), "doanhthu", tk.getNameSP());
                 System.out.println(tk.getNameSP());
             }
-            JFreeChart jchart = ChartFactory.createBarChart("Doanh Thu Record", "Tên Sản Phẩm", "Doanh thu", dcd, PlotOrientation.VERTICAL, true, true, false);
+            JFreeChart jchart = ChartFactory.createBarChart("Doanh Thu Bán Hàng", "Tên Sản Phẩm", "Doanh thu", dcd, PlotOrientation.VERTICAL, true, true, false);
             ChartPanel chartPanel = new ChartPanel(jchart);
 
             panel.removeAll();

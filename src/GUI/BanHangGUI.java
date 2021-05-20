@@ -55,7 +55,7 @@ import javax.swing.table.TableRowSorter;
  */
 public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
 
-    private int userID;
+    private String userID;
     private int DEFALUT_WIDTH;
 
     //variable BUS
@@ -72,7 +72,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
     private JTextField txtMaNV;
     private JTextField txtNgayHD;
     private JTextField txtTongTien;
-    private JButton btnMaNV;
     private JTextField txtMaSP;
     private JTextField txtCTSL;
     private JButton btnMaSP;
@@ -92,7 +91,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
     private JButton btnMaKH;
     private boolean flag = true;
 
-    public BanHangGUI(int width, int userID) {
+    public BanHangGUI(int width, String userID) {
         this.userID = userID;
         DEFALUT_WIDTH = width;
         hdBUS.list();
@@ -159,14 +158,10 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtMaNV.setFont(font0);
         txtMaNV.setBounds(new Rectangle(475, 0, 100, 30));
         txtMaNV.setEditable(false);
+        txtMaNV.setText(userID);
         txtMaNV.addKeyListener(this);
         hdView.add(lbMaNV);
         hdView.add(txtMaNV);
-        btnMaNV = new JButton("+");
-        btnMaNV.setBackground(new Color(131, 149, 167));
-        btnMaNV.setBounds(new Rectangle(575, 0, 30, 30));
-        btnMaNV.addActionListener(this);
-        hdView.add(btnMaNV);
 
         JLabel lbTongTien = new JLabel("Tổng Tiền (VNĐ)");
         lbTongTien.setFont(font0);
@@ -417,7 +412,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         txtMaKH.setEditable(flag);
         txtMaNV.setEditable(flag);
         txtNgayHD.setEditable(flag);
-        btnMaNV.setEnabled(flag);
     }
 
     public void clear(boolean flag) {
@@ -455,14 +449,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnMaNV) // Suggest Nhan Vien
-        {
-            if (flag) {
-                SuggestNhanVien rm = new SuggestNhanVien();
-                String s = rm.getTextFieldContent();
-                txtMaNV.setText(s);
-            }
-        }
         if (e.getSource() == btnMaKH) // Suggest Nhan Vien
         {
             if (flag) {
@@ -588,6 +574,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 ctBUS.add(ct);
             }
             new Toast.ToastSuccessful("Thành công", "Thêm hóa đơn thành công !!!", Toast.SHORT_DELAY);
+            flag = true;
             reset(true);
         }
         if (e.getSource().equals(btnEdit)) //Sửa sl trong Chitiet sp
