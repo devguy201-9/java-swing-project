@@ -18,6 +18,7 @@ public class NhanVienDTO {
     private int id_NV, age;
     private String name, address, phone, img;
     private Gender gender;
+    private Boolean status;
     private Date start_day;
 
     public NhanVienDTO() {
@@ -28,23 +29,25 @@ public class NhanVienDTO {
         start_day = null;
     }
 
-    public NhanVienDTO(int age, String name, String address, String phone, Gender gender, LocalDate start_day, String img) {
+    public NhanVienDTO(int age, String name, String address, String phone, Gender gender, LocalDate start_day, Boolean status, String img) {
         this.age = age;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.gender = gender;
         setStart_day(start_day);
+        this.status = status;
         this.img = img;
     }
 
-    public NhanVienDTO(int age, String name, String address, String phone, Gender gender, Date start_day, String img) {
+    public NhanVienDTO(int age, String name, String address, String phone, Gender gender, Date start_day,Boolean status, String img) {
         this.age = age;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.gender = gender;
         this.start_day = start_day;
+        this.status = status;
         this.img = img;
     }
 
@@ -107,6 +110,14 @@ public class NhanVienDTO {
 
     public void setStart_day(LocalDate start_day) {
         this.start_day = Date.from(start_day.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public String getImg() {

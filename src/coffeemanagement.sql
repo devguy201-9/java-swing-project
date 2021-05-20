@@ -198,6 +198,7 @@ CREATE TABLE `nhanvien` (
   `address` text DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
   `start_day` date DEFAULT NULL,
+  `status` BOOLEAN DEFAULT TRUE,
   `img` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -205,9 +206,9 @@ CREATE TABLE `nhanvien` (
 -- Đang đổ dữ liệu cho bảng `nhanvien`
 --
 
-INSERT INTO `nhanvien` (`id_NV`, `name`, `age`, `gender`, `address`, `phone`, `start_day`, `img`) VALUES
-(1, 'admin', 20, 'male', NULL, '0123456789', '2021-04-17', '001.jpg'),
-(2, 'Như', 20, 'female', NULL, NULL, NULL, '002.jpg');
+INSERT INTO `nhanvien` (`id_NV`, `name`, `age`, `gender`, `address`, `phone`, `start_day`,`status`,`img`) VALUES
+(1, 'admin', 20, 'male', NULL, '0123456789', '2021-04-17',true, '001.jpg'),
+(2, 'Như', 20, 'female', NULL, NULL, NULL,true,'002.jpg');
 
 -- --------------------------------------------------------
 

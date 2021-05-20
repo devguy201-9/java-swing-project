@@ -38,10 +38,10 @@ public class NhanVienDAO extends AbstractDAO<NhanVienDAO> {
 
     public Integer save(NhanVienDTO nv) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO nhanvien(name,age,");
-        sql.append("gender,address,phone,start_day,img)");
-        sql.append(" VALUES(?, ?, ?, ?, ?, ?, ?)");
+        sql.append("gender,address,phone,start_day,status,img)");
+        sql.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
         return insert(sql.toString(), nv.getName(), nv.getAge(), nv.getGender().toString(), nv.getAddress(),
-                nv.getPhone(), new SimpleDateFormat("yyyy/MM/dd").format(nv.getStart_day()), nv.getImg());
+                nv.getPhone(), new SimpleDateFormat("yyyy/MM/dd").format(nv.getStart_day()), true ,nv.getImg());
     }
 
     public List<NhanVienDTO> findAll() {
@@ -50,7 +50,7 @@ public class NhanVienDAO extends AbstractDAO<NhanVienDAO> {
     }
 
     public void delete(int idNV) throws FileNotFoundException {
-        String sql = "DELETE FROM nhanvien WHERE id_NV = ? ";
+        String sql = "UPDATE nhanvien SET status = 0 WHERE id_NV = ? ";
         update(sql, idNV);
     }
 

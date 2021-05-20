@@ -65,7 +65,7 @@ public class ThongKeGUI extends JPanel{
     Font font0 = new Font("Segoe UI", Font.PLAIN, 14);
 		
     panel = new JPanel();
-    panel.setBounds(246, 21, 800, 1000);
+    panel.setBounds(350, 65, 700, 800);
     
     lbDateStart = new JLabel("Ngày Bắt Đầu:");
     lbDateStart.setFont(font0);

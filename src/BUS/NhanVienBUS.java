@@ -85,7 +85,6 @@ public class NhanVienBUS {
         int idNV = Integer.parseInt(id);
         for (NhanVienDTO nvDTO : nvBUS) {
             if (nvDTO.getId_NV() == idNV) {
-                nvBUS.remove(nvDTO);
                 NhanVienDAO nvDAO = new NhanVienDAO();
                 try {
                     nvDAO.delete(idNV);

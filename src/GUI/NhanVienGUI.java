@@ -295,6 +295,7 @@ public class NhanVienGUI extends JPanel {
                     new Toast.ToastSuccessful("Thành công", "Xóa nhân viên thành công !!!", Toast.SHORT_DELAY);
                     cleanView();
                     tbl.clearSelection();
+                    nvBUS.list();
                     outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());
                 }
             }
@@ -409,7 +410,7 @@ public class NhanVienGUI extends JPanel {
 
                             if (!hoTen.equals("") && !sdt.equals("") && !IMG.equals("") && !phai.equals("") && !diaChi.equals("") && tuoi != 0) {
                                 //Upload nhân viên lên DAO và BUS
-                                NhanVienDTO nv = new NhanVienDTO(tuoi, hoTen, diaChi, sdt, gd, LocalDate.now(), IMG);
+                                NhanVienDTO nv = new NhanVienDTO(tuoi, hoTen, diaChi, sdt, gd, LocalDate.now(), true, IMG);
                                 nvBUS.add(nv);
                                 outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());// Load lại table
 
@@ -459,7 +460,7 @@ public class NhanVienGUI extends JPanel {
 
                         if (!hoTen.equals("") && !sdt.equals("") && !ngayNV.equals("") && !phai.equals("") && !diaChi.equals("")) {
                             //Upload nhân viên lên DAO và BUS
-                            NhanVienDTO NV = new NhanVienDTO(tuoi, hoTen, diaChi, sdt, gd, LocalDate.parse(ngayNV), IMG);
+                            NhanVienDTO NV = new NhanVienDTO(tuoi, hoTen, diaChi, sdt, gd, LocalDate.parse(ngayNV),true,IMG);
                             NV.setId_NV(maNV);
                             nvBUS.set(NV);
                             outModel(model, (ArrayList<NhanVienDTO>) nvBUS.getNvBUS());
@@ -484,6 +485,7 @@ public class NhanVienGUI extends JPanel {
         header.add("Tuổi");
         header.add("Phái");
         header.add("Ngày bắt đầu");
+        header.add("Status");
         header.add("Địa chỉ");
         header.add("IMG");
         model = new MyTable(header, 5) {
@@ -492,6 +494,8 @@ public class NhanVienGUI extends JPanel {
                     case 0:
                         return Integer.class;
                     case 3:
+                        return Integer.class;
+                    case 6:
                         return Integer.class;
                     default:
                         return String.class;
@@ -514,8 +518,9 @@ public class NhanVienGUI extends JPanel {
         tbl.getColumnModel().getColumn(3).setPreferredWidth(30);
         tbl.getColumnModel().getColumn(4).setPreferredWidth(30);
         tbl.getColumnModel().getColumn(5).setPreferredWidth(70);
-        tbl.getColumnModel().getColumn(6).setPreferredWidth(130);
-
+        tbl.getColumnModel().getColumn(6).setPreferredWidth(15);
+        tbl.getColumnModel().getColumn(7).setPreferredWidth(110);
+        
         DefaultTableCellRenderer centerAlign = new DefaultTableCellRenderer();
         centerAlign.setHorizontalAlignment(JLabel.CENTER);
         tbl.getColumnModel().getColumn(0).setCellRenderer(centerAlign);
@@ -523,7 +528,8 @@ public class NhanVienGUI extends JPanel {
         tbl.getColumnModel().getColumn(3).setCellRenderer(centerAlign);
         tbl.getColumnModel().getColumn(4).setCellRenderer(centerAlign);
         tbl.getColumnModel().getColumn(5).setCellRenderer(centerAlign);
-        tbl.getColumnModel().getColumn(7).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(6).setCellRenderer(centerAlign);
+        tbl.getColumnModel().getColumn(8).setCellRenderer(centerAlign);
 
         // Custom table
         tbl.setFocusable(false);
@@ -536,7 +542,7 @@ public class NhanVienGUI extends JPanel {
         tbl.getTableHeader().setBackground(new Color(134, 64, 0)); //tieu de nâu
         tbl.getTableHeader().setForeground(Color.WHITE);
         tbl.setSelectionBackground(new Color(52, 152, 219));
-
+        
         // Add table vào ScrollPane
         JScrollPane scroll = new JScrollPane(tbl);
         scroll.setBounds(new Rectangle(30, 360, this.DEFALUT_WIDTH - 400, 300));
@@ -555,7 +561,7 @@ public class NhanVienGUI extends JPanel {
                     if (i == -1) {
                         return;
                     }
-                    imgName = tbl.getModel().getValueAt(i, 7).toString();
+                    imgName = tbl.getModel().getValueAt(i, 8).toString();
                     Image newImage;
                     try {
                         newImage = new ImageIcon("./src/image/NhanVien/" + imgName).getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
@@ -568,7 +574,7 @@ public class NhanVienGUI extends JPanel {
                     txtTuoi.setText(tbl.getModel().getValueAt(i, 3).toString());
                     choicePhai.select((tbl.getModel().getValueAt(i, 4).toString()));
                     txtNgay.setText(tbl.getModel().getValueAt(i, 5).toString());
-                    txtDiaChi.setText(tbl.getModel().getValueAt(i, 6).toString());
+                    txtDiaChi.setText(tbl.getModel().getValueAt(i, 7).toString());
                     img.setText("");
                     img.setIcon(new ImageIcon(newImage));
 
@@ -774,6 +780,12 @@ public class NhanVienGUI extends JPanel {
                 data.add("Nam");
             }
             data.add(n.getStart_day());
+            if(n.getStatus() == true){
+                data.add("1");
+            }else{
+                data.add("0");
+            }
+            
             data.add(n.getAddress());
             data.add(n.getImg());
             model.addRow(data);
