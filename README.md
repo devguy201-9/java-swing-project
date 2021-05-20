@@ -19,11 +19,9 @@
 |2    |3119410418  |[Trần Gia Thuân](https://www.facebook.com/)|
 |3    |3119410424  |[Võ Quang Thuận](https://www.facebook.com/)|
 
-<<<<<<< HEAD
 ## Hướng dẫn cài đặt
 
 Phần mềm chạy tốt trên nền tảng java version 8 với jdk version 1. 8 với độ phân giải màn hình chuẩn của máy là > 1280x900 ( FullHD )
-=======
 
 ## Hướng dẫn cài đặt
 
