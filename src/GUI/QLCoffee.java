@@ -29,7 +29,7 @@ import javax.swing.JScrollPane;
 
 public class QLCoffee extends JFrame implements MouseListener {
 
-    private int userId;
+    private String userId;
     private String userName;
     private int id_permission;
     private boolean flag = true;
@@ -39,7 +39,7 @@ public class QLCoffee extends JFrame implements MouseListener {
     private ArrayList<navItem> navObj = new ArrayList<>();  //Chứa cái button trên thanh menu
     private ArrayList<Integer> permissions = new ArrayList<>();
 
-    public QLCoffee(int userId, String userName, int id_permission) throws FileNotFoundException {
+    public QLCoffee(String userId, String userName, int id_permission) throws FileNotFoundException {
         this.userId = userId;
         this.userName = userName;
         this.id_permission = id_permission;
