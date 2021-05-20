@@ -154,7 +154,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         lbMaNV.setFont(font0);
         lbMaNV.setBounds(415, 0, 60, 30);
         txtMaNV = new JTextField();
-//        if( userID != 0 ) txtMaNV.setText(userID);
+        txtMaNV.setText(String.valueOf(userID));
         txtMaNV.setHorizontalAlignment(JTextField.CENTER);
         txtMaNV.setFont(font0);
         txtMaNV.setBounds(new Rectangle(475, 0, 100, 30));
@@ -506,12 +506,20 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             //Kiểm tra đã có trong giỏ chưa
             boolean flag = true;
             for (ct_HoaDonDTO sp : dsct) {
-                System.out.println(sp.getId_SP() + " " + txtMaSP.getText());
-                if (txtMaSP.getText().equals(sp.getId_SP())) {
+//                System.out.println(sp.getId_SP() + " " + txtMaSP.getText());
+                if (Integer.parseInt(txtMaSP.getText()) == (sp.getId_SP())) {
+                    sp.setAmount(sp.getAmount() + Integer.parseInt(txtCTSL.getText()));
+                    
                     flag = false;
+                    txtMaSP.setText(null);
+                    txtCTSL.setText(null);
+                    txtCTTenSP.setText(null);
+                    txtCTGia.setText(null);
+                    imgSP.setIcon(null);
                     break;
                 }
             }
+            outModel(model, dsct);
             if (flag) {
                 dsct.add(new ct_HoaDonDTO(Integer.parseInt(txtMaHD.getText()), Integer.parseInt(txtMaSP.getText()), txtCTTenSP.getText(), sl, gia));
 
@@ -540,9 +548,10 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             }
 
             if (txtMaKH.getText().isEmpty()) {
-                new Toast.ToastWarning("Vui lòng chọn mã khách hàng", Toast.SHORT_DELAY);
-                txtMaKH.requestFocus();
-                return;
+//                new Toast.ToastWarning("Vui lòng chọn mã khách hàng", Toast.SHORT_DELAY);
+//                txtMaKH.requestFocus();
+//                return;
+                  txtMaKH.setText("1");
             }
 
             if (txtMaNV.getText().isEmpty()) {
@@ -577,15 +586,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             hdBUS.add(hd);
             for (ct_HoaDonDTO ct : dsct) {
                 ctBUS.add(ct);
-
-                SanPhamDTO sp = spBUS.getOneById(ct.getId_SP());
-                SanPhamDAO spDAO = new SanPhamDAO();
-
-                try {
-                    spDAO.update(sp);
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(BanHangGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
             }
             new Toast.ToastSuccessful("Thành công", "Thêm hóa đơn thành công !!!", Toast.SHORT_DELAY);
             reset(true);
