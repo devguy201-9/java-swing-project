@@ -54,7 +54,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
     private JComboBox cmbRole;
     private JButton btnMaNV;
 
-    private boolean EditOrAdd = true;//Cờ cho button Cofirm True:ADD || False:Edit
+    private boolean EditOrAdd = false;//Cờ cho button Cofirm True:ADD || False:Edit
 
     private boolean tableSelectionActive = true;
 
@@ -302,7 +302,7 @@ public class TaiKhoanGUI extends JPanel implements ActionListener {
         btnBack.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 cleanView();
-
+                EditOrAdd = false;
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
                 setEdit(false);
