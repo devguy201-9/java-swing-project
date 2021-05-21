@@ -1,7 +1,7 @@
 # Đồ án Java - Quản lý cửa hàng cà phê (CoffeeManager)
 
 
-![](https://devpro.edu.vn/uploads/studies/1533113810.png)
+![](https://download.logo.wine/logo/Java_(programming_language)/Java_(programming_language)-Logo.wine.png)
 
 
 ![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master) ![](https://img.shields.io/github/tag/pandao/editor.md.svg) 
