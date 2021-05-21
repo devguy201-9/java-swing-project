@@ -19,7 +19,7 @@ public class SanPhamDAO extends AbstractDAO<SanPhamDTO> {
     public Integer save(SanPhamDTO sp) throws FileNotFoundException {
         StringBuilder sql = new StringBuilder("INSERT INTO sanpham(id_Loai,name,");
         sql.append("descrption,price,img)");
-        sql.append(" VALUES(?, ?, ?, ?, ?, ?)");
+        sql.append(" VALUES(?, ?, ?, ?, ?)");
         return insert(sql.toString(), sp.getId_Loai(), sp.getName(), sp.getDescrption(), sp.getPrice(), sp.getImg());
     }
 
