@@ -41,7 +41,7 @@ public class NhanVienDAO extends AbstractDAO<NhanVienDAO> {
         sql.append("gender,address,phone,start_day,status,img)");
         sql.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
         return insert(sql.toString(), nv.getName(), nv.getAge(), nv.getGender().toString(), nv.getAddress(),
-                nv.getPhone(), new SimpleDateFormat("yyyy/MM/dd").format(nv.getStart_day()), true ,nv.getImg());
+                nv.getPhone(), new SimpleDateFormat("yyyy/MM/dd").format(nv.getStart_day()), 1 ,nv.getImg());
     }
 
     public List<NhanVienDTO> findAll() {
