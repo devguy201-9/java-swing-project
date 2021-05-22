@@ -677,7 +677,6 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         txtMinPrice.setFont(font0);
         txtMinPrice.setBounds(new Rectangle(580, 42, 100, 30));
         txtMinPrice.setInputVerifier(new MyInputVerifier());
-        txtMinPrice.addKeyListener(this);
         sort.add(txtMinPrice);
 
         JSeparator sepPrice = new JSeparator(JSeparator.HORIZONTAL);
@@ -688,7 +687,6 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         txtMaxPrice.setFont(font0);
         txtMaxPrice.setBounds(new Rectangle(710, 42, 100, 30));
         txtMaxPrice.setInputVerifier(new MyInputVerifier());
-        txtMaxPrice.addKeyListener(this);
         sort.add(txtMaxPrice);
         /**
          * ***************************************
